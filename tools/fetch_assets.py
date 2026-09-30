@@ -37,7 +37,8 @@ def main():
     meta = json.load(open(MANIFEST)) if os.path.exists(MANIFEST) else {}
     for a in ASSETS:
         name, url, kind = a["name"], a["url"], a["type"]
-        raw = os.path.join(OUT, f"{name}-src.{ 'mp4' if kind == 'video' else 'png'}")
+        os.makedirs(os.path.join(ROOT, ".assets-tmp"), exist_ok=True)
+        raw = os.path.join(ROOT, ".assets-tmp", f"{name}-src.{ 'mp4' if kind == 'video' else 'png'}")
         if not os.path.exists(raw):
             req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
             open(raw, "wb").write(urllib.request.urlopen(req, timeout=120).read())

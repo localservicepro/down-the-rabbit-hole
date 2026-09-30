@@ -1,3 +1,12 @@
 [
-  {"name": "about-branded-trailer", "type": "image", "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EWpoiN6nlg900Jz4gzZzRlxgtK/hf_20260930_144346_8ca821b0-d6fd-4dba-a727-7650417b4f78.png"}
+  {
+    "name": "about-branded-trailer",
+    "type": "image",
+    "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EWpoiN6nlg900Jz4gzZzRlxgtK/hf_20260930_144346_8ca821b0-d6fd-4dba-a727-7650417b4f78.png"
+  },
+  {
+    "name": "hero-video",
+    "type": "video",
+    "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3EWpoiN6nlg900Jz4gzZzRlxgtK/hf_20260930_144359_70cc7628-30a7-4207-b6ec-94a027c5b1ac.mp4"
+  }
 ]

@@ -36,6 +36,11 @@ Requires Python 3.10+ (Pillow only for the image tooling).
 - `/blog` is the guides index and the 19 posts are built from `content/posts/*.md` into `post/<slug>.html`.
 - Every page is written twice: `page.html` and `page/index.html`, so `/page` resolves on hosts with or without clean-URL support. `vercel.json` covers Vercel (clean URLs plus the 301 map); `_redirects` covers Netlify/Cloudflare; `.htaccess` covers Apache; meta-refresh stubs cover the old URLs on hosts that ignore all three.
 
+## Hero video and generated imagery
+
+- The homepage hero plays `images/hero-video.webm` / `.mp4` (6 s, silent, loops) over the poster frame `hero-video-poster.webp`, which is also the LCP image and the schema/OG image. The video loads only after page load and only when the visitor has not asked for reduced motion or data saving.
+- `hero-video` and `about-branded-trailer` were generated with Higgsfield from the client's photos (Michael in his hi-vis vest, the branded trailer, the badge logo). `tools/assets.json` lists the source URLs and `.github/workflows/fetch-assets.yml` downloads and converts them (mp4/webm/poster, WebP sizes) on demand.
+
 ## Navigation and areas map
 
 - Header: Home · Services (mega-menu) · About · Areas · Blog (mega-menu of nine guides, list in `BLOG_MENU`) · Contact, plus phone and the quote button. Mobile menu mirrors both mega-menus as accordions.

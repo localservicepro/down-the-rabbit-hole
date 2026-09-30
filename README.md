@@ -9,6 +9,7 @@ No page-builder runtime, no CSS framework: one HTML file per page with the style
 |---|---|
 | `index.html`, `about.html`, `contact.html`, `areas.html`, `blog.html`, `services.html`, `<service>.html`, `lawn-mowing-*.html`, `thank-you.html`, `404.html` | Built pages (generated, do not hand-edit) |
 | `content/*.json` | Copy for the service, hub, suburb and district pages (H1, meta, sections, FAQs) |
+| `content/posts/*.md` | Blog post bodies (parsed from the old site) |
 | `tools/build.py` | Generator: templates, homepage copy, schema, redirects, sitemap |
 | `tools/verify.py` | Checks: one H1 with keyword, title ≤ 60, description 150–160, canonicals, JSON-LD, links, alt text, image caps, keyword density |
 | `tools/serve.py` | Local preview server that maps `/lawn-mowing` → `lawn-mowing.html` and returns a real 404 |
@@ -32,7 +33,14 @@ Requires Python 3.10+ (Pillow only for the image tooling).
 - Serve clean URLs: `/lawn-mowing` must serve `lawn-mowing.html` (Netlify and Cloudflare Pages do this by default; Apache uses the rewrite in `.htaccess`).
 - Unknown URLs must return **HTTP 404** with `404.html`.
 - 301 redirects for the old site's URLs are in `_redirects` / `.htaccess`.
-- `/blog` is a built index of the 19 existing guides. The posts themselves (`/post/…`) are migrated separately; until they are, those links return 404. Add them to `sitemap.xml` when live.
+- `/blog` is the guides index and the 19 posts are built from `content/posts/*.md` into `post/<slug>.html`.
+- Every page is written twice: `page.html` and `page/index.html`, so `/page` resolves on hosts with or without clean-URL support. `vercel.json` covers Vercel (clean URLs plus the 301 map); `_redirects` covers Netlify/Cloudflare; `.htaccess` covers Apache; meta-refresh stubs cover the old URLs on hosts that ignore all three.
+
+## Navigation and areas map
+
+- Header: Home · Services (mega-menu) · About · Areas · Blog (mega-menu of nine guides, list in `BLOG_MENU`) · Contact, plus phone and the quote button. Mobile menu mirrors both mega-menus as accordions.
+- The Areas page hero is an inline SVG map of the seven districts with hover/focus pins (`area_map()` in `tools/build.py`); each pin links to its district page.
+- "Find us on Google" links use the short Maps link; the schema `sameAs` carries both the short link and the place-id URL.
 
 ## Quote form and CRM tracking
 
@@ -41,8 +49,11 @@ Requires Python 3.10+ (Pillow only for the image tooling).
 - The CRM tracking script (`external-tracking.js`, tracking id `tk_6f4c…`) is loaded deferred in every page's `<head>` and captures the native `submit` event; the page then redirects to `/thank-you` (noindex). There is no form endpoint.
 - Both forms use native validation (required fields, email, 4-digit postcode, phone pattern) with an inline error message.
 
+## Business hours
+
+Mon–Thu 8am–5pm, Fri 9am–5pm, closed weekends. Set in `HOURS` and `openingHoursSpecification` in `tools/build.py`.
+
 ## Placeholders still to fill
 
-- `___HOURS___` (footer, contact section, schema `openingHoursSpecification`) — trading hours not supplied.
 - `<!-- REVIEWS: paste 3–5 Google reviews here -->` in `tools/build.py` (homepage proof section).
 - ABN number is not published; the site says "ABN Registered".

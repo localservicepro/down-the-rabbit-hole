@@ -77,7 +77,13 @@ def main():
         jobs.append((f"{p['job']}-after", p["after"]))
     for s in MANIFEST["singles"]:
         jobs.append((s["name"], s["id"]))
+    existing = {}
+    if os.path.exists(os.path.join(OUT, "manifest.json")):
+        existing = json.load(open(os.path.join(OUT, "manifest.json")))
+    meta.update(existing)
     for name, fid in jobs:
+        if name in existing and os.path.exists(os.path.join(OUT, f"{name}.webp")):
+            continue  # already fetched and (possibly) re-encoded locally; do not overwrite
         try:
             process(name, fid, meta)
         except Exception as e:

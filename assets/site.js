@@ -10,23 +10,26 @@
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  /* Services mega-dropdown: hover (pointer devices) + click/tap + Escape */
-  if (dd) {
+  /* Mega-dropdowns (Services, Blog): hover (pointer devices) + click/tap + Escape, one open at a time */
+  var dropdowns = Array.prototype.slice.call(document.querySelectorAll('.nav-dropdown'));
+  var closeAll = function () { dropdowns.forEach(function (d) { d.classList.remove('open'); d.querySelector('.nav-trigger').setAttribute('aria-expanded', 'false'); d.byHover = false; }); };
+  dropdowns.forEach(function (dd) {
     var trigger = dd.querySelector('.nav-trigger');
-    var byHover = false;
-    var open = function () { dd.classList.add('open'); trigger.setAttribute('aria-expanded', 'true'); };
-    var close = function () { dd.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); byHover = false; };
+    var open = function () { closeAll(); dd.classList.add('open'); trigger.setAttribute('aria-expanded', 'true'); };
+    var close = function () { dd.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); dd.byHover = false; };
     if (hoverCapable) {
-      dd.addEventListener('mouseenter', function () { if (!dd.classList.contains('open')) { byHover = true; open(); } });
-      dd.addEventListener('mouseleave', function () { if (byHover) close(); });
+      dd.addEventListener('mouseenter', function () { if (!dd.classList.contains('open')) { open(); dd.byHover = true; } });
+      dd.addEventListener('mouseleave', function () { if (dd.byHover) close(); });
     }
     trigger.addEventListener('click', function (e) {
       e.preventDefault();
-      if (dd.classList.contains('open') && !byHover) { close(); } else { byHover = false; open(); }
+      if (dd.classList.contains('open') && !dd.byHover) { close(); } else { open(); dd.byHover = false; }
     });
-    document.addEventListener('click', function (e) { if (!dd.contains(e.target)) close(); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { close(); closeMobile(); } });
     dd.addEventListener('focusout', function (e) { if (!dd.contains(e.relatedTarget)) close(); });
+  });
+  if (dropdowns.length) {
+    document.addEventListener('click', function (e) { if (!dropdowns.some(function (d) { return d.contains(e.target); })) closeAll(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeAll(); closeMobile(); } });
   }
 
   /* Mobile slide-in panel with Services accordion */
@@ -52,14 +55,13 @@
     backdrop.addEventListener('click', closeMobile);
     panel.querySelector('.mp-close').addEventListener('click', closeMobile);
     panel.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', closeMobile); });
-    var acc = panel.querySelector('.mp-acc');
-    if (acc) {
-      var sub = panel.querySelector('.mp-sub');
+    panel.querySelectorAll('.mp-acc').forEach(function (acc) {
+      var sub = document.getElementById(acc.getAttribute('aria-controls'));
       acc.addEventListener('click', function () {
         var isOpen = sub.classList.toggle('open');
         acc.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       });
-    }
+    });
   }
 
   /* Scroll reveal */

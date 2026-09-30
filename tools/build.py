@@ -15,7 +15,8 @@ SMS = "sms:+61423720317"
 EMAIL = "info@downtherabbitholeaust.com"
 FB = "https://www.facebook.com/p/Down-the-Rabbit-Hole-AUST-61552753624844/"
 IG = "https://www.instagram.com/downtherabbitholeaust"
-GBP = "https://www.google.com/maps/search/?api=1&query=Google&query_place_id=ChIJuzQLsqNMFmsRcFlpp27qAAQ"
+GBP_PLACE = "https://www.google.com/maps/search/?api=1&query=Google&query_place_id=ChIJuzQLsqNMFmsRcFlpp27qAAQ"
+GBP = "https://maps.app.goo.gl/kx6sMBaVZok5tBfw6"
 MAP_EMBED = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d416436.695680462!2d149.1297825!3d-35.37024405!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xaf8e434d15506cf1%3A0x24c31c1abe5ee30a!2sDown%20the%20Rabbit%20Hole%20Aust!5e0!3m2!1sen!2sph!4v1790757761736!5m2!1sen!2sph"
 HOURS = "___HOURS___"
 TRACKING_ID = "tk_6f4c1089fe214ae6baa8c2dc37522e82"
@@ -90,6 +91,28 @@ POSTS = {
     "/post/case-study--transforming-a-neglected-garden-into-a-vibrant-outdoor-space": ("Case Study: Transforming a Neglected Garden into a Vibrant Outdoor Space", "", ""),
 }
 LATEST_POSTS = ["/post/garden-mulching-canberra-guide", "/post/bindi-spraying-canberra-lawn-weeds", "/post/spring-lawn-mowing-canberra-guide"]
+BLOG_MENU = [
+    "/post/garden-mulching-canberra-guide", "/post/bindi-spraying-canberra-lawn-weeds", "/post/spring-lawn-mowing-canberra-guide",
+    "/post/hedge-trimming-canberra", "/post/spring-garden-checklist-canberra", "/post/canberra-lawn-frost-damage-spring-care",
+    "/post/green-waste-canberra-disposal-guide", "/post/yard-clean-up-canberra-guide", "/post/dva-lawn-care-services-canberra-5929",
+]
+BLOG_SHORT = {
+    "/post/garden-mulching-canberra-guide": "Garden mulching guide", "/post/bindi-spraying-canberra-lawn-weeds": "Stop bindi & broadleaf weeds",
+    "/post/spring-lawn-mowing-canberra-guide": "Spring lawn mowing", "/post/hedge-trimming-canberra": "Hedge trimming for spring",
+    "/post/spring-garden-checklist-canberra": "Spring garden checklist", "/post/canberra-lawn-frost-damage-spring-care": "Lawn care after frost",
+    "/post/green-waste-canberra-disposal-guide": "Green waste disposal", "/post/yard-clean-up-canberra-guide": "Yard clean up guide",
+    "/post/dva-lawn-care-services-canberra-5929": "DVA lawn care for veterans",
+}
+BLOG_TAG = {
+    "/post/garden-mulching-canberra-guide": "Garden beds", "/post/bindi-spraying-canberra-lawn-weeds": "Weeds", "/post/spring-lawn-mowing-canberra-guide": "Mowing",
+    "/post/hedge-trimming-canberra": "Hedges", "/post/spring-garden-checklist-canberra": "Seasonal", "/post/canberra-lawn-frost-damage-spring-care": "Lawn care",
+    "/post/green-waste-canberra-disposal-guide": "Green waste", "/post/yard-clean-up-canberra-guide": "Clean-ups", "/post/dva-lawn-care-services-canberra-5929": "Veterans",
+}
+BLOG_ICONS = {
+    "/post/garden-mulching-canberra-guide": "trowel", "/post/bindi-spraying-canberra-lawn-weeds": "spray", "/post/spring-lawn-mowing-canberra-guide": "mower",
+    "/post/hedge-trimming-canberra": "hedge", "/post/spring-garden-checklist-canberra": "check", "/post/canberra-lawn-frost-damage-spring-care": "sprout",
+    "/post/green-waste-canberra-disposal-guide": "leaf", "/post/yard-clean-up-canberra-guide": "broom", "/post/dva-lawn-care-services-canberra-5929": "medal",
+}
 
 HOME_FAQS = [
     ("How much does lawn mowing cost in Canberra?", "Lawn mowing costs in Canberra depend on lawn size, frequency, and condition. We provide clear, upfront quotes before starting so you know exactly what to expect."),
@@ -180,6 +203,11 @@ def header(active="", over_hero=False):
     for slug, name, desc, ic, _ in SERVICES:
         items.append(f'<a class="dd-item" role="menuitem" href="/{slug}"><span class="dd-icon">{icon(ic)}</span><span class="dd-text"><strong>{esc(name)}</strong><em>{esc(desc)}</em></span></a>')
     dd = "\n".join(items)
+    blog_items = [f'<a class="dd-item dd-all" role="menuitem" href="/blog"><span class="dd-icon">{icon("leaf")}</span><span class="dd-text"><strong>All guides</strong><em>Canberra lawn care tips, guides and seasonal advice</em></span></a>']
+    for u in BLOG_MENU:
+        t, d, _ = POSTS[u]
+        blog_items.append(f'<a class="dd-item" role="menuitem" href="{u}"><span class="dd-icon">{icon(BLOG_ICONS.get(u, "leaf"))}</span><span class="dd-text"><strong>{esc(BLOG_SHORT.get(u, t))}</strong><em>{esc(d[:4] + " · " if d else "")}{esc(BLOG_TAG.get(u, "Guide"))}</em></span></a>')
+    bd = "\n".join(blog_items)
     contact_href = "/contact"
     areas_href = "/areas"
     about_href = "/about"
@@ -201,6 +229,12 @@ def header(active="", over_hero=False):
       </div>
       <a href="{about_href}" class="{cls("about")}">About</a>
       <a href="{areas_href}" class="{cls("areas")}">Areas</a>
+      <div class="nav-dropdown">
+        <button class="{cls("blog")} nav-trigger" aria-expanded="false" aria-controls="blog-menu" aria-haspopup="true">Blog {CARET}</button>
+        <div class="dropdown-panel cols-3" id="blog-menu" role="menu" aria-label="Guides">
+{bd}
+        </div>
+      </div>
       <a href="{contact_href}" class="{cls("contact")}">Contact</a>
     </nav>
     <div class="nav-actions">
@@ -221,6 +255,10 @@ def header(active="", over_hero=False):
   </div>
   <a class="mp-link" href="{about_href}">About</a>
   <a class="mp-link" href="{areas_href}">Areas</a>
+  <button class="mp-link mp-acc" aria-expanded="false" aria-controls="mp-blog">Blog {CARET}</button>
+  <div class="mp-sub" id="mp-blog">
+{bd.replace('role="menuitem" ', '')}
+  </div>
   <a class="mp-link" href="{contact_href}">Contact</a>
   <div class="mp-cta"><a class="btn btn-primary" href="{contact_href}" data-open-quote>Get a Free Quote</a><a class="btn btn-outline" href="{TEL}">{icon("phone")}Call {PHONE}</a></div>
   <div class="mp-social social"><a href="{FB}" aria-label="Facebook" rel="noopener" target="_blank">{icon("fb")}</a><a href="{IG}" aria-label="Instagram" rel="noopener" target="_blank">{icon("ig")}</a></div>
@@ -255,7 +293,7 @@ def footer():
       </ul></div>
       <div><h3 class="fh">Company</h3><ul>
         <li><a href="/about">About us</a></li>
-        <li><a href="/blog">Lawn care guides</a></li>
+        <li><a href="/blog">Blog &amp; guides</a></li>
         <li><a href="/contact">Contact us</a></li>
         <li><a href="/areas">Service areas</a></li>
         <li><a href="{GBP}" rel="noopener" target="_blank">Find us on Google</a></li>
@@ -378,7 +416,7 @@ def business_schema():
         "priceRange": "$$",
         "address": {"@type": "PostalAddress", "addressLocality": "Canberra", "addressRegion": "ACT", "addressCountry": "AU"},
         "areaServed": [{"@type": "City", "name": "Canberra"}] + [{"@type": "Place", "name": d[0].replace(" & NSW", "")} for d in DISTRICTS],
-        "sameAs": [FB, IG, GBP],
+        "sameAs": [FB, IG, GBP, GBP_PLACE],
         "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": HOURS, "closes": HOURS}],
         "hasOfferCatalog": {
             "@type": "OfferCatalog",
@@ -886,6 +924,53 @@ def thankyou():
                           body=body, graph=graph, active="thanks", over_hero=False, robots="noindex, nofollow"))
 
 
+def area_map():
+    """Stylised Canberra map with a hover/focus pin per district. Coordinates are percentages of the map box."""
+    pins = [
+        ("Belconnen", "/lawn-mowing-belconnen", 27, 20, "Charnwood to Bruce, 18 suburbs around Lake Ginninderra"),
+        ("Inner North", "/lawn-mowing-inner-north", 51, 27, "Lyneham, O'Connor, Dickson, Ainslie, Braddon and more"),
+        ("Inner South", "/lawn-mowing-inner-south", 43, 47, "Yarralumla, Deakin, Red Hill, Narrabundah"),
+        ("Weston Creek", "/lawn-mowing-weston-creek", 20, 55, "Our home patch: Fisher, Waramanga, Chapman, Weston, Duffy and the Molonglo Valley"),
+        ("Woden Valley", "/lawn-mowing-woden-valley", 35, 62, "Phillip, Chifley, Mawson, Pearce, Curtin, Hughes and more"),
+        ("Tuggeranong", "/lawn-mowing-tuggeranong", 30, 82, "Kambah, Wanniassa, Greenway, Fadden, Monash and the valley"),
+        ("Queanbeyan", "/lawn-mowing-queanbeyan", 78, 60, "Queanbeyan, Jerrabomberra, Googong, Karabar, Crestwood, Beard"),
+    ]
+    pin_html = "".join(
+        f'''<a class="pin" href="{u}" style="--x:{x}%;--y:{y}%" aria-label="Lawn mowing {esc(n)}"><span class="pin-dot">{icon("pin")}</span><span class="pin-tip"><strong>{esc(n)}</strong><em>{esc(d)}</em><b>See the {esc(n)} page →</b></span></a>'''
+        for n, u, x, y, d in pins)
+    svg = '''<svg class="map-svg" viewBox="0 0 600 560" aria-hidden="true" focusable="false">
+  <defs><radialGradient id="mg" cx="45%" cy="45%" r="70%"><stop offset="0" stop-color="#16407A"/><stop offset="1" stop-color="#0B2F5F"/></radialGradient></defs>
+  <rect width="600" height="560" rx="22" fill="url(#mg)"/>
+  <!-- ACT / district land shapes -->
+  <path d="M120 40 C240 20 380 40 470 110 C520 150 540 210 555 270 C570 340 540 420 480 480 C400 545 260 550 170 520 C100 495 60 430 55 350 C50 260 70 150 120 40 Z" fill="#12386F" stroke="#4A8FD9" stroke-opacity=".35" stroke-width="2"/>
+  <!-- NSW border (Queanbeyan side) -->
+  <path d="M470 60 L455 200 L470 330 L450 470" fill="none" stroke="#F8C018" stroke-opacity=".6" stroke-width="2" stroke-dasharray="8 8"/>
+  <text x="482" y="88" fill="#F8C018" fill-opacity=".7" font-size="13" font-family="Hanken Grotesk, sans-serif">NSW</text>
+  <text x="404" y="88" fill="#C9D6EA" fill-opacity=".6" font-size="13" font-family="Hanken Grotesk, sans-serif">ACT</text>
+  <!-- Murrumbidgee and Molonglo rivers -->
+  <path d="M60 120 C90 220 60 330 120 420 C150 470 130 520 150 545" fill="none" stroke="#4A8FD9" stroke-opacity=".55" stroke-width="3"/>
+  <path d="M470 300 C420 270 380 250 330 240 C300 236 270 260 250 240 C220 210 190 230 150 300" fill="none" stroke="#4A8FD9" stroke-opacity=".55" stroke-width="3"/>
+  <!-- Lakes: Ginninderra, Burley Griffin, Tuggeranong -->
+  <ellipse cx="185" cy="130" rx="22" ry="12" fill="#4A8FD9" fill-opacity=".75"/>
+  <path d="M215 235 C240 218 275 230 300 220 C330 212 360 232 385 248 C355 262 330 250 300 258 C270 266 240 256 215 235 Z" fill="#4A8FD9" fill-opacity=".8"/>
+  <ellipse cx="195" cy="455" rx="20" ry="11" fill="#4A8FD9" fill-opacity=".75"/>
+  <!-- District tints -->
+  <g fill="#F89018" fill-opacity=".14" stroke="#F89018" stroke-opacity=".45" stroke-width="1.5">
+    <ellipse cx="162" cy="112" rx="88" ry="62"/><ellipse cx="306" cy="150" rx="70" ry="52"/><ellipse cx="258" cy="262" rx="62" ry="42"/>
+    <ellipse cx="120" cy="308" rx="72" ry="50"/><ellipse cx="210" cy="348" rx="62" ry="46"/><ellipse cx="180" cy="458" rx="90" ry="62"/><ellipse cx="468" cy="336" rx="68" ry="52"/>
+  </g>
+  <!-- Labels -->
+  <g fill="#fff" font-family="Outfit, sans-serif" font-weight="700" font-size="14" text-anchor="middle">
+    <text x="162" y="150">Belconnen</text><text x="306" y="190">Inner North</text><text x="258" y="300">Inner South</text>
+    <text x="120" y="346">Weston Creek</text><text x="210" y="388">Woden Valley</text><text x="180" y="498">Tuggeranong</text><text x="468" y="374">Queanbeyan</text>
+  </g>
+  <text x="300" y="248" fill="#fff" fill-opacity=".8" font-size="11" font-family="Hanken Grotesk, sans-serif" text-anchor="middle">Lake Burley Griffin</text>
+  <g fill="#A9B9D3" font-size="11" font-family="Hanken Grotesk, sans-serif"><text x="470" y="540" text-anchor="end">Not to scale · Gungahlin not serviced</text></g>
+</svg>'''
+    return f'''<div class="map-hero" aria-label="Map of the districts we service"><div class="map-box">{svg}{pin_html}</div><p class="map-hint">Hover or tap a pin for the suburbs in each district.</p></div>'''
+
+
+
 # ---------- areas hub ----------
 
 def areas():
@@ -910,7 +995,7 @@ def areas():
         <div class="hero-cta"><a class="btn btn-primary" href="{TEL}">{icon("phone")}Call {PHONE}</a><a class="btn btn-ghost" href="#contact" data-open-quote>Get a Free Quote {icon("arrow")}</a></div>
         <div class="trust-strip"><span>{icon("check")}Fully insured</span><span>{icon("check")}ABN registered</span><span>{icon("check")}60+ Canberra lawns maintained</span><span>{icon("check")}Locally operated</span></div>
       </div>
-      <div class="hero-photo">{picture("lawn-after-mowing", "Lawn mowing Canberra: a freshly mowed and edged front lawn on a suburban corner block", lazy=False, priority=True)}</div>
+      {area_map()}
     </div>
   </div>
 </section>

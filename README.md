@@ -36,6 +36,12 @@ Requires Python 3.10+ (Pillow only for the image tooling).
 - `/blog` is the guides index and the 19 posts are built from `content/posts/*.md` into `post/<slug>.html`.
 - Every page is written twice: `page.html` and `page/index.html`, so `/page` resolves on hosts with or without clean-URL support. `vercel.json` covers Vercel (clean URLs plus the 301 map); `_redirects` covers Netlify/Cloudflare; `.htaccess` covers Apache; meta-refresh stubs cover the old URLs on hosts that ignore all three.
 
+## Navigation and areas map
+
+- Header: Home · Services (mega-menu) · About · Areas · Blog (mega-menu of nine guides, list in `BLOG_MENU`) · Contact, plus phone and the quote button. Mobile menu mirrors both mega-menus as accordions.
+- The Areas page hero is an inline SVG map of the seven districts with hover/focus pins (`area_map()` in `tools/build.py`); each pin links to its district page.
+- "Find us on Google" links use the short Maps link; the schema `sameAs` carries both the short link and the place-id URL.
+
 ## Quote form and CRM tracking
 
 - The quote form is custom HTML (no iframe): inline in every page's `#contact` section and as a pop-up (`#quote-modal`) opened by every "Get a Free Quote" button. `/#quote` also opens it.

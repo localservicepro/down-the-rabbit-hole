@@ -238,7 +238,7 @@ def header(active="", over_hero=False):
       <a href="{contact_href}" class="{cls("contact")}">Contact</a>
     </nav>
     <div class="nav-actions">
-      <a href="{TEL}" class="nav-phone">{icon("phone")}{PHONE}</a>
+      <a href="{SMS}" class="nav-phone">{icon("sms")}{PHONE}</a>
       <a href="{contact_href}" class="btn btn-primary" data-open-quote>Get a Free Quote</a>
       <button class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
     </div>
@@ -260,10 +260,10 @@ def header(active="", over_hero=False):
 {bd.replace('role="menuitem" ', '')}
   </div>
   <a class="mp-link" href="{contact_href}">Contact</a>
-  <div class="mp-cta"><a class="btn btn-primary" href="{contact_href}" data-open-quote>Get a Free Quote</a><a class="btn btn-outline" href="{TEL}">{icon("phone")}Call {PHONE}</a></div>
+  <div class="mp-cta"><a class="btn btn-primary" href="{contact_href}" data-open-quote>Get a Free Quote</a><a class="btn btn-outline" href="{SMS}">{icon("sms")}Text {PHONE}</a></div>
   <div class="mp-social social"><a href="{FB}" aria-label="Facebook" rel="noopener" target="_blank">{icon("fb")}</a><a href="{IG}" aria-label="Instagram" rel="noopener" target="_blank">{icon("ig")}</a></div>
 </nav>
-<div class="call-bar"><a href="{TEL}">{icon("phone")}Call {PHONE}</a><a class="cb-quote" href="{contact_href}" data-open-quote>Get a Free Quote</a></div>'''
+<div class="call-bar"><a class="cb-quote" href="{contact_href}" data-open-quote>Get a Free Quote</a><a href="{SMS}">{icon("sms")}Text {PHONE}</a></div>'''
 
 
 def footer():
@@ -342,7 +342,7 @@ def quote_form(prefix, compact=False):
   <div class="hp" aria-hidden="true"><label for="{prefix}-qf-extra">Leave this field empty</label><input type="text" id="{prefix}-qf-extra" name="qf_extra" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore="true"></div>
   <input type="hidden" name="source_page" value="">
   <button class="btn btn-primary fsubmit" type="submit">Send my quote request {icon("arrow")}</button>
-  <p class="fnote">Free, no-obligation quote. We reply by phone or email, usually the same business day. Or call <a href="{TEL}">{PHONE}</a>.</p>
+  <p class="fnote">Free, no-obligation quote. We reply by phone or email, usually the same business day. Or text <a href="{SMS}">{PHONE}</a>.</p>
   <p class="ferror" role="alert" hidden>Please check the highlighted fields.</p>
 </form>'''
 
@@ -534,8 +534,8 @@ def home():
     <h1>Lawn Mowing Canberra — Reliable, Insured Lawn Care &amp; Garden Maintenance</h1>
     <p class="lead">Lawn mowing Canberra homeowners rely on: scheduled mowing, garden maintenance, hedge trimming and clean-ups for homes and businesses across Weston Creek, Woden, Tuggeranong and Belconnen. Upfront quotes, and the green waste leaves with us.</p>
     <div class="hero-cta">
-      <a class="btn btn-primary" href="{TEL}">{icon("phone")}Call {PHONE}</a>
-      <a class="btn btn-ghost" href="#contact" data-open-quote>Get a Free Quote {icon("arrow")}</a>
+      <a class="btn btn-primary" href="#contact" data-open-quote>Get a Free Quote {icon("arrow")}</a>
+      <a class="btn btn-ghost" href="{SMS}">{icon("sms")}Text {PHONE}</a>
     </div>
     <div class="trust-strip">
       <span>{icon("check")}Fully insured</span><span>{icon("check")}ABN registered</span><span>{icon("check")}60+ Canberra lawns maintained</span><span>{icon("check")}Local Canberra team</span><span>{icon("check")}Est. 2021</span>
@@ -755,7 +755,7 @@ def service_page(slug, is_suburb=False):
         <span class="eyebrow">{esc(c["eyebrow"])}</span>
         <h1>{esc(c["h1"])}</h1>
         <p class="lead">{esc(c["lede"])}</p>
-        <div class="hero-cta"><a class="btn btn-primary" href="{TEL}">{icon("phone")}Call {PHONE}</a><a class="btn btn-ghost" href="#contact" data-open-quote>Get a Free Quote {icon("arrow")}</a></div>
+        <div class="hero-cta"><a class="btn btn-primary" href="#contact" data-open-quote>Get a Free Quote {icon("arrow")}</a><a class="btn btn-ghost" href="{SMS}">{icon("sms")}Text {PHONE}</a></div>
         <div class="trust-strip"><span>{icon("check")}Fully insured</span><span>{icon("check")}ABN registered</span><span>{icon("check")}60+ Canberra lawns maintained</span><span>{icon("check")}Est. 2021</span></div>
       </div>
       <div class="hero-photo">{picture(img_name, img_alt, lazy=False, priority=True)}</div>
@@ -775,9 +775,9 @@ def service_page(slug, is_suburb=False):
       <aside class="aside">
         <div class="aside-card navy">
           <h3>Free, upfront quote</h3>
-          <p>Call or text {PHONE}, or send the form. We reply with a clear quote before any work starts.</p>
-          <a class="btn btn-primary" href="{TEL}">{icon("phone")}Call {PHONE}</a>
-          <a class="btn btn-ghost" href="#contact" data-open-quote>Request a quote</a>
+          <p>Send the form or text {PHONE}. We reply with a clear quote before any work starts.</p>
+          <a class="btn btn-primary" href="#contact" data-open-quote>Request a quote</a>
+          <a class="btn btn-ghost" href="{SMS}">{icon("sms")}Text {PHONE}</a>
         </div>
         <div class="aside-card">
           <h3>Suburbs we service</h3>
@@ -836,7 +836,7 @@ def about():
         <span class="eyebrow">About us · Est. 2021</span>
         <h1>About Down the Rabbit Hole AUST: Canberra lawn and garden care since 2021</h1>
         <p class="lead">A locally operated Canberra business that mows, maintains and tidies more than 60 lawns and gardens across the ACT and Queanbeyan.</p>
-        <div class="hero-cta"><a class="btn btn-primary" href="{TEL}">{icon("phone")}Call {PHONE}</a><a class="btn btn-ghost" href="#contact" data-open-quote>Get a Free Quote {icon("arrow")}</a></div>
+        <div class="hero-cta"><a class="btn btn-primary" href="#contact" data-open-quote>Get a Free Quote {icon("arrow")}</a><a class="btn btn-ghost" href="{SMS}">{icon("sms")}Text {PHONE}</a></div>
         <div class="trust-strip"><span>{icon("check")}Fully insured</span><span>{icon("check")}ABN registered</span><span>{icon("check")}Residential &amp; commercial</span><span>{icon("check")}Locally operated</span></div>
       </div>
       <div class="hero-photo">{picture("leaf-removal", "Leaf removal: a swept and tidy paved entry and garden at a Canberra home", lazy=False, priority=True)}</div>
@@ -861,7 +861,7 @@ def about():
         <div class="cta-band rv" style="margin-top:40px"><div><h2 style="margin-top:0">Want a lawn you do not have to think about?</h2><p>Call, text or send the form and we will quote your property.</p></div><a class="btn btn-navy" href="#contact">Get a Free Quote</a></div>
       </article>
       <aside class="aside">
-        <div class="aside-card navy"><h3>Talk to the team</h3><p>Call or text {PHONE}, or email {EMAIL}.</p><a class="btn btn-primary" href="{TEL}">{icon("phone")}Call {PHONE}</a><a class="btn btn-ghost" href="mailto:{EMAIL}">Email us</a></div>
+        <div class="aside-card navy"><h3>Talk to the team</h3><p>Text {PHONE}, or email {EMAIL}.</p><a class="btn btn-primary" href="{SMS}">{icon("sms")}Text {PHONE}</a><a class="btn btn-ghost" href="mailto:{EMAIL}">Email us</a></div>
         <div class="aside-card"><h3>Business details</h3><ul style="display:grid;gap:8px;list-style:none;padding:0;margin:0"><li><strong>Legal name:</strong> {LEGAL}</li><li><strong>Trading as:</strong> {NAME}</li><li><strong>ABN:</strong> Registered</li><li><strong>Insurance:</strong> Fully insured</li><li><strong>Established:</strong> 2021</li><li><strong>Base:</strong> Canberra, ACT</li><li><strong>Hours:</strong> {HOURS}</li></ul></div>
         <div class="aside-card"><h3>Find us online</h3><ul><li><a href="{GBP}" rel="noopener" target="_blank">Google Business Profile</a></li><li><a href="{FB}" rel="noopener" target="_blank">Facebook</a></li><li><a href="{IG}" rel="noopener" target="_blank">Instagram</a></li></ul></div>
       </aside>
@@ -886,7 +886,7 @@ def notfound():
   <div class="wrap">
     <div class="big">4<span>0</span>4</div>
     <h1 style="font-size:clamp(1.6rem,3vw,2.4rem)">We could not find that page</h1>
-    <p class="lead" style="margin-inline:auto">The link may be old or mistyped. Try one of these, or call {PHONE} and we will point you in the right direction.</p>
+    <p class="lead" style="margin-inline:auto">The link may be old or mistyped. Try one of these, or text {PHONE} and we will point you in the right direction.</p>
     <div class="hero-cta" style="justify-content:center"><a class="btn btn-navy" href="/">Homepage</a><a class="btn btn-primary" href="/services">Our services</a><a class="btn btn-outline" href="/contact">Contact us</a></div>
     <p style="color:var(--muted)">Popular pages: <a href="/lawn-mowing">lawn mowing</a> · <a href="/garden-maintenance">garden maintenance</a> · <a href="/yard-clean-ups">yard clean-ups</a> · <a href="/blog">guides</a></p>
   </div>
@@ -907,8 +907,8 @@ def thankyou():
   <div class="wrap" style="max-width:720px">
     <span class="ico" style="width:72px;height:72px;border-radius:50%;background:var(--tint);display:grid;place-items:center;margin:0 auto 20px">{tick}</span>
     <h1 style="font-size:clamp(1.9rem,3.6vw,2.8rem)">Thanks, your quote request is in</h1>
-    <p class="lead" style="margin-inline:auto">We have your details and will come back to you by phone or email, usually the same business day. If it is urgent, call or text {PHONE} now.</p>
-    <div class="hero-cta" style="justify-content:center"><a class="btn btn-primary" href="{TEL}">{icon("phone")}Call {PHONE}</a><a class="btn btn-outline" href="/">Back to the homepage</a></div>
+    <p class="lead" style="margin-inline:auto">We have your details and will come back to you by phone or email, usually the same business day. If it is urgent, text {PHONE} now.</p>
+    <div class="hero-cta" style="justify-content:center"><a class="btn btn-primary" href="{SMS}">{icon("sms")}Text {PHONE}</a><a class="btn btn-outline" href="/">Back to the homepage</a></div>
     <div class="steps" style="grid-template-columns:repeat(3,1fr);margin-top:36px;text-align:left">
       <div class="step" style="background:#fff;border-color:var(--line)"><span class="num">1</span><h3 style="color:var(--navy)">We read your notes</h3><p style="color:var(--muted)">Service, property size and suburb tell us what the job needs.</p></div>
       <div class="step" style="background:#fff;border-color:var(--line)"><span class="num">2</span><h3 style="color:var(--navy)">You get a clear quote</h3><p style="color:var(--muted)">Upfront pricing before any work starts. No surprises.</p></div>
@@ -992,7 +992,7 @@ def areas():
         <span class="eyebrow">Where we work</span>
         <h1>Lawn Mowing Service Areas Across Canberra &amp; Queanbeyan</h1>
         <p class="lead">Seven districts, more than 70 suburbs. Pick your district for local detail, or call and we will tell you straight away whether we cover your street.</p>
-        <div class="hero-cta"><a class="btn btn-primary" href="{TEL}">{icon("phone")}Call {PHONE}</a><a class="btn btn-ghost" href="#contact" data-open-quote>Get a Free Quote {icon("arrow")}</a></div>
+        <div class="hero-cta"><a class="btn btn-primary" href="#contact" data-open-quote>Get a Free Quote {icon("arrow")}</a><a class="btn btn-ghost" href="{SMS}">{icon("sms")}Text {PHONE}</a></div>
         <div class="trust-strip"><span>{icon("check")}Fully insured</span><span>{icon("check")}ABN registered</span><span>{icon("check")}60+ Canberra lawns maintained</span><span>{icon("check")}Locally operated</span></div>
       </div>
       {area_map()}
@@ -1048,7 +1048,7 @@ def contact():
         <span class="eyebrow">Contact</span>
         <h1>Contact Down the Rabbit Hole AUST for a Free Lawn or Garden Quote</h1>
         <p class="lead">Call, text, email or send the form. We reply with a clear, upfront quote, usually the same business day.</p>
-        <div class="hero-cta"><a class="btn btn-primary" href="{TEL}">{icon("phone")}Call {PHONE}</a><a class="btn btn-ghost" href="{SMS}">{icon("sms")}Text us</a></div>
+        <div class="hero-cta"><a class="btn btn-primary" href="#contact" data-open-quote>Get a Free Quote {icon("arrow")}</a><a class="btn btn-ghost" href="{SMS}">{icon("sms")}Text {PHONE}</a></div>
         <div class="trust-strip"><span>{icon("check")}Fully insured</span><span>{icon("check")}ABN registered</span><span>{icon("check")}Locally operated</span><span>{icon("check")}Est. 2021</span></div>
       </div>
       <div class="hero-photo">{picture("garden-tidy-job", "Garden tidy: a brick path and garden beds at a Canberra home after weeding and edging", lazy=False, priority=True)}</div>
@@ -1343,7 +1343,7 @@ def post_page(slug):
         <span class="eyebrow">Canberra lawn care guide</span>
         <h1>{esc(h1)}</h1>
         <p class="lead" style="font-size:1rem">{date_html}{minutes} min read · Down the Rabbit Hole AUST team</p>
-        <div class="hero-cta"><a class="btn btn-primary" href="#contact" data-open-quote>Get a Free Quote {icon("arrow")}</a><a class="btn btn-ghost" href="{TEL}">{icon("phone")}Call {PHONE}</a></div>
+        <div class="hero-cta"><a class="btn btn-primary" href="#contact" data-open-quote>Get a Free Quote {icon("arrow")}</a><a class="btn btn-ghost" href="{SMS}">{icon("sms")}Text {PHONE}</a></div>
       </div>
       <div class="hero-photo">{picture(img_name, esc(h1) + ": " + SERVICE_IMAGES.get(related[0], ("", "a Canberra lawn maintained by Down the Rabbit Hole AUST"))[1].split(": ")[-1], lazy=False, priority=True)}</div>
     </div>
@@ -1361,7 +1361,7 @@ def post_page(slug):
         <div class="cta-band rv" style="margin-top:32px"><div><h2 style="margin-top:0">Rather have us do it?</h2><p>Free, upfront quotes for mowing, garden care and clean-ups across Canberra.</p></div><a class="btn btn-navy" href="#contact">Get a Free Quote</a></div>
       </article>
       <aside class="aside">
-        <div class="aside-card navy"><h3>Free, upfront quote</h3><p>Call or text {PHONE}, or send the form. We reply with a clear quote before any work starts.</p><a class="btn btn-primary" href="{TEL}">{icon("phone")}Call {PHONE}</a><a class="btn btn-ghost" href="#contact" data-open-quote>Request a quote</a></div>
+        <div class="aside-card navy"><h3>Free, upfront quote</h3><p>Send the form or text {PHONE}. We reply with a clear quote before any work starts.</p><a class="btn btn-primary" href="#contact" data-open-quote>Request a quote</a><a class="btn btn-ghost" href="{SMS}">{icon("sms")}Text {PHONE}</a></div>
         <div class="aside-card"><h3>Related services</h3><ul>{"".join(f'<li><a href="/{r}">{esc(SERVICE_NAMES[r])}</a></li>' for r in related)}<li><a href="/services">All services</a></li></ul></div>
         <div class="aside-card"><h3>More guides</h3><ul>{more}<li><a href="/blog">All guides</a></li></ul></div>
       </aside>

@@ -27,7 +27,9 @@ try:
 except FileNotFoundError:
     IMG = {}
 
-HERO_IMAGE = os.environ.get("HERO_IMAGE", "garden-clean-up-1-after")
+HERO_IMAGE = os.environ.get("HERO_IMAGE", "hero-video-poster" if os.path.exists(os.path.join(ROOT, "images", "hero-video-poster.webp")) else "garden-clean-up-1-after")
+HERO_ALT = ("Lawn mowing Canberra: Michael from Down the Rabbit Hole AUST mowing a front lawn in his orange hi-vis vest" if HERO_IMAGE == "hero-video-poster"
+            else "Lawn mowing Canberra: a mowed front lawn, clipped hedge and clean driveway under autumn trees after a visit from Down the Rabbit Hole AUST")
 
 SERVICES = [
     # slug, name, nav descriptor, icon, home-card blurb
@@ -528,9 +530,11 @@ def home():
         f'<a class="post rv rv-d{i}" href="{u}"><time datetime="{POSTS[u][1]}">{POSTS[u][1][8:10]} {["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][int(POSTS[u][1][5:7])]} {POSTS[u][1][:4]}</time><h3>{esc(POSTS[u][0])}</h3><p>{esc(POSTS[u][2])}</p><span class="more" style="font-weight:700;color:var(--navy)">Read the guide →</span></a>'
         for i, u in enumerate(LATEST_POSTS))
     hw, hh = img_dims(HERO_IMAGE)
+    has_video = os.path.exists(os.path.join(ROOT, "images", "hero-video.mp4"))
+    video_html = ('''<video class="hero-video" autoplay muted loop playsinline preload="none" poster="/images/hero-video-poster.webp" aria-hidden="true" tabindex="-1"><source src="/images/hero-video.webm" type="video/webm"><source src="/images/hero-video.mp4" type="video/mp4"></video>''' if has_video else "")
     body = f'''
-<section class="hero">
-  <div class="hero-media"><img src="/images/{HERO_IMAGE}.webp" srcset="/images/{HERO_IMAGE}-800.webp 800w, /images/{HERO_IMAGE}.webp {hw}w" sizes="100vw" width="{hw}" height="{hh}" alt="Lawn mowing Canberra: a mowed front lawn, clipped hedge and clean driveway under autumn trees after a visit from Down the Rabbit Hole AUST" fetchpriority="high" decoding="async"></div>
+<section class="hero{" has-video" if has_video else ""}">
+  <div class="hero-media"><img src="/images/{HERO_IMAGE}.webp" srcset="/images/{HERO_IMAGE}-800.webp 800w, /images/{HERO_IMAGE}.webp {hw}w" sizes="100vw" width="{hw}" height="{hh}" alt="{HERO_ALT}" fetchpriority="high" decoding="async">{video_html}</div>
   <div class="hero-scrim" aria-hidden="true"></div>
   <div class="wrap hero-inner">
     <span class="eyebrow">Taking the headaches away · Est. 2021</span>
@@ -842,7 +846,7 @@ def about():
         <div class="hero-cta"><a class="btn btn-primary" href="#contact" data-open-quote>Get a Free Quote {icon("arrow")}</a><a class="btn btn-ghost" href="{SMS}">{icon("sms")}Text {PHONE}</a></div>
         <div class="trust-strip"><span>{icon("check")}Fully insured</span><span>{icon("check")}ABN registered</span><span>{icon("check")}Residential &amp; commercial</span><span>{icon("check")}Locally operated</span></div>
       </div>
-      <div class="hero-photo">{picture("leaf-removal", "Leaf removal: a swept and tidy paved entry and garden at a Canberra home", lazy=False, priority=True)}</div>
+      <div class="hero-photo">{picture("about-branded-trailer", "Michael from Down the Rabbit Hole AUST beside the branded work ute and trailer on a Canberra street", lazy=False, priority=True) if "about-branded-trailer" in IMG else picture("leaf-removal", "Leaf removal: a swept and tidy paved entry and garden at a Canberra home", lazy=False, priority=True)}</div>
     </div>
   </div>
 </section>

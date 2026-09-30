@@ -64,6 +64,21 @@
     });
   }
 
+  /* Hero background video: load after first paint, only when motion and data allow */
+  var hv = document.querySelector('.hero-video');
+  if (hv) {
+    var conn = navigator.connection || {};
+    var okData = !conn.saveData && !/2g/.test(conn.effectiveType || '');
+    var okMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (okData && okMotion) {
+      window.addEventListener('load', function () {
+        hv.preload = 'auto';
+        hv.addEventListener('canplay', function () { hv.classList.add('ready'); var p = hv.play(); if (p && p.catch) p.catch(function () {}); }, { once: true });
+        hv.load();
+      });
+    }
+  }
+
   /* Scroll reveal */
   var rv = document.querySelectorAll('.rv');
   if ('IntersectionObserver' in window && rv.length) {

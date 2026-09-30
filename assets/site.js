@@ -131,30 +131,57 @@
     if (location.hash === '#quote') openQuote();
   }
 
-  /* Quote forms: native validation, then let the CRM tracking script capture the submit event and redirect */
+  /* Quote forms. The CRM tracking script (external-tracking.js) listens for submit events on the page and
+     may stop them or cancel their default. To stay independent of it we:
+     1. catch the submit button click in the capture phase on window (runs before every other listener),
+     2. validate, then dispatch our own submit event so the tracking script can still read the fields,
+     3. redirect to the thank-you page on a timer that no other listener can cancel. */
+  function quoteFormOf(el) { return el && el.closest ? el.closest('.quote-form') : null; }
+  function showError(form, show) { var err = form.querySelector('.ferror'); if (err) err.hidden = !show; }
+  function startSend(form) {
+    if (form.dataset.sending) return false;
+    form.classList.add('touched');
+    var hp = form.querySelector('.hp');
+    if (hp && hp.value) return false;
+    if (!form.checkValidity()) {
+      showError(form, true);
+      var bad = form.querySelector(':invalid'); if (bad) bad.focus();
+      return false;
+    }
+    showError(form, false);
+    form.dataset.sending = '1';
+    var btn = form.querySelector('.fsubmit');
+    if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+    if (window.fbq) { try { window.fbq('track', 'Lead'); } catch (x) {} }
+    var dest = form.dataset.thankYou || '/thank-you';
+    setTimeout(function () { window.location.assign(dest); }, 800);
+    setTimeout(function () { if (location.pathname.indexOf('thank-you') === -1) window.location.href = dest; }, 2500);
+    return true;
+  }
+  window.addEventListener('click', function (e) {
+    var btn = e.target && e.target.closest ? e.target.closest('.quote-form .fsubmit') : null;
+    if (!btn) return;
+    var form = quoteFormOf(btn);
+    e.preventDefault();
+    if (!startSend(form)) { e.stopImmediatePropagation(); return; }
+    /* Let the tracking script see a real submit event with the values in place. A synthetic submit does
+       not trigger native navigation, so nothing else has to be cancelled. */
+    var ev;
+    try { ev = new SubmitEvent('submit', { bubbles: true, cancelable: true, submitter: btn }); }
+    catch (x) { ev = document.createEvent('Event'); ev.initEvent('submit', true, true); }
+    form.dispatchEvent(ev);
+  }, true);
+  window.addEventListener('submit', function (e) {
+    var form = quoteFormOf(e.target);
+    if (!form) return;
+    e.preventDefault(); /* never let the browser navigate with the field values in the URL */
+    if (form.dataset.sending) return; /* our own dispatched event: pass it on to other listeners */
+    if (!startSend(form)) e.stopImmediatePropagation(); /* Enter key on an invalid form */
+  }, true);
   document.querySelectorAll('.quote-form').forEach(function (form) {
     var src = form.querySelector('[name=source_page]'); if (src) src.value = location.href;
-    var err = form.querySelector('.ferror');
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      form.classList.add('touched');
-      var hp = form.querySelector('.hp');
-      if (hp && hp.value) { return; }
-      if (!form.checkValidity()) {
-        err.hidden = false;
-        var bad = form.querySelector(':invalid'); if (bad) bad.focus();
-        return;
-      }
-      err.hidden = true;
-      var btn = form.querySelector('.fsubmit');
-      btn.disabled = true; btn.textContent = 'Sending…';
-      if (window.fbq) { try { window.fbq('track', 'Lead'); } catch (x) {} }
-      /* The external tracking script listens for this same submit event and sends the fields to the CRM.
-         Give its request a moment to leave before navigating. */
-      setTimeout(function () { window.location.assign(form.dataset.thankYou || '/thank-you'); }, 700);
-    });
     form.querySelectorAll('input, select, textarea').forEach(function (c) {
-      c.addEventListener('input', function () { if (form.checkValidity()) err.hidden = true; });
+      c.addEventListener('input', function () { if (form.checkValidity()) showError(form, false); });
     });
   });
 

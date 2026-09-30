@@ -1145,6 +1145,9 @@ def md_blocks(md):
             while i < len(lines) and (re.match(r"^\s*[-*•]\s+", lines[i]) or re.match(r"^\s*\d+\.\s+", lines[i])):
                 items.append(re.sub(r"^\s*([-*•]|\d+\.)\s+", "", lines[i]).strip()); i += 1
             blocks.append(["ul", items]); continue
+        if st in ("Custom HTML/CSS/JAVASCRIPT",):
+            i += 1; continue
+        st = st.replace("👉 ", "")
         blocks.append(["p", st]); i += 1
     # drop flattened duplicate cells the parser emits after a table
     out, cells = [], set()
@@ -1207,8 +1210,11 @@ def split_faq(blocks):
 
 def render_blocks(blocks):
     out = []
+    seen_h1 = False
     for kind, val in blocks:
-        if kind == "h1": continue
+        if kind == "h1":
+            if seen_h1: out.append(f"<h2>{inline(val)}</h2>")
+            seen_h1 = True; continue
         if kind == "h2": out.append(f"<h2>{inline(val)}</h2>")
         elif kind == "h3": out.append(f"<h3>{inline(val)}</h3>")
         elif kind == "ul": out.append('<ul class="checks">' + "".join(f"<li>{icon('check')}<span>{inline(x)}</span></li>" for x in val) + "</ul>")

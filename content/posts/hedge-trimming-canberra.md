@@ -40,7 +40,12 @@ However, the exact timing can vary. According to horticultural best practices, f
 
 Even with the best care, hedges can run into issues. Identifying problems early is the key to fixing them before they become severe. Here are some common challenges Canberra homeowners face with their hedges and how to address them.
 
-Problem Symptom Solution Leggy Growth Bare, woody stems at the base with greenery only at the top. Implement tapered shaping (wider base). Perform a hard rejuvenation prune in winter to encourage new low growth. Pest Infestation Visible insects, sticky residue (honeydew), or yellowing leaves. Identify the pest and apply an appropriate horticultural oil or insecticidal soap. Improve air circulation through proper pruning. Fungal Disease Powdery mildew, dark spots on leaves, or branch dieback. Prune away infected areas, ensure tools are sterilized, and apply a fungicide if necessary. Avoid overhead watering. Gaps or Holes Empty patches within the hedge. For small gaps, tie adjacent branches together to cover the hole. For larger gaps, a hard prune may be needed to stimulate new, dense growth.
+| Problem | Symptom | Solution |
+|---|---|---|
+| Leggy growth | Bare, woody stems at the base with greenery only at the top. | Implement tapered shaping (wider base). Perform a hard rejuvenation prune in winter to encourage new low growth. |
+| Pest infestation | Visible insects, sticky residue (honeydew), or yellowing leaves. | Identify the pest and apply an appropriate horticultural oil or insecticidal soap. Improve air circulation through proper pruning. |
+| Fungal disease | Powdery mildew, dark spots on leaves, or branch dieback. | Prune away infected areas, ensure tools are sterilised, and apply a fungicide if necessary. Avoid overhead watering. |
+| Gaps or holes | Empty patches within the hedge. | For small gaps, tie adjacent branches together to cover the hole. For larger gaps, a hard prune may be needed to stimulate new, dense growth. |
 
 Industry research suggests that over 60% of common hedge diseases are caused by improper pruning techniques or poor air circulation. This highlights the value of having your hedges professionally managed to prevent such issues from arising.
 ## Getting Your Yard Ready for Spring and Summer

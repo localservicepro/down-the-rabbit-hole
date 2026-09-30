@@ -42,7 +42,7 @@ Blowing clippings off hard surfaces
 A tidy finish every visit
 ### 4. Knowledge of Canberra Suburbs
 
-Lawns in Tuggeranong don’t behave exactly like lawns in Belconnen or Gungahlin. The best lawn mowing services understand these differences and adjust their approach.
+Lawns in Tuggeranong don’t behave exactly like lawns in Belconnen or Weston Creek. The best lawn mowing services understand these differences and adjust their approach.
 ### 5. Reliability & Communication
 
 You shouldn’t have to chase your lawn guy. Good providers:

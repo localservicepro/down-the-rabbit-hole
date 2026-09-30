@@ -15,7 +15,7 @@ Consistency is Key: A professional service ensures that your grounds look identi
 
 Safety is the cornerstone of commercial property management in Australia. Under Work Health and Safety (WHS) laws, property managers have a "duty of care" to provide a safe environment.
 
-Hazard Reduction: Fallen bark, overgrown vines, and protruding branches are not just messy—sila ay mga potential trip hazards and fire risks.
+Hazard Reduction: Fallen bark, overgrown vines, and protruding branches are not just messy, they are potential trip hazards and fire risks.
 
 Visibility and Security: We ensure that security cameras, outdoor lighting, and directional signage are never obscured by rapid summer growth. Clear sightlines in car parks and entryways significantly reduce the risk of accidents and improve site security.
 

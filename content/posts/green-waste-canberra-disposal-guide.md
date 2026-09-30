@@ -73,7 +73,13 @@ Lack of Time or Equipment: If you don't have a suitable vehicle, or simply can't
 For these jobs, a dedicated service is invaluable. For comprehensive yard cleanups, lawn care, and expert advice, check out [Down The Rabbit Hole](https://downtherabbitholeaust.com/) — they have the tools and team to handle it all.
 ### DIY vs. Professional Service: A Quick Comparison
 
-Factor DIY Disposal Professional Service Time & Effort High (loading, driving, unloading) Low (they do all the work) Volume Limit Limited by your vehicle/trailer size Can handle very large volumes Equipment You must have a suitable vehicle/trailer All necessary equipment is provided Convenience Low (requires a trip to the tip) High (they come to you) Cost Fuel costs + disposal fees Upfront quote for the entire job
+| Factor | DIY disposal | Professional service |
+|---|---|---|
+| Time and effort | High (loading, driving, unloading) | Low (they do all the work) |
+| Volume limit | Limited by your vehicle or trailer size | Can handle very large volumes |
+| Equipment | You must have a suitable vehicle or trailer | All necessary equipment is provided |
+| Convenience | Low (requires a trip to the tip) | High (they come to you) |
+| Cost | Fuel costs plus disposal fees | Upfront quote for the entire job |
 
 Managing your garden's green waste in Canberra doesn't have to be a chore. By understanding your options and choosing the right one for your situation, you can keep your property looking great while supporting a greener city. Whether it's using your fortnightly bin or calling in the experts from Down the Rabbit Hole AUST Pty ltd for a major cleanup, there’s a smart solution for every garden. Ready to reclaim your yard? Visit their website at downtherabbitholeaust.com to get started.
 ### What can I put in my Canberra green waste bin?

@@ -294,7 +294,7 @@ ul{margin:0 0 1em;padding-left:1.2em}
 .fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--orange);background:#fff;box-shadow:0 0 0 4px rgba(248,144,24,.18)}
 .fld input::placeholder,.fld textarea::placeholder{color:#93A0B4}
 .quote-form.touched :invalid:not(form),.fld.bad input,.fld.bad select,.fld.bad textarea{border-color:#D6453D;box-shadow:0 0 0 4px rgba(214,69,61,.12)}
-.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.hp{position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none}
 .fsubmit{width:100%;margin-top:18px;min-height:54px;font-size:1.05rem}
 .fsubmit[disabled]{opacity:.7;cursor:progress;transform:none}
 .fnote{margin:12px 0 0;font-size:.86rem;color:var(--muted);text-align:center}
@@ -557,7 +557,7 @@ ul{margin:0 0 1em;padding-left:1.2em}
     <div class="fld"><label for="q-service_needed">Service needed</label><select id="q-service_needed" name="service_needed" data-field="service_needed" required><option value="" disabled selected>Select…</option><option value="Lawn Mowing">Lawn Mowing</option><option value="Lawn Care">Lawn Care</option><option value="Gardening Services">Gardening Services</option><option value="Garden Maintenance">Garden Maintenance</option><option value="Hedge Trimming">Hedge Trimming</option><option value="Yard Clean-Ups">Yard Clean-Ups</option><option value="Green Waste Removal">Green Waste Removal</option><option value="Rubbish Removal">Rubbish Removal</option><option value="DVA Lawn Care">DVA Lawn Care</option><option value="Weed Spraying">Weed Spraying</option><option value="Something else / not sure">Something else / not sure</option></select></div>
     <div class="fld span"><label for="q-job_notes">Job notes <span>(optional)</span></label><textarea id="q-job_notes" name="job_notes" data-field="job_notes" rows="3" placeholder="What needs doing, how often, access details, anything we should know."></textarea></div>
   </div>
-  <input type="text" name="company_website" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
+  <div class="hp" aria-hidden="true"><label for="q-qf-extra">Leave this field empty</label><input type="text" id="q-qf-extra" name="qf_extra" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore="true"></div>
   <input type="hidden" name="source_page" value="">
   <button class="btn btn-primary fsubmit" type="submit">Send my quote request <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
   <p class="fnote">Free, no-obligation quote. We reply by phone or email, usually the same business day. Or call <a href="tel:+61423720317">0423 720 317</a>.</p>
@@ -637,7 +637,7 @@ ul{margin:0 0 1em;padding-left:1.2em}
     <div class="fld"><label for="m-service_needed">Service needed</label><select id="m-service_needed" name="service_needed" data-field="service_needed" required><option value="" disabled selected>Select…</option><option value="Lawn Mowing">Lawn Mowing</option><option value="Lawn Care">Lawn Care</option><option value="Gardening Services">Gardening Services</option><option value="Garden Maintenance">Garden Maintenance</option><option value="Hedge Trimming">Hedge Trimming</option><option value="Yard Clean-Ups">Yard Clean-Ups</option><option value="Green Waste Removal">Green Waste Removal</option><option value="Rubbish Removal">Rubbish Removal</option><option value="DVA Lawn Care">DVA Lawn Care</option><option value="Weed Spraying">Weed Spraying</option><option value="Something else / not sure">Something else / not sure</option></select></div>
     <div class="fld span"><label for="m-job_notes">Job notes <span>(optional)</span></label><textarea id="m-job_notes" name="job_notes" data-field="job_notes" rows="3" placeholder="What needs doing, how often, access details, anything we should know."></textarea></div>
   </div>
-  <input type="text" name="company_website" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
+  <div class="hp" aria-hidden="true"><label for="m-qf-extra">Leave this field empty</label><input type="text" id="m-qf-extra" name="qf_extra" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore="true"></div>
   <input type="hidden" name="source_page" value="">
   <button class="btn btn-primary fsubmit" type="submit">Send my quote request <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
   <p class="fnote">Free, no-obligation quote. We reply by phone or email, usually the same business day. Or call <a href="tel:+61423720317">0423 720 317</a>.</p>

@@ -293,7 +293,7 @@ def quote_form(prefix, compact=False):
     {f("service_needed", "Service needed", tag="select", options=SERVICE_OPTIONS)}
     {f("job_notes", "Job notes", tag="textarea", required=False, span=True, placeholder="What needs doing, how often, access details, anything we should know.")}
   </div>
-  <input type="text" name="company_website" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
+  <div class="hp" aria-hidden="true"><label for="{prefix}-qf-extra">Leave this field empty</label><input type="text" id="{prefix}-qf-extra" name="qf_extra" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore="true"></div>
   <input type="hidden" name="source_page" value="">
   <button class="btn btn-primary fsubmit" type="submit">Send my quote request {icon("arrow")}</button>
   <p class="fnote">Free, no-obligation quote. We reply by phone or email, usually the same business day. Or call <a href="{TEL}">{PHONE}</a>.</p>

@@ -141,8 +141,13 @@
   function startSend(form) {
     if (form.dataset.sending) return false;
     form.classList.add('touched');
-    var hp = form.querySelector('.hp');
-    if (hp && hp.value) return false;
+    var hp = form.querySelector('.hp input');
+    if (hp && hp.value) {
+      /* Honeypot filled: almost certainly a bot. Show the thank-you page but do not pass the submission on. */
+      form.dataset.sending = '1';
+      setTimeout(function () { window.location.assign(form.dataset.thankYou || '/thank-you'); }, 300);
+      return false;
+    }
     if (!form.checkValidity()) {
       showError(form, true);
       var bad = form.querySelector(':invalid'); if (bad) bad.focus();

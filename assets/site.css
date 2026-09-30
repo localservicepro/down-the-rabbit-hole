@@ -271,7 +271,7 @@ ul{margin:0 0 1em;padding-left:1.2em}
 .fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--orange);background:#fff;box-shadow:0 0 0 4px rgba(248,144,24,.18)}
 .fld input::placeholder,.fld textarea::placeholder{color:#93A0B4}
 .quote-form.touched :invalid:not(form),.fld.bad input,.fld.bad select,.fld.bad textarea{border-color:#D6453D;box-shadow:0 0 0 4px rgba(214,69,61,.12)}
-.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.hp{position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none}
 .fsubmit{width:100%;margin-top:18px;min-height:54px;font-size:1.05rem}
 .fsubmit[disabled]{opacity:.7;cursor:progress;transform:none}
 .fnote{margin:12px 0 0;font-size:.86rem;color:var(--muted);text-align:center}

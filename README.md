@@ -37,7 +37,7 @@ Requires Python 3.10+ (Pillow only for the image tooling).
 ## Quote form and CRM tracking
 
 - The quote form is custom HTML (no iframe): inline in every page's `#contact` section and as a pop-up (`#quote-modal`) opened by every "Get a Free Quote" button. `/#quote` also opens it.
-- Field `name`/`data-field` attributes match the GoHighLevel contact fields: `full_name`, `email`, `phone`, `property_address`, `postal_code`, `property_size`, `service_needed`, `job_notes`. A hidden `source_page` carries the page URL and `company_website` is a honeypot.
+- Field `name`/`data-field` attributes match the GoHighLevel contact fields: `full_name`, `email`, `phone`, `property_address`, `postal_code`, `property_size`, `service_needed`, `job_notes`. A hidden `source_page` carries the page URL and `qf_extra` is a honeypot (named so browser autofill ignores it; a filled honeypot goes straight to the thank-you page without passing the submission on).
 - The CRM tracking script (`external-tracking.js`, tracking id `tk_6f4c…`) is loaded deferred in every page's `<head>` and captures the native `submit` event; the page then redirects to `/thank-you` (noindex). There is no form endpoint.
 - Both forms use native validation (required fields, email, 4-digit postcode, phone pattern) with an inline error message.
 

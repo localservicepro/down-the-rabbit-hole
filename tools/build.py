@@ -756,7 +756,7 @@ def service_page(slug, is_suburb=False):
   </div>
 </section>
 
-{faq_section(faqs, "Questions about " + (SERVICE_TYPES.get(slug, c["h1"].split(" — ")[0]).lower() if slug != "services" else "our services") + " in Canberra")}
+{faq_section(faqs, ("Questions about lawn mowing in " + c["h1"].split(" — ")[0].replace("Lawn Mowing ", "")) if is_suburb else ("Questions about " + (SERVICE_TYPES.get(slug, c["h1"].split(" — ")[0]).lower() if slug != "services" else "our services") + " in Canberra"))}
 
 {contact_section(c["cta_heading"], c["cta_line"])}
 '''

@@ -255,8 +255,47 @@ ul{margin:0 0 1em;padding-left:1.2em}
 .nap svg{width:20px;height:20px;stroke:var(--orange-deep);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .nap small{display:block;font-weight:500;color:var(--muted);font-size:.85rem}
 .fallback{background:#fff;border-left:4px solid var(--orange);padding:14px 18px;border-radius:0 12px 12px 0;margin:0 0 16px;font-size:.98rem}
-.form-wrap{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:10px;min-height:1218px}
-.form-wrap iframe{min-height:1218px}
+.form-wrap{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:28px}
+/* Quote form */
+.quote-form{display:block}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px 16px}
+.fld{display:flex;flex-direction:column;gap:6px}
+.fld.span{grid-column:1/-1}
+.fld label{font-family:var(--display);font-weight:700;font-size:.9rem;color:var(--navy);letter-spacing:.01em}
+.fld label span{font-family:var(--body);font-weight:500;color:var(--muted);font-size:.82rem}
+.fld input,.fld select,.fld textarea{width:100%;min-height:48px;padding:11px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--paper);font:inherit;font-size:1rem;color:var(--ink);transition:border-color .2s,box-shadow .2s,background-color .2s;-webkit-appearance:none;appearance:none}
+.fld select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' fill='none' stroke='%230B2F5F' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:12px;padding-right:40px;cursor:pointer}
+.fld select:invalid{color:var(--muted)}
+.fld textarea{min-height:88px;resize:vertical}
+.fld input:hover,.fld select:hover,.fld textarea:hover{border-color:#B9C3D3}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--orange);background:#fff;box-shadow:0 0 0 4px rgba(248,144,24,.18)}
+.fld input::placeholder,.fld textarea::placeholder{color:#93A0B4}
+.quote-form.touched :invalid:not(form),.fld.bad input,.fld.bad select,.fld.bad textarea{border-color:#D6453D;box-shadow:0 0 0 4px rgba(214,69,61,.12)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.fsubmit{width:100%;margin-top:18px;min-height:54px;font-size:1.05rem}
+.fsubmit[disabled]{opacity:.7;cursor:progress;transform:none}
+.fnote{margin:12px 0 0;font-size:.86rem;color:var(--muted);text-align:center}
+.ferror{margin:10px 0 0;font-size:.9rem;font-weight:600;color:#B8322B;text-align:center}
+.quote-form.compact .fgrid{gap:10px 12px}
+.quote-form.compact .fld input,.quote-form.compact .fld select{min-height:44px;padding:9px 12px}
+.quote-form.compact .fld textarea{min-height:72px}
+.quote-form.compact .fsubmit{margin-top:14px}
+@media (max-width:560px){.fgrid{grid-template-columns:1fr}.form-wrap{padding:20px 16px}}
+/* Quote modal */
+.qm-backdrop{position:fixed;inset:0;z-index:1300;background:rgba(8,40,88,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;transition:opacity .25s var(--ease)}
+.qm-backdrop[hidden]{display:none}
+.qm-backdrop.show{opacity:1}
+.qm{position:relative;width:min(640px,100%);max-height:calc(100vh - 40px);overflow:auto;background:#fff;border-radius:22px;padding:28px 28px 24px;box-shadow:0 30px 80px rgba(0,0,0,.35);transform:translateY(16px) scale(.98);transition:transform .3s var(--ease)}
+.qm-backdrop.show .qm{transform:none}
+.qm-head{display:flex;gap:16px;align-items:flex-start;margin-bottom:18px;padding-right:44px}
+.qm-head img{width:48px;height:48px;border-radius:50%;flex:none}
+.qm-head .eyebrow{margin-bottom:4px}
+.qm-head h2{margin:0 0 4px;font-size:1.45rem}
+.qm-head p{margin:0;color:var(--muted);font-size:.95rem}
+.qm-close{position:absolute;top:16px;right:16px;width:44px;height:44px;border:0;border-radius:50%;background:var(--paper);display:grid;place-items:center;cursor:pointer;transition:background-color .2s,transform .2s}
+.qm-close:hover{background:var(--tint);transform:rotate(90deg)}
+.qm-close svg{width:18px;height:18px;stroke:var(--navy);stroke-width:2.2;fill:none;stroke-linecap:round}
+@media (max-width:560px){.qm-backdrop{padding:0;align-items:flex-end}.qm{max-height:100vh;max-height:100dvh;border-radius:22px 22px 0 0;padding:22px 18px calc(24px + env(safe-area-inset-bottom))}.qm-head img{display:none}}
 @media (max-width:900px){.contact-grid{grid-template-columns:1fr}}
 /* Footer */
 .site-footer{background:var(--navy-deep);color:#C9D6EA;padding:64px 0 0;font-size:.95rem}

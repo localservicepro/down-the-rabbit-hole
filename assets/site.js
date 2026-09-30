@@ -96,6 +96,68 @@
     });
   }
 
+  /* Quote modal: opened by any [data-open-quote] control, closed by Escape, backdrop or the close button */
+  var modal = document.getElementById('quote-modal');
+  var lastFocus = null;
+  function openQuote(e) {
+    if (!modal) return;
+    if (e) e.preventDefault();
+    closeMobile();
+    lastFocus = document.activeElement;
+    modal.hidden = false;
+    requestAnimationFrame(function () { modal.classList.add('show'); });
+    document.body.style.overflow = 'hidden';
+    var first = modal.querySelector('input:not([type=hidden]):not(.hp)'); if (first) setTimeout(function () { first.focus(); }, 250);
+  }
+  function closeQuote() {
+    if (!modal || modal.hidden) return;
+    modal.classList.remove('show');
+    setTimeout(function () { modal.hidden = true; }, 250);
+    document.body.style.overflow = '';
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  if (modal) {
+    document.querySelectorAll('[data-open-quote]').forEach(function (el) { el.addEventListener('click', openQuote); });
+    modal.querySelector('.qm-close').addEventListener('click', closeQuote);
+    modal.addEventListener('click', function (e) { if (e.target === modal) closeQuote(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeQuote(); });
+    modal.addEventListener('keydown', function (e) {
+      if (e.key !== 'Tab') return;
+      var f = modal.querySelectorAll('button, input:not([type=hidden]):not(.hp), select, textarea, a[href]');
+      var a = f[0], z = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
+      else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+    });
+    if (location.hash === '#quote') openQuote();
+  }
+
+  /* Quote forms: native validation, then let the CRM tracking script capture the submit event and redirect */
+  document.querySelectorAll('.quote-form').forEach(function (form) {
+    var src = form.querySelector('[name=source_page]'); if (src) src.value = location.href;
+    var err = form.querySelector('.ferror');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      form.classList.add('touched');
+      var hp = form.querySelector('.hp');
+      if (hp && hp.value) { return; }
+      if (!form.checkValidity()) {
+        err.hidden = false;
+        var bad = form.querySelector(':invalid'); if (bad) bad.focus();
+        return;
+      }
+      err.hidden = true;
+      var btn = form.querySelector('.fsubmit');
+      btn.disabled = true; btn.textContent = 'Sending…';
+      if (window.fbq) { try { window.fbq('track', 'Lead'); } catch (x) {} }
+      /* The external tracking script listens for this same submit event and sends the fields to the CRM.
+         Give its request a moment to leave before navigating. */
+      setTimeout(function () { window.location.assign(form.dataset.thankYou || '/thank-you'); }, 700);
+    });
+    form.querySelectorAll('input, select, textarea').forEach(function (c) {
+      c.addEventListener('input', function () { if (form.checkValidity()) err.hidden = true; });
+    });
+  });
+
   /* Facebook pixel: deferred until after first paint / load */
   function loadPixel() {
     if (window.fbq) return;

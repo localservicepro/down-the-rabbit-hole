@@ -18,7 +18,8 @@ IG = "https://www.instagram.com/downtherabbitholeaust"
 GBP = "https://www.google.com/maps/search/?api=1&query=Google&query_place_id=ChIJuzQLsqNMFmsRcFlpp27qAAQ"
 MAP_EMBED = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d416436.695680462!2d149.1297825!3d-35.37024405!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xaf8e434d15506cf1%3A0x24c31c1abe5ee30a!2sDown%20the%20Rabbit%20Hole%20Aust!5e0!3m2!1sen!2sph!4v1790757761736!5m2!1sen!2sph"
 HOURS = "___HOURS___"
-FORM_ID = "8LEeZDGhbmsGCiKD0p5n"
+TRACKING_ID = "tk_6f4c1089fe214ae6baa8c2dc37522e82"
+THANK_YOU = "/thank-you"
 CSS = open(os.path.join(ROOT, "assets", "site.css"), encoding="utf-8").read()
 try:
     IMG = json.load(open(os.path.join(ROOT, "images", "manifest.json")))
@@ -197,7 +198,7 @@ def header(active="", over_hero=False):
     </nav>
     <div class="nav-actions">
       <a href="{TEL}" class="nav-phone">{icon("phone")}{PHONE}</a>
-      <a href="{contact_href}" class="btn btn-primary">Get a Free Quote</a>
+      <a href="{contact_href}" class="btn btn-primary" data-open-quote>Get a Free Quote</a>
       <button class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -214,10 +215,10 @@ def header(active="", over_hero=False):
   <a class="mp-link" href="{about_href}">About</a>
   <a class="mp-link" href="{areas_href}">Areas</a>
   <a class="mp-link" href="{contact_href}">Contact</a>
-  <div class="mp-cta"><a class="btn btn-primary" href="{contact_href}">Get a Free Quote</a><a class="btn btn-outline" href="{TEL}">{icon("phone")}Call {PHONE}</a></div>
+  <div class="mp-cta"><a class="btn btn-primary" href="{contact_href}" data-open-quote>Get a Free Quote</a><a class="btn btn-outline" href="{TEL}">{icon("phone")}Call {PHONE}</a></div>
   <div class="mp-social social"><a href="{FB}" aria-label="Facebook" rel="noopener" target="_blank">{icon("fb")}</a><a href="{IG}" aria-label="Instagram" rel="noopener" target="_blank">{icon("ig")}</a></div>
 </nav>
-<div class="call-bar"><a href="{TEL}">{icon("phone")}Call {PHONE}</a><a class="cb-quote" href="{contact_href}">Get a Free Quote</a></div>'''
+<div class="call-bar"><a href="{TEL}">{icon("phone")}Call {PHONE}</a><a class="cb-quote" href="{contact_href}" data-open-quote>Get a Free Quote</a></div>'''
 
 
 def footer():
@@ -262,6 +263,54 @@ def footer():
 </footer>'''
 
 
+SERVICE_OPTIONS = [n for _, n, *_ in SERVICES] + ["Something else / not sure"]
+SIZE_OPTIONS = ["Courtyard or unit (under 200 m²)", "Standard block (200–600 m²)", "Large block (600–1,000 m²)", "Acreage or commercial site", "Not sure"]
+
+
+def quote_form(prefix, compact=False):
+    """Custom quote form. Field names match the GHL contact fields: full_name, email, phone,
+    property_address, postal_code, property_size, service_needed, job_notes. The external
+    tracking script captures the submission; the page then redirects to the thank-you page."""
+    def f(key, label, tag="input", extra="", required=True, span=False, options=None, placeholder=""):
+        i = f"{prefix}-{key}"
+        req = " required" if required else ""
+        if tag == "select":
+            opts = '<option value="" disabled selected>Select…</option>' + "".join(f'<option value="{esc(o)}">{esc(o)}</option>' for o in options)
+            ctl = f'<select id="{i}" name="{key}" data-field="{key}"{req}>{opts}</select>'
+        elif tag == "textarea":
+            ctl = f'<textarea id="{i}" name="{key}" data-field="{key}" rows="3" placeholder="{esc(placeholder)}"{req}></textarea>'
+        else:
+            ctl = f'<input id="{i}" name="{key}" data-field="{key}" placeholder="{esc(placeholder)}"{extra}{req}>'
+        return f'<div class="fld{" span" if span else ""}"><label for="{i}">{esc(label)}{"" if required else " <span>(optional)</span>"}</label>{ctl}</div>'
+    return f'''<form class="quote-form{" compact" if compact else ""}" id="{prefix}-form" novalidate="" data-thank-you="{THANK_YOU}" aria-label="Request a free quote">
+  <div class="fgrid">
+    {f("full_name", "Full name", extra=' type="text" autocomplete="name"', placeholder="Jane Citizen")}
+    {f("email", "Email", extra=' type="email" autocomplete="email" inputmode="email"', placeholder="you@example.com")}
+    {f("phone", "Phone", extra=' type="tel" autocomplete="tel" inputmode="tel" pattern="[0-9+ ()-]{{8,}}"', placeholder="04xx xxx xxx")}
+    {f("postal_code", "Postcode", extra=' type="text" autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{{4}}" maxlength="4"', placeholder="2611")}
+    {f("property_address", "Property address", extra=' type="text" autocomplete="street-address"', span=True, placeholder="12 Example Street, Kambah")}
+    {f("property_size", "Property size", tag="select", options=SIZE_OPTIONS)}
+    {f("service_needed", "Service needed", tag="select", options=SERVICE_OPTIONS)}
+    {f("job_notes", "Job notes", tag="textarea", required=False, span=True, placeholder="What needs doing, how often, access details, anything we should know.")}
+  </div>
+  <input type="text" name="company_website" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
+  <input type="hidden" name="source_page" value="">
+  <button class="btn btn-primary fsubmit" type="submit">Send my quote request {icon("arrow")}</button>
+  <p class="fnote">Free, no-obligation quote. We reply by phone or email, usually the same business day. Or call <a href="{TEL}">{PHONE}</a>.</p>
+  <p class="ferror" role="alert" hidden>Please check the highlighted fields.</p>
+</form>'''
+
+
+def quote_modal():
+    return f'''<div class="qm-backdrop" id="quote-modal" role="dialog" aria-modal="true" aria-labelledby="qm-title" hidden>
+  <div class="qm">
+    <button class="qm-close" type="button" aria-label="Close quote form">{icon("close")}</button>
+    <div class="qm-head"><img src="/images/dtrh-logo-104.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><div><span class="eyebrow">Free quote</span><h2 id="qm-title">Tell us about the job</h2><p>Takes about a minute. We come back with a clear, upfront quote.</p></div></div>
+    {quote_form("m", compact=True)}
+  </div>
+</div>'''
+
+
 def contact_section(heading="Get a free lawn mowing Canberra quote", line="Tell us about your lawn or garden, whether it is lawn mowing Canberra wide on a schedule or a one-off tidy, and we will come back with a clear, upfront quote. No obligation."):
     return f'''<section class="section" id="contact">
   <div class="wrap">
@@ -281,27 +330,7 @@ def contact_section(heading="Get a free lawn mowing Canberra quote", line="Tell 
       <div class="rv rv-d1">
         <p class="fallback">Prefer to talk? Call or text <a href="{TEL}">{PHONE}</a> (<a href="{SMS}">SMS</a>) or email <a href="mailto:{EMAIL}">{EMAIL}</a></p>
         <div class="form-wrap">
-<iframe
-    src="https://app.downtherabbitholeaust.com/widget/form/{FORM_ID}"
-    style="width:100%;height:100%;border:none;border-radius:0px"
-    id="inline-{FORM_ID}" 
-    data-layout="{{'id':'INLINE'}}"
-    data-trigger-type="alwaysShow"
-    data-trigger-value=""
-    data-activation-type="alwaysActivated"
-    data-activation-value=""
-    data-deactivation-type="neverDeactivate"
-    data-deactivation-value=""
-    data-form-name="Request a booking or quote"
-    data-height="1218"
-    data-layout-iframe-id="inline-{FORM_ID}"
-    data-form-id="{FORM_ID}"
-    data-cookie-consent="true"
-    data-cookie-consent-provider="auto"
-    title="Request a booking or quote"
-        >
-</iframe>
-<script src="https://app.downtherabbitholeaust.com/js/form_embed.js" defer></script>
+{quote_form("q")}
         </div>
       </div>
     </div>
@@ -400,6 +429,10 @@ def page(*, path, title, description, body, graph, active="", over_hero=False, o
 <style>{CSS}</style>
 {jsonld(graph)}
 <script src="/assets/site.js" defer></script>
+<script 
+  src="https://app.downtherabbitholeaust.com/js/external-tracking.js"
+  data-tracking-id="tk_6f4c1089fe214ae6baa8c2dc37522e82" defer>
+</script>
 </head>
 <body>
 {header(active, over_hero)}
@@ -407,6 +440,7 @@ def page(*, path, title, description, body, graph, active="", over_hero=False, o
 {body}
 </main>
 {footer()}
+{quote_modal() if active != "thanks" else ""}
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=25766325546287202&ev=PageView&noscript=1"></noscript>
 </body>
 </html>
@@ -448,7 +482,7 @@ def home():
     <p class="lead">Lawn mowing Canberra homeowners rely on: scheduled mowing, garden maintenance, hedge trimming and clean-ups for homes and businesses across Weston Creek, Woden, Tuggeranong and Belconnen. Upfront quotes, and the green waste leaves with us.</p>
     <div class="hero-cta">
       <a class="btn btn-primary" href="{TEL}">{icon("phone")}Call {PHONE}</a>
-      <a class="btn btn-ghost" href="#contact">Get a Free Quote {icon("arrow")}</a>
+      <a class="btn btn-ghost" href="#contact" data-open-quote>Get a Free Quote {icon("arrow")}</a>
     </div>
     <div class="trust-strip">
       <span>{icon("check")}Fully insured</span><span>{icon("check")}ABN registered</span><span>{icon("check")}60+ Canberra lawns maintained</span><span>{icon("check")}Local Canberra team</span><span>{icon("check")}Est. 2021</span>
@@ -660,7 +694,7 @@ def service_page(slug, is_suburb=False):
         <span class="eyebrow">{esc(c["eyebrow"])}</span>
         <h1>{esc(c["h1"])}</h1>
         <p class="lead">{esc(c["lede"])}</p>
-        <div class="hero-cta"><a class="btn btn-primary" href="{TEL}">{icon("phone")}Call {PHONE}</a><a class="btn btn-ghost" href="#contact">Get a Free Quote {icon("arrow")}</a></div>
+        <div class="hero-cta"><a class="btn btn-primary" href="{TEL}">{icon("phone")}Call {PHONE}</a><a class="btn btn-ghost" href="#contact" data-open-quote>Get a Free Quote {icon("arrow")}</a></div>
         <div class="trust-strip"><span>{icon("check")}Fully insured</span><span>{icon("check")}ABN registered</span><span>{icon("check")}60+ Canberra lawns maintained</span><span>{icon("check")}Est. 2021</span></div>
       </div>
       <div class="hero-photo">{picture(img_name, img_alt, lazy=False, priority=True)}</div>
@@ -682,7 +716,7 @@ def service_page(slug, is_suburb=False):
           <h3>Free, upfront quote</h3>
           <p>Call or text {PHONE}, or send the form. We reply with a clear quote before any work starts.</p>
           <a class="btn btn-primary" href="{TEL}">{icon("phone")}Call {PHONE}</a>
-          <a class="btn btn-ghost" href="#contact">Request a quote</a>
+          <a class="btn btn-ghost" href="#contact" data-open-quote>Request a quote</a>
         </div>
         <div class="aside-card">
           <h3>Suburbs we service</h3>
@@ -741,7 +775,7 @@ def about():
         <span class="eyebrow">About us · Est. 2021</span>
         <h1>About Down the Rabbit Hole AUST: Canberra lawn and garden care since 2021</h1>
         <p class="lead">A locally operated Canberra business that mows, maintains and tidies more than 60 lawns and gardens across the ACT and Queanbeyan.</p>
-        <div class="hero-cta"><a class="btn btn-primary" href="{TEL}">{icon("phone")}Call {PHONE}</a><a class="btn btn-ghost" href="#contact">Get a Free Quote {icon("arrow")}</a></div>
+        <div class="hero-cta"><a class="btn btn-primary" href="{TEL}">{icon("phone")}Call {PHONE}</a><a class="btn btn-ghost" href="#contact" data-open-quote>Get a Free Quote {icon("arrow")}</a></div>
         <div class="trust-strip"><span>{icon("check")}Fully insured</span><span>{icon("check")}ABN registered</span><span>{icon("check")}Residential &amp; commercial</span><span>{icon("check")}Locally operated</span></div>
       </div>
       <div class="hero-photo">{picture("leaf-removal", "Leaf removal: a swept and tidy paved entry and garden at a Canberra home", lazy=False, priority=True)}</div>
@@ -803,6 +837,32 @@ def notfound():
                        body=body, graph=graph, active="404", over_hero=False, robots="noindex, follow"))
 
 
+# ---------- thank you ----------
+
+def thankyou():
+    tick = icon("check").replace("<svg", '<svg style="width:34px;height:34px;stroke:var(--orange-deep);fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"', 1)
+    body = f'''
+<section class="notfound" style="min-height:60vh">
+  <div class="wrap" style="max-width:720px">
+    <span class="ico" style="width:72px;height:72px;border-radius:50%;background:var(--tint);display:grid;place-items:center;margin:0 auto 20px">{tick}</span>
+    <h1 style="font-size:clamp(1.9rem,3.6vw,2.8rem)">Thanks, your quote request is in</h1>
+    <p class="lead" style="margin-inline:auto">We have your details and will come back to you by phone or email, usually the same business day. If it is urgent, call or text {PHONE} now.</p>
+    <div class="hero-cta" style="justify-content:center"><a class="btn btn-primary" href="{TEL}">{icon("phone")}Call {PHONE}</a><a class="btn btn-outline" href="/">Back to the homepage</a></div>
+    <div class="steps" style="grid-template-columns:repeat(3,1fr);margin-top:36px;text-align:left">
+      <div class="step" style="background:#fff;border-color:var(--line)"><span class="num">1</span><h3 style="color:var(--navy)">We read your notes</h3><p style="color:var(--muted)">Service, property size and suburb tell us what the job needs.</p></div>
+      <div class="step" style="background:#fff;border-color:var(--line)"><span class="num">2</span><h3 style="color:var(--navy)">You get a clear quote</h3><p style="color:var(--muted)">Upfront pricing before any work starts. No surprises.</p></div>
+      <div class="step" style="background:#fff;border-color:var(--line)"><span class="num">3</span><h3 style="color:var(--navy)">We book you in</h3><p style="color:var(--muted)">One-off visit or a regular slot, whichever suits.</p></div>
+    </div>
+    <p style="color:var(--muted);margin-top:28px">While you wait: <a href="/services">our services</a> · <a href="/blog">lawn care guides</a></p>
+  </div>
+</section>
+'''
+    graph = [business_schema()]
+    write(THANK_YOU, page(path=THANK_YOU, title="Thanks, Your Quote Request Is In | Down the Rabbit Hole",
+                          description="Thanks for requesting a quote from Down the Rabbit Hole AUST. We reply by phone or email, usually the same business day. Need it sooner? Call 0423 720 317.",
+                          body=body, graph=graph, active="thanks", over_hero=False, robots="noindex, nofollow"))
+
+
 # ---------- static files ----------
 
 REDIRECTS = """# Netlify / Cloudflare Pages style redirects (status 301 unless noted)
@@ -861,7 +921,7 @@ RedirectMatch 302 ^/lawn-mowing-(weston-creek|tuggeranong|belconnen|inner-north|
 def static_files(pages):
     open(os.path.join(ROOT, "_redirects"), "w").write(REDIRECTS)
     open(os.path.join(ROOT, ".htaccess"), "w").write(HTACCESS)
-    open(os.path.join(ROOT, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDisallow: /404\nSitemap: {SITE}/sitemap.xml\n")
+    open(os.path.join(ROOT, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDisallow: /404\nDisallow: /thank-you\nSitemap: {SITE}/sitemap.xml\n")
     urls = "".join(f"  <url><loc>{SITE}{p}</loc><changefreq>monthly</changefreq><priority>{'1.0' if p=='/' else '0.8'}</priority></url>\n" for p in pages)
     open(os.path.join(ROOT, "sitemap.xml"), "w").write(
         '<?xml version="1.0" encoding="UTF-8"?>\n<!-- Blog posts (/blog and /post/...) are migrated separately; add them to this sitemap when they go live. -->\n'
@@ -872,6 +932,7 @@ def main():
     home()
     about()
     notfound()
+    thankyou()
     pages = ["/", "/about", "/services"]
     for slug in ["services"] + [s[0] for s in SERVICES]:
         service_page(slug)

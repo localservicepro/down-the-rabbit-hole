@@ -34,6 +34,13 @@ Requires Python 3.10+ (Pillow only for the image tooling).
 - 301 redirects for the old site's URLs are in `_redirects` / `.htaccess`. The six district pages that are not built yet are temporary 302s to the areas section; delete each line when its page goes live.
 - Blog (`/blog`, `/post/…`) is migrated separately and is linked, not rebuilt here. Add the posts to `sitemap.xml` when they are live.
 
+## Quote form and CRM tracking
+
+- The quote form is custom HTML (no iframe): inline in every page's `#contact` section and as a pop-up (`#quote-modal`) opened by every "Get a Free Quote" button. `/#quote` also opens it.
+- Field `name`/`data-field` attributes match the GoHighLevel contact fields: `full_name`, `email`, `phone`, `property_address`, `postal_code`, `property_size`, `service_needed`, `job_notes`. A hidden `source_page` carries the page URL and `company_website` is a honeypot.
+- The CRM tracking script (`external-tracking.js`, tracking id `tk_6f4c…`) is loaded deferred in every page's `<head>` and captures the native `submit` event; the page then redirects to `/thank-you` (noindex). There is no form endpoint.
+- Both forms use native validation (required fields, email, 4-digit postcode, phone pattern) with an inline error message.
+
 ## Placeholders still to fill
 
 - `___HOURS___` (footer, contact section, schema `openingHoursSpecification`) — trading hours not supplied.

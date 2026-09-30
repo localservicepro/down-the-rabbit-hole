@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Blog posts (/blog and /post/...) are migrated separately; add them to this sitemap when they go live. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://downtherabbitholeaust.com/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://downtherabbitholeaust.com/about</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://downtherabbitholeaust.com/services</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://downtherabbitholeaust.com/lawn-mowing</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://downtherabbitholeaust.com/lawn-care</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://downtherabbitholeaust.com/gardening-services</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://downtherabbitholeaust.com/garden-maintenance</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://downtherabbitholeaust.com/hedge-trimming</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://downtherabbitholeaust.com/yard-clean-ups</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://downtherabbitholeaust.com/green-waste-removal</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://downtherabbitholeaust.com/rubbish-removal</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://downtherabbitholeaust.com/dva-lawn-care</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://downtherabbitholeaust.com/weed-spraying</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://downtherabbitholeaust.com/areas</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://downtherabbitholeaust.com/contact</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://downtherabbitholeaust.com/blog</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://downtherabbitholeaust.com/lawn-mowing-kambah</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://downtherabbitholeaust.com/lawn-mowing-woden-valley</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://downtherabbitholeaust.com/lawn-mowing-weston-creek</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://downtherabbitholeaust.com/lawn-mowing-tuggeranong</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://downtherabbitholeaust.com/lawn-mowing-belconnen</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://downtherabbitholeaust.com/lawn-mowing-inner-north</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://downtherabbitholeaust.com/lawn-mowing-inner-south</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://downtherabbitholeaust.com/lawn-mowing-queanbeyan</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+</urlset>

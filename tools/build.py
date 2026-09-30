@@ -238,14 +238,14 @@ def footer():
         </div>
         <div class="social"><a href="{FB}" aria-label="Down the Rabbit Hole AUST on Facebook" rel="noopener" target="_blank">{icon("fb")}</a><a href="{IG}" aria-label="Down the Rabbit Hole AUST on Instagram" rel="noopener" target="_blank">{icon("ig")}</a></div>
       </div>
-      <div><h4>Services</h4><ul>
+      <div><h3 class="fh">Services</h3><ul>
         <li><a href="/services">All services</a></li>
 {services}
       </ul></div>
-      <div><h4>Areas</h4><ul>
+      <div><h3 class="fh">Areas</h3><ul>
 {districts}
       </ul></div>
-      <div><h4>Company</h4><ul>
+      <div><h3 class="fh">Company</h3><ul>
         <li><a href="/about">About us</a></li>
         <li><a href="/blog">Lawn care guides</a></li>
         <li><a href="/#contact">Get a free quote</a></li>
@@ -368,7 +368,7 @@ def breadcrumb_schema(items):
         {"@type": "ListItem", "position": i + 1, "name": n, "item": SITE + u} for i, (n, u) in enumerate(items)]}
 
 
-def page(*, path, title, description, body, graph, active="", over_hero=False, og_image=None, robots=None):
+def page(*, path, title, description, body, graph, active="", over_hero=False, og_image=None, robots=None, preload_image=None):
     assert len(title) <= 60, f"title too long ({len(title)}): {title}"
     assert 150 <= len(description) <= 160, f"description length {len(description)}: {path}"
     canonical = SITE + ("/" if path == "/" else path)
@@ -394,6 +394,7 @@ def page(*, path, title, description, body, graph, active="", over_hero=False, o
 <meta name="theme-color" content="#0B2F5F">
 <link rel="icon" href="/images/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+{preload_image or ""}
 <link rel="preload" href="/assets/fonts/outfit-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/hanken-grotesk-var.woff2" as="font" type="font/woff2" crossorigin>
 <style>{CSS}</style>
@@ -530,7 +531,7 @@ def home():
         <iframe src="{MAP_EMBED}" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Map of the Down the Rabbit Hole AUST service area around Canberra"></iframe>
         <div class="rating">
           <span class="score">4.8</span>
-          <span><span class="stars" aria-label="4.8 out of 5 stars">{icon("star")*5}</span><small>Google rating from 85 reviews</small><a href="{GBP}" rel="noopener" target="_blank">Read our Google reviews →</a></span>
+          <span><span class="stars" role="img" aria-label="4.8 out of 5 stars">{icon("star")*5}</span><small>Google rating from 85 reviews</small><a href="{GBP}" rel="noopener" target="_blank">Read our Google reviews →</a></span>
         </div>
       </div>
     </div>
@@ -556,7 +557,7 @@ def home():
       </div>
       <div class="rv rv-d1">
         <div class="review-card">
-          <div class="g"><span class="score">4.8</span><span><span class="stars">{icon("star")*5}</span><small style="color:var(--muted)">Google rating, 85 reviews</small></span></div>
+          <div class="g"><span class="score">4.8</span><span><span class="stars" role="img" aria-label="4.8 out of 5 stars">{icon("star")*5}</span><small style="color:var(--muted)">Google rating, 85 reviews</small></span></div>
           <h3>What lawn mowing Canberra customers say</h3>
           <!-- REVIEWS: paste 3–5 Google reviews here (reviewer first name, date, review text). Source: {GBP} -->
           <p style="color:var(--muted)">We are adding recent customer reviews here. Until then, read them straight from our Google Business Profile.</p>
@@ -593,7 +594,8 @@ def home():
     ]
     write("/", page(path="/", title="Lawn Mowing Canberra | Down the Rabbit Hole Lawn Care",
                     description="Lawn mowing Canberra homeowners rely on. Insured local team for mowing, garden maintenance, hedges & clean-ups in Weston Creek, Woden & Tuggeranong. Free quote.",
-                    body=body, graph=graph, active="home", over_hero=True))
+                    body=body, graph=graph, active="home", over_hero=True,
+                    preload_image=f'<link rel="preload" as="image" href="/images/{HERO_IMAGE}.webp" imagesrcset="/images/{HERO_IMAGE}-800.webp 800w, /images/{HERO_IMAGE}.webp {hw}w" imagesizes="100vw" fetchpriority="high">'))
 
 
 # ---------- service / suburb pages ----------

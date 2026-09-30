@@ -261,7 +261,7 @@ ul{margin:0 0 1em;padding-left:1.2em}
 /* Footer */
 .site-footer{background:var(--navy-deep);color:#C9D6EA;padding:64px 0 0;font-size:.95rem}
 .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px}
-.site-footer h4{color:#fff;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
+.site-footer .fh{color:#fff;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
 .site-footer ul{list-style:none;padding:0;margin:0;display:grid;gap:8px}
 .site-footer a{color:#DCE6F5;text-decoration:none;transition:color .2s}
 .site-footer a:hover{color:var(--amber)}

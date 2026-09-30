@@ -18,6 +18,7 @@
 <meta name="theme-color" content="#0B2F5F">
 <link rel="icon" href="/images/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="preload" as="image" href="/images/garden-clean-up-1-after.webp" imagesrcset="/images/garden-clean-up-1-after-800.webp 800w, /images/garden-clean-up-1-after.webp 1600w" imagesizes="100vw" fetchpriority="high">
 <link rel="preload" href="/assets/fonts/outfit-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/hanken-grotesk-var.woff2" as="font" type="font/woff2" crossorigin>
 <style>/* Down the Rabbit Hole AUST — site styles. Palette sampled from the badge logo. */
@@ -283,7 +284,7 @@ ul{margin:0 0 1em;padding-left:1.2em}
 /* Footer */
 .site-footer{background:var(--navy-deep);color:#C9D6EA;padding:64px 0 0;font-size:.95rem}
 .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px}
-.site-footer h4{color:#fff;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
+.site-footer .fh{color:#fff;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
 .site-footer ul{list-style:none;padding:0;margin:0;display:grid;gap:8px}
 .site-footer a{color:#DCE6F5;text-decoration:none;transition:color .2s}
 .site-footer a:hover{color:var(--amber)}
@@ -510,7 +511,7 @@ ul{margin:0 0 1em;padding-left:1.2em}
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d416436.695680462!2d149.1297825!3d-35.37024405!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xaf8e434d15506cf1%3A0x24c31c1abe5ee30a!2sDown%20the%20Rabbit%20Hole%20Aust!5e0!3m2!1sen!2sph!4v1790757761736!5m2!1sen!2sph" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Map of the Down the Rabbit Hole AUST service area around Canberra"></iframe>
         <div class="rating">
           <span class="score">4.8</span>
-          <span><span class="stars" aria-label="4.8 out of 5 stars"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></span><small>Google rating from 85 reviews</small><a href="https://www.google.com/maps/search/?api=1&query=Google&query_place_id=ChIJuzQLsqNMFmsRcFlpp27qAAQ" rel="noopener" target="_blank">Read our Google reviews →</a></span>
+          <span><span class="stars" role="img" aria-label="4.8 out of 5 stars"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></span><small>Google rating from 85 reviews</small><a href="https://www.google.com/maps/search/?api=1&query=Google&query_place_id=ChIJuzQLsqNMFmsRcFlpp27qAAQ" rel="noopener" target="_blank">Read our Google reviews →</a></span>
         </div>
       </div>
     </div>
@@ -543,7 +544,7 @@ ul{margin:0 0 1em;padding-left:1.2em}
       </div>
       <div class="rv rv-d1">
         <div class="review-card">
-          <div class="g"><span class="score">4.8</span><span><span class="stars"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></span><small style="color:var(--muted)">Google rating, 85 reviews</small></span></div>
+          <div class="g"><span class="score">4.8</span><span><span class="stars" role="img" aria-label="4.8 out of 5 stars"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></span><small style="color:var(--muted)">Google rating, 85 reviews</small></span></div>
           <h3>What lawn mowing Canberra customers say</h3>
           <!-- REVIEWS: paste 3–5 Google reviews here (reviewer first name, date, review text). Source: https://www.google.com/maps/search/?api=1&query=Google&query_place_id=ChIJuzQLsqNMFmsRcFlpp27qAAQ -->
           <p style="color:var(--muted)">We are adding recent customer reviews here. Until then, read them straight from our Google Business Profile.</p>
@@ -648,7 +649,7 @@ ul{margin:0 0 1em;padding-left:1.2em}
         </div>
         <div class="social"><a href="https://www.facebook.com/p/Down-the-Rabbit-Hole-AUST-61552753624844/" aria-label="Down the Rabbit Hole AUST on Facebook" rel="noopener" target="_blank"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.3H7.4V14h2.8v8z"/></svg></a><a href="https://www.instagram.com/downtherabbitholeaust" aria-label="Down the Rabbit Hole AUST on Instagram" rel="noopener" target="_blank"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 7.3A4.7 4.7 0 1 0 12 16.7 4.7 4.7 0 0 0 12 7.3zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm5.9-7.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0zM12 3.9c2.6 0 2.9 0 4 .1 2.7.1 3.9 1.4 4 4 .1 1 .1 1.3.1 4s0 3-.1 4c-.1 2.6-1.4 3.9-4 4-1 .1-1.3.1-4 .1s-3 0-4-.1c-2.6-.1-3.9-1.4-4-4-.1-1-.1-1.3-.1-4s0-3 .1-4c.1-2.6 1.4-3.9 4-4 1-.1 1.3-.1 4-.1zM12 2.2c-2.7 0-3 0-4.1.1-3.6.2-5.5 2.1-5.7 5.7C2.2 9 2.2 9.3 2.2 12s0 3 .1 4.1c.2 3.6 2.1 5.5 5.7 5.7 1.1.1 1.4.1 4.1.1s3 0 4.1-.1c3.6-.2 5.5-2.1 5.7-5.7.1-1.1.1-1.4.1-4.1s0-3-.1-4.1c-.2-3.6-2.1-5.5-5.7-5.7-1.1-.1-1.4-.1-4.1-.1z"/></svg></a></div>
       </div>
-      <div><h4>Services</h4><ul>
+      <div><h3 class="fh">Services</h3><ul>
         <li><a href="/services">All services</a></li>
 <li><a href="/lawn-mowing">Lawn Mowing</a></li>
 <li><a href="/lawn-care">Lawn Care</a></li>
@@ -661,7 +662,7 @@ ul{margin:0 0 1em;padding-left:1.2em}
 <li><a href="/dva-lawn-care">DVA Lawn Care</a></li>
 <li><a href="/weed-spraying">Weed Spraying</a></li>
       </ul></div>
-      <div><h4>Areas</h4><ul>
+      <div><h3 class="fh">Areas</h3><ul>
 <li><a href="/lawn-mowing-weston-creek">Weston Creek</a></li>
 <li><a href="/lawn-mowing-woden-valley">Woden Valley</a></li>
 <li><a href="/lawn-mowing-tuggeranong">Tuggeranong</a></li>
@@ -670,7 +671,7 @@ ul{margin:0 0 1em;padding-left:1.2em}
 <li><a href="/lawn-mowing-inner-south">Inner South</a></li>
 <li><a href="/lawn-mowing-queanbeyan">Queanbeyan &amp; NSW</a></li>
       </ul></div>
-      <div><h4>Company</h4><ul>
+      <div><h3 class="fh">Company</h3><ul>
         <li><a href="/about">About us</a></li>
         <li><a href="/blog">Lawn care guides</a></li>
         <li><a href="/#contact">Get a free quote</a></li>

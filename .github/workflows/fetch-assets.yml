@@ -1,0 +1,29 @@
+name: Fetch generated assets
+# Downloads the media listed in tools/assets.json (generated hero video, branded imagery),
+# converts them for the web and commits them. Run manually after updating assets.json.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null
+      - run: pip install pillow
+      - run: python tools/fetch_assets.py
+      - name: Commit assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add images
+          git commit -m "Add generated hero video and branded imagery" || echo "nothing to commit"
+          git push origin HEAD:${{ github.ref_name }}

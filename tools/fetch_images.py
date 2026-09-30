@@ -57,6 +57,8 @@ def process(name: str, file_id: str, meta: dict):
     else:
         img = img.convert("RGB")
     big = encode(img, MAX_W, CAP)
+    # keep the original for any hi-res use (video reference, branding)
+    img.save(os.path.join(OUT, f"{name}-src.jpg"), "JPEG", quality=92)
     small = encode(img, 800, 60 * 1024)
     open(os.path.join(OUT, f"{name}.webp"), "wb").write(big)
     open(os.path.join(OUT, f"{name}-800.webp"), "wb").write(small)
@@ -77,7 +79,13 @@ def main():
         jobs.append((f"{p['job']}-after", p["after"]))
     for s in MANIFEST["singles"]:
         jobs.append((s["name"], s["id"]))
+    existing = {}
+    if os.path.exists(os.path.join(OUT, "manifest.json")):
+        existing = json.load(open(os.path.join(OUT, "manifest.json")))
+    meta.update(existing)
     for name, fid in jobs:
+        if name in existing and os.path.exists(os.path.join(OUT, f"{name}.webp")):
+            continue  # already fetched and (possibly) re-encoded locally; do not overwrite
         try:
             process(name, fid, meta)
         except Exception as e:

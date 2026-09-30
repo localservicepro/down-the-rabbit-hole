@@ -61,12 +61,17 @@ def density(text, kw):
     return occ, n, (occ / n * 100 if n else 0)
 
 
-built = {os.path.basename(f)[:-5] for f in glob.glob(os.path.join(ROOT, "*.html"))}
+ALL_HTML = sorted(glob.glob(os.path.join(ROOT, "*.html")) + glob.glob(os.path.join(ROOT, "*", "*.html")) + glob.glob(os.path.join(ROOT, "*", "*", "*.html")))
+built = {os.path.relpath(f, ROOT)[:-5] for f in ALL_HTML}
 ok = True
 ids = set()
 rows = []
-for f in sorted(glob.glob(os.path.join(ROOT, "*.html"))):
-    name = os.path.basename(f)[:-5]
+for f in ALL_HTML:
+    name = os.path.relpath(f, ROOT)[:-5]
+    if name.endswith("/index") or name.endswith(os.sep + "index"):
+        continue  # directory copy of a page
+    if "http-equiv=\"refresh\"" in open(f, encoding="utf-8").read(400):
+        continue  # redirect stub
     p = Text(); p.feed(open(f, encoding="utf-8").read())
     issues = []
     if len(p.h1) != 1: issues.append(f"h1 count {len(p.h1)}")
@@ -80,7 +85,7 @@ for f in sorted(glob.glob(os.path.join(ROOT, "*.html"))):
                 issues.append("keyword not in H1")
     if len(p.title) > 60: issues.append(f"title {len(p.title)}")
     if not p.desc or not 150 <= len(p.desc) <= 160: issues.append(f"description {len(p.desc or '')}")
-    exp = "https://downtherabbitholeaust.com/" + ("" if name == "index" else name)
+    exp = "https://downtherabbitholeaust.com/" + ("" if name == "index" else name.replace(os.sep, "/"))
     if p.canon != exp: issues.append(f"canonical {p.canon}")
     if p.kw_meta: issues.append("meta keywords present")
     for ld in p.ld:
@@ -100,11 +105,11 @@ for f in sorted(glob.glob(os.path.join(ROOT, "*.html"))):
         path = href.split("#")[0].split("?")[0]
         if not path: continue
         if path == "/": continue
-        if path.startswith("/post/") or path in PLACEHOLDER_ROUTES: continue
+        if path in PLACEHOLDER_ROUTES: continue
         if path.startswith("/images/") or path.startswith("/assets/"):
             if not os.path.exists(os.path.join(ROOT, path.lstrip("/"))): issues.append(f"missing asset {path}")
             continue
-        if path.strip("/") not in built: issues.append(f"dead link {href}")
+        if path.strip("/") not in built and path.strip("/") + "/index" not in built: issues.append(f"dead link {href}")
     for src in [a.get("src") for a in p.imgs if not a.get("iframe")]:
         if src and src.startswith("/") and not os.path.exists(os.path.join(ROOT, src.lstrip("/"))): issues.append(f"missing image {src}")
     main_text = " ".join(p.main); all_text = " ".join(p.parts)

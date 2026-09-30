@@ -358,3 +358,15 @@ a.chip:hover{background:var(--orange);color:var(--navy-deep)}
 .notfound{min-height:70vh;display:grid;place-items:center;text-align:center;padding-top:var(--nav-h)}
 .notfound .big{font-family:var(--display);font-weight:800;font-size:clamp(5rem,16vw,9rem);line-height:1;color:var(--navy);letter-spacing:-.04em}
 .notfound .big span{color:var(--orange)}
+
+/* Blog posts */
+.post-body h3{margin-top:1.4em}
+.post-body .callout{background:var(--tint);border-left:4px solid var(--orange);padding:14px 18px;border-radius:0 12px 12px 0}
+.tbl{overflow-x:auto;margin:0 0 1.2em;border:1px solid var(--line);border-radius:12px;background:#fff}
+.tbl table{border-collapse:collapse;width:100%;font-size:.95rem}
+.tbl th,.tbl td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th{font-family:var(--display);font-weight:700;color:var(--navy);background:var(--paper)}
+.tbl tr:last-child td{border-bottom:0}
+.author-card{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px;margin-top:36px}
+.author-card img{border-radius:50%;flex:none}
+.author-card p{margin:4px 0 0;color:var(--muted);font-size:.95rem}

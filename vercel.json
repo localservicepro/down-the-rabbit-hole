@@ -1,0 +1,72 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/home",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/hedge-trimming--lawn-care",
+      "destination": "/hedge-trimming",
+      "permanent": true
+    },
+    {
+      "source": "/dva-lawncare-services",
+      "destination": "/dva-lawn-care",
+      "permanent": true
+    },
+    {
+      "source": "/weed-spraying-prevention",
+      "destination": "/weed-spraying",
+      "permanent": true
+    },
+    {
+      "source": "/blog/category/canberra-lawn-care-tips-guides",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/categories/canberra-lawn-care-tips-guides",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/author/695b34992c0fabfb5cfaeec8",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/author/down-the-rabbit-hole-lawn-care-team",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/post/grass-mowing-canberra-guide-7692",
+      "destination": "/post/grass-mowing-canberra-guide",
+      "permanent": true
+    },
+    {
+      "source": "/post/ultimate-guide-to-green-waste-disposal-in-Canberra",
+      "destination": "/post/green-waste-canberra-disposal-guide",
+      "permanent": true
+    },
+    {
+      "source": "/blog/tag/:tag*",
+      "destination": "/blog",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)\\.(webp|png|woff2|css|js)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
+}

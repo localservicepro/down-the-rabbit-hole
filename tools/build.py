@@ -456,10 +456,17 @@ def page(*, path, title, description, body, graph, active="", over_hero=False, o
 
 
 def write(path, content):
+    """Write page.html and page/index.html so /page works on hosts with and without clean-URL support."""
     fn = "index.html" if path == "/" else path.strip("/") + ".html"
     full = os.path.join(ROOT, fn)
+    os.makedirs(os.path.dirname(full), exist_ok=True)
     with open(full, "w", encoding="utf-8") as f:
         f.write(content)
+    if path not in ("/", "/404") and not path.endswith("/index"):
+        alt = os.path.join(ROOT, path.strip("/"), "index.html")
+        os.makedirs(os.path.dirname(alt), exist_ok=True)
+        with open(alt, "w", encoding="utf-8") as f:
+            f.write(content)
     print(f"wrote {fn} ({len(content.encode())//1024} KB)")
 
 
@@ -1056,6 +1063,262 @@ def blog():
                         body=body, graph=graph, active="blog", over_hero=True, og_image=f"{SITE}/images/guide-green-waste-disposal.webp"))
 
 
+# ---------- blog posts (migrated from the old site; markdown in content/posts/*.md) ----------
+
+POST_META = {
+    # slug: (title override or None, description override or None, hero image, related service slugs, datePublished or "")
+    "garden-mulching-canberra-guide": (None, None, "garden-bed-restore-after", ["garden-maintenance", "gardening-services"], "2026-09-15"),
+    "bindi-spraying-canberra-lawn-weeds": (None, None, "extra-a-after", ["weed-spraying", "lawn-care"], "2026-09-08"),
+    "spring-lawn-mowing-canberra-guide": (None, None, "lawn-after-mowing", ["lawn-mowing", "lawn-care"], "2026-09-02"),
+    "hedge-trimming-canberra": (None, None, "garden-clean-up-2-after", ["hedge-trimming", "garden-maintenance"], "2026-08-25"),
+    "spring-garden-checklist-canberra": (None, "A spring garden checklist for Canberra residents: lawn mowing, weeding, feeding and planting jobs to get your ACT garden ready for the growing season.", "garden-tidy-after", ["garden-maintenance", "lawn-mowing"], "2026-08-18"),
+    "canberra-lawn-frost-damage-spring-care": (None, None, "garden-clean-up-1-after", ["lawn-care", "lawn-mowing"], "2026-08-11"),
+    "winter-lawn-care-tips-canberra": (None, "Winter lawn care tips for Canberra homeowners: mowing, watering and frost protection through the cold months, and how to set up a lush green spring lawn.", "lawn-after-mowing", ["lawn-care", "lawn-mowing"], ""),
+    "prepare-lawn-for-spring-canberra": (None, None, "yard-tidy-1-after", ["lawn-care", "weed-spraying"], ""),
+    "green-waste-canberra-disposal-guide": (None, "Managing green waste in Canberra: kerbside collections, drop-off options and removal services, from lawn clippings to tree branches, for a tidy garden.", "guide-green-waste-disposal", ["green-waste-removal", "rubbish-removal"], ""),
+    "yard-clean-up-canberra-guide": (None, "Your guide to yard clean up in Canberra: seasonal tips, what a professional clean-up includes and how to get an overgrown garden looking its best again.", "service-yard-clean-ups", ["yard-clean-ups", "green-waste-removal"], ""),
+    "garden-service-canberra-guide": ("Garden Service Canberra: Guide to a Perfect Yard", None, "garden-tidy-job", ["gardening-services", "garden-maintenance"], ""),
+    "garden-maintenance-canberra-guide": (None, "What Canberra homeowners should know about garden maintenance: seasonal care, lawn health, pruning tips and keeping outdoor spaces neat and healthy all year.", "service-garden-maintenance", ["garden-maintenance", "hedge-trimming"], ""),
+    "grass-mowing-canberra-guide": (None, None, "extra-b-after", ["lawn-mowing", "lawn-care"], ""),
+    "canberra-lawn-mowing-services-guide": (None, None, "garden-tidy-after", ["lawn-mowing", "garden-maintenance"], ""),
+    "dva-lawn-care-services-canberra-5929": (None, None, "service-dva-lawn-care", ["dva-lawn-care", "lawn-mowing"], ""),
+    "best-lawn-mowing-services-canberra": (None, "How to choose the best lawn mowing service in Canberra: what reliable lawn care looks like, how pricing works and what to expect from a local team year-round.", "lawn-after-mowing", ["lawn-mowing", "lawn-care"], ""),
+    "top-rated-canberra-lawn-maintenance-providers": ("Top-Rated Canberra Lawn Maintenance Providers: A Guide", None, "garden-clean-up-1-after", ["lawn-mowing", "garden-maintenance"], ""),
+    "the-ultimate-guide-to-commercial-yard-maintenance-in-Australia": ("Commercial Yard Maintenance in Australia: The Guide", None, "commercial-grounds-after-1", ["garden-maintenance", "green-waste-removal"], ""),
+    "case-study--transforming-a-neglected-garden-into-a-vibrant-outdoor-space": ("Case Study: Transforming a Neglected Canberra Garden", "How Down the Rabbit Hole AUST turned a neglected Canberra garden into a vibrant outdoor space: debris removal, soil revitalisation and precision hedging.", "overgrown-clean-up-after", ["yard-clean-ups", "hedge-trimming"], ""),
+}
+CRAWL_META = {}
+try:
+    _crawl = json.load(open("/root/.claude/uploads/1bd95d00-0fb7-5770-a5d3-98abbab6ba02/1fa11bde-dtrh-crawl.json"))
+    for _u, _d in _crawl.items():
+        if "/post/" in _u:
+            CRAWL_META[_u.split("/post/")[1]] = (_d["title"], _d["meta"])
+except FileNotFoundError:
+    pass
+OLD_LINKS = {
+    "/hedge-trimming--lawn-care": "/hedge-trimming", "/dva-lawncare-services": "/dva-lawn-care", "/weed-spraying-prevention/": "/weed-spraying",
+    "/weed-spraying-prevention": "/weed-spraying", "/home": "/", "/blog/author/695b34992c0fabfb5cfaeec8": "/about",
+    "/author/down-the-rabbit-hole-lawn-care-team": "/about", "/blog/category/canberra-lawn-care-tips-guides": "/blog",
+    "/categories/canberra-lawn-care-tips-guides": "/blog", "/post/grass-mowing-canberra-guide-7692": "/post/grass-mowing-canberra-guide",
+    "/post/ultimate-guide-to-green-waste-disposal-in-Canberra": "/post/green-waste-canberra-disposal-guide",
+}
+
+
+def fix_link(url):
+    if url.startswith(SITE):
+        url = url[len(SITE):] or "/"
+    if url.startswith("/blog/tag/"):
+        return "/blog"
+    return OLD_LINKS.get(url, url)
+
+
+def inline(text):
+    text = esc(text)
+    text = text.replace("Down the Rabbit Hole AUST Pty ltd", NAME).replace("Down the Rabbit Hole AUST Pty Ltd", NAME)
+    text = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", lambda m: f'<a href="{esc(fix_link(html.unescape(m.group(2))))}">{m.group(1)}</a>', text)
+    text = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", text)
+    return text
+
+
+def md_blocks(md):
+    lines = md.split("\n")
+    blocks, i = [], 0
+    while i < len(lines):
+        ln = lines[i].rstrip()
+        st = ln.strip()
+        if not st:
+            i += 1; continue
+        if st.startswith("# "): blocks.append(["h1", st[2:].strip()]); i += 1; continue
+        if st.startswith("## "): blocks.append(["h2", st[3:].strip()]); i += 1; continue
+        if st.startswith("### "): blocks.append(["h3", st[4:].strip()]); i += 1; continue
+        if st.startswith("#### "): blocks.append(["h3", st[5:].strip()]); i += 1; continue
+        if st.startswith("|"):
+            rows = []
+            while i < len(lines) and lines[i].strip().startswith("|"):
+                cells = [c.strip() for c in lines[i].strip().strip("|").split("|")]
+                if not all(set(c) <= set("-: ") for c in cells):
+                    rows.append(cells)
+                i += 1
+            blocks.append(["table", rows]); continue
+        if re.match(r"^[-*•]\s+", st) or re.match(r"^\d+\.\s+", st):
+            items = []
+            while i < len(lines) and (re.match(r"^\s*[-*•]\s+", lines[i]) or re.match(r"^\s*\d+\.\s+", lines[i])):
+                items.append(re.sub(r"^\s*([-*•]|\d+\.)\s+", "", lines[i]).strip()); i += 1
+            blocks.append(["ul", items]); continue
+        blocks.append(["p", st]); i += 1
+    # drop flattened duplicate cells the parser emits after a table
+    out, cells = [], set()
+    for b in blocks:
+        if b[0] == "table":
+            cells = {c for row in b[1] for c in row}
+            out.append(b); continue
+        if b[0] == "p" and b[1] in cells:
+            continue
+        if b[0] in ("h2", "h3"):
+            cells = set()
+        out.append(b)
+    blocks = out
+    # drop the author footer
+    out = []
+    skip = 0
+    for b in blocks:
+        if skip: skip -= 1; continue
+        if b[0] == "p" and b[1].startswith("[Down The Rabbit Hole Lawn Care Team]"):
+            skip = 1; continue
+        out.append(b)
+    blocks = out
+    # "Key takeaways": consecutive short paragraphs become a list
+    out = []
+    i = 0
+    while i < len(blocks):
+        b = blocks[i]
+        if b[0] == "h2" and "takeaway" in b[1].lower():
+            out.append(b); i += 1
+            items = []
+            while i < len(blocks) and blocks[i][0] == "p" and len(blocks[i][1]) < 160:
+                items.append(blocks[i][1]); i += 1
+            if items: out.append(["ul", items])
+            continue
+        out.append(b); i += 1
+    return out
+
+
+def split_faq(blocks):
+    """Trailing H3 questions (after the last H2 section) become the FAQ."""
+    last_h2 = max([k for k, b in enumerate(blocks) if b[0] == "h2"], default=-1)
+    start = None
+    for k in range(last_h2 + 1, len(blocks)):
+        if blocks[k][0] == "h3" and blocks[k][1].rstrip().endswith("?"):
+            start = k; break
+    if start is None:
+        return blocks, []
+    faqs, q, ans = [], None, []
+    for b in blocks[start:]:
+        if b[0] == "h3":
+            if q: faqs.append((q, " ".join(ans)))
+            q, ans = b[1], []
+        elif b[0] == "p":
+            ans.append(b[1])
+        elif b[0] == "ul":
+            ans.append(" ".join(b[1]))
+    if q: faqs.append((q, " ".join(ans)))
+    return blocks[:start], faqs
+
+
+def render_blocks(blocks):
+    out = []
+    for kind, val in blocks:
+        if kind == "h1": continue
+        if kind == "h2": out.append(f"<h2>{inline(val)}</h2>")
+        elif kind == "h3": out.append(f"<h3>{inline(val)}</h3>")
+        elif kind == "ul": out.append('<ul class="checks">' + "".join(f"<li>{icon('check')}<span>{inline(x)}</span></li>" for x in val) + "</ul>")
+        elif kind == "table":
+            head, body = val[0], val[1:]
+            out.append('<div class="tbl"><table><thead><tr>' + "".join(f"<th>{inline(c)}</th>" for c in head) + "</tr></thead><tbody>" +
+                       "".join("<tr>" + "".join(f"<td>{inline(c)}</td>" for c in row) + "</tr>" for row in body) + "</tbody></table></div>")
+        elif kind == "p":
+            if val.lower().startswith("quick answer:"):
+                out.append(f'<p class="callout"><strong>Quick answer:</strong> {inline(val[13:].strip())}</p>')
+            else:
+                out.append(f"<p>{inline(val)}</p>")
+    return "\n".join(out)
+
+
+def post_page(slug):
+    md = open(os.path.join(COPY, "posts", slug + ".md"), encoding="utf-8").read()
+    blocks = md_blocks(md)
+    h1 = next((b[1] for b in blocks if b[0] == "h1"), None) or POSTS["/post/" + slug][0]
+    body_blocks, faqs = split_faq(blocks)
+    t_over, d_over, img_name, related, date = POST_META[slug]
+    c_title, c_desc = CRAWL_META.get(slug, (POSTS["/post/" + slug][0], ""))
+    title = t_over or c_title
+    desc = d_over or (c_desc if 150 <= len(c_desc) <= 160 else BLOG_META["/post/" + slug])
+    if len(desc) < 150: desc = (desc.rstrip(".") + ". Advice from the Down the Rabbit Hole AUST team.")[:160]
+    text_words = len(re.findall(r"\w+", md))
+    minutes = max(3, round(text_words / 220))
+    url = f"{SITE}/post/{slug}"
+    date_html = f'<time datetime="{date}">{date[8:10]} {["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][int(date[5:7])]} {date[:4]}</time> · ' if date else ""
+    related_cards = "".join(
+        f'<a class="card" href="/{r}"><span class="ico">{icon(next(x[3] for x in SERVICES if x[0]==r))}</span><h3>{esc(SERVICE_NAMES[r])}</h3><p>{esc(next(x[4] for x in SERVICES if x[0]==r))}</p><span class="more">See {esc(SERVICE_NAMES[r].lower())} {icon("arrow")}</span></a>'
+        for r in related)
+    others = [u for u in BLOG_META if u != "/post/" + slug][:4]
+    more = "".join(f'<li><a href="{u}">{esc(POSTS[u][0])}</a></li>' for u in others)
+    body = f"""
+<section class="page-hero">
+  <div class="wrap">
+    <ol class="crumbs" aria-label="Breadcrumb"><li><a href="/">Home</a></li><li><a href="/blog">Guides</a></li><li aria-current="page">{esc(h1[:60])}</li></ol>
+    <div class="page-hero-grid">
+      <div>
+        <span class="eyebrow">Canberra lawn care guide</span>
+        <h1>{esc(h1)}</h1>
+        <p class="lead" style="font-size:1rem">{date_html}{minutes} min read · Down the Rabbit Hole AUST team</p>
+        <div class="hero-cta"><a class="btn btn-primary" href="#contact" data-open-quote>Get a Free Quote {icon("arrow")}</a><a class="btn btn-ghost" href="{TEL}">{icon("phone")}Call {PHONE}</a></div>
+      </div>
+      <div class="hero-photo">{picture(img_name, esc(h1) + ": " + SERVICE_IMAGES.get(related[0], ("", "a Canberra lawn maintained by Down the Rabbit Hole AUST"))[1].split(": ")[-1], lazy=False, priority=True)}</div>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <div class="article-grid">
+      <article class="article post-body">
+        {render_blocks(body_blocks)}
+        <div class="author-card">
+          <img src="/images/dtrh-logo-104.webp" width="56" height="56" alt="" loading="lazy" decoding="async">
+          <div><strong>Down the Rabbit Hole AUST team</strong><p>We mow, maintain and tidy more than 60 lawns and gardens across Canberra and Queanbeyan. Our guides come from what we see on local properties every week. <a href="/about">About us</a></p></div>
+        </div>
+        <div class="cta-band rv" style="margin-top:32px"><div><h2 style="margin-top:0">Rather have us do it?</h2><p>Free, upfront quotes for mowing, garden care and clean-ups across Canberra.</p></div><a class="btn btn-navy" href="#contact">Get a Free Quote</a></div>
+      </article>
+      <aside class="aside">
+        <div class="aside-card navy"><h3>Free, upfront quote</h3><p>Call or text {PHONE}, or send the form. We reply with a clear quote before any work starts.</p><a class="btn btn-primary" href="{TEL}">{icon("phone")}Call {PHONE}</a><a class="btn btn-ghost" href="#contact" data-open-quote>Request a quote</a></div>
+        <div class="aside-card"><h3>Related services</h3><ul>{"".join(f'<li><a href="/{r}">{esc(SERVICE_NAMES[r])}</a></li>' for r in related)}<li><a href="/services">All services</a></li></ul></div>
+        <div class="aside-card"><h3>More guides</h3><ul>{more}<li><a href="/blog">All guides</a></li></ul></div>
+      </aside>
+    </div>
+  </div>
+</section>
+<section class="section-tight" style="background:#fff">
+  <div class="wrap">
+    <div class="section-head rv"><div><span class="eyebrow">Related</span><h2>Services mentioned in this guide</h2></div><a class="btn btn-outline" href="/services">All services</a></div>
+    <div class="grid grid-3">{related_cards}<a class="card" href="/blog"><span class="ico">{icon("leaf")}</span><h3>More Canberra guides</h3><p>Seasonal lawn and garden advice from the team.</p><span class="more">Browse the guides {icon("arrow")}</span></a></div>
+  </div>
+</section>
+{faq_section(faqs, "Frequently asked questions") if faqs else ""}
+{contact_section("Get a free lawn or garden quote", "Tell us about your property and we will come back with a clear, upfront quote.")}
+"""
+    graph = [business_schema(),
+             {"@type": "Article", "@id": url + "#article", "headline": h1, "description": desc, "url": url, "mainEntityOfPage": url,
+              "image": f"{SITE}/images/{img_name}.webp", "author": {"@type": "Organization", "name": NAME, "url": SITE + "/about"},
+              "publisher": {"@id": BIZ_ID}, "inLanguage": "en-AU", **({"datePublished": date, "dateModified": date} if date else {})},
+             dict(breadcrumb_schema([("Home", "/"), ("Guides", "/blog"), (h1, "/post/" + slug)]), **{"@id": url + "#breadcrumb"})]
+    if faqs:
+        graph.append(faq_schema(faqs))
+    write("/post/" + slug, page(path="/post/" + slug, title=title, description=desc, body=body, graph=graph, active="blog", over_hero=True, og_image=f"{SITE}/images/{img_name}.webp"))
+
+
+REDIRECT_STUBS = {
+    # old path → new path (host-independent meta-refresh stubs; the _redirects/.htaccess 301s take precedence where supported)
+    "/home": "/", "/hedge-trimming--lawn-care": "/hedge-trimming", "/dva-lawncare-services": "/dva-lawn-care",
+    "/weed-spraying-prevention": "/weed-spraying", "/weed-spraying-prevention/index": "/weed-spraying",
+    "/author/down-the-rabbit-hole-lawn-care-team": "/about", "/categories/canberra-lawn-care-tips-guides": "/blog",
+    "/post/grass-mowing-canberra-guide-7692": "/post/grass-mowing-canberra-guide",
+    "/post/ultimate-guide-to-green-waste-disposal-in-Canberra": "/post/green-waste-canberra-disposal-guide",
+}
+
+
+def redirect_stubs():
+    for old, new in REDIRECT_STUBS.items():
+        target = SITE + new
+        html_doc = f"""<!DOCTYPE html>
+<html lang="en-AU"><head><meta charset="utf-8"><title>Redirecting to {esc(target)}</title>
+<meta name="robots" content="noindex"><link rel="canonical" href="{target}">
+<meta http-equiv="refresh" content="0; url={new}">
+<script>location.replace({json.dumps(new)});</script></head>
+<body><p>This page has moved to <a href="{new}">{esc(target)}</a>.</p></body></html>
+"""
+        write(old, html_doc)
+
+
 # ---------- static files ----------
 
 REDIRECTS = """# Netlify / Cloudflare Pages style redirects (status 301 unless noted)
@@ -1102,7 +1365,28 @@ RedirectMatch 301 ^/blog/tag/.*$ /blog
 """
 
 
+VERCEL = {
+    "cleanUrls": True,
+    "trailingSlash": False,
+    "redirects": [
+        {"source": "/home", "destination": "/", "permanent": True},
+        {"source": "/hedge-trimming--lawn-care", "destination": "/hedge-trimming", "permanent": True},
+        {"source": "/dva-lawncare-services", "destination": "/dva-lawn-care", "permanent": True},
+        {"source": "/weed-spraying-prevention", "destination": "/weed-spraying", "permanent": True},
+        {"source": "/blog/category/canberra-lawn-care-tips-guides", "destination": "/blog", "permanent": True},
+        {"source": "/categories/canberra-lawn-care-tips-guides", "destination": "/blog", "permanent": True},
+        {"source": "/blog/author/695b34992c0fabfb5cfaeec8", "destination": "/about", "permanent": True},
+        {"source": "/author/down-the-rabbit-hole-lawn-care-team", "destination": "/about", "permanent": True},
+        {"source": "/post/grass-mowing-canberra-guide-7692", "destination": "/post/grass-mowing-canberra-guide", "permanent": True},
+        {"source": "/post/ultimate-guide-to-green-waste-disposal-in-Canberra", "destination": "/post/green-waste-canberra-disposal-guide", "permanent": True},
+        {"source": "/blog/tag/:tag*", "destination": "/blog", "permanent": True},
+    ],
+    "headers": [{"source": "/(.*)\\.(webp|png|woff2|css|js)", "headers": [{"key": "Cache-Control", "value": "public, max-age=31536000, immutable"}]}],
+}
+
+
 def static_files(pages):
+    json.dump(VERCEL, open(os.path.join(ROOT, "vercel.json"), "w"), indent=2)
     open(os.path.join(ROOT, "_redirects"), "w").write(REDIRECTS)
     open(os.path.join(ROOT, ".htaccess"), "w").write(HTACCESS)
     open(os.path.join(ROOT, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDisallow: /404\nDisallow: /thank-you\nSitemap: {SITE}/sitemap.xml\n")
@@ -1130,6 +1414,13 @@ def main():
             print(f"!! missing content/{slug}.json, page not built"); continue
         service_page(slug, is_suburb=True)
         pages.append("/" + slug)
+    post_dir = os.path.join(COPY, "posts")
+    for slug in POST_META:
+        if os.path.exists(os.path.join(post_dir, slug + ".md")):
+            post_page(slug); pages.append("/post/" + slug)
+        else:
+            print(f"!! missing content/posts/{slug}.md, post not built")
+    redirect_stubs()
     static_files(pages)
 
 

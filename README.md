@@ -49,8 +49,11 @@ Requires Python 3.10+ (Pillow only for the image tooling).
 - The CRM tracking script (`external-tracking.js`, tracking id `tk_6f4c…`) is loaded deferred in every page's `<head>` and captures the native `submit` event; the page then redirects to `/thank-you` (noindex). There is no form endpoint.
 - Both forms use native validation (required fields, email, 4-digit postcode, phone pattern) with an inline error message.
 
+## Business hours
+
+Mon–Thu 8am–5pm, Fri 9am–5pm, closed weekends. Set in `HOURS` and `openingHoursSpecification` in `tools/build.py`.
+
 ## Placeholders still to fill
 
-- `___HOURS___` (footer, contact section, schema `openingHoursSpecification`) — trading hours not supplied.
 - `<!-- REVIEWS: paste 3–5 Google reviews here -->` in `tools/build.py` (homepage proof section).
 - ABN number is not published; the site says "ABN Registered".

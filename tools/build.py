@@ -18,7 +18,7 @@ IG = "https://www.instagram.com/downtherabbitholeaust"
 GBP_PLACE = "https://www.google.com/maps/search/?api=1&query=Google&query_place_id=ChIJuzQLsqNMFmsRcFlpp27qAAQ"
 GBP = "https://maps.app.goo.gl/kx6sMBaVZok5tBfw6"
 MAP_EMBED = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d416436.695680462!2d149.1297825!3d-35.37024405!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xaf8e434d15506cf1%3A0x24c31c1abe5ee30a!2sDown%20the%20Rabbit%20Hole%20Aust!5e0!3m2!1sen!2sph!4v1790757761736!5m2!1sen!2sph"
-HOURS = "___HOURS___"
+HOURS = "Mon–Thu 8am–5pm · Fri 9am–5pm · Sat–Sun closed"
 TRACKING_ID = "tk_6f4c1089fe214ae6baa8c2dc37522e82"
 THANK_YOU = "/thank-you"
 CSS = open(os.path.join(ROOT, "assets", "site.css"), encoding="utf-8").read()
@@ -417,7 +417,10 @@ def business_schema():
         "address": {"@type": "PostalAddress", "addressLocality": "Canberra", "addressRegion": "ACT", "addressCountry": "AU"},
         "areaServed": [{"@type": "City", "name": "Canberra"}] + [{"@type": "Place", "name": d[0].replace(" & NSW", "")} for d in DISTRICTS],
         "sameAs": [FB, IG, GBP, GBP_PLACE],
-        "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": HOURS, "closes": HOURS}],
+        "openingHoursSpecification": [
+            {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"], "opens": "08:00", "closes": "17:00"},
+            {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday"], "opens": "09:00", "closes": "17:00"},
+        ],
         "hasOfferCatalog": {
             "@type": "OfferCatalog",
             "name": "Lawn and garden services",
@@ -1064,7 +1067,7 @@ def contact():
         <h2>Where and when to find us</h2>
         <ul class="checks">
           <li>{icon("pin")}<span><strong>Base:</strong> Canberra, ACT, Australia. Service-area business covering the ACT and the Queanbeyan region. <a href="/areas">See all suburbs.</a></span></li>
-          <li>{icon("clock")}<span><strong>Hours:</strong> {HOURS}</span></li>
+          <li>{icon("clock")}<span><strong>Hours:</strong> Monday to Thursday 8am–5pm, Friday 9am–5pm, closed Saturday and Sunday</span></li>
           <li>{icon("phone")}<span><strong>Phone:</strong> <a href="{TEL}">{PHONE}</a> (call) or <a href="{SMS}">text</a></span></li>
           <li>{icon("mail")}<span><strong>Email:</strong> <a href="mailto:{EMAIL}">{EMAIL}</a></span></li>
           <li>{icon("badge")}<span><strong>Legal name:</strong> {LEGAL}, trading as {NAME}. ABN registered, fully insured.</span></li>

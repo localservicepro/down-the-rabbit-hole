@@ -7,8 +7,8 @@ No page-builder runtime, no CSS framework: one HTML file per page with the style
 
 | Path | What it is |
 |---|---|
-| `index.html`, `about.html`, `services.html`, `<service>.html`, `lawn-mowing-*.html`, `404.html` | Built pages (generated, do not hand-edit) |
-| `content/*.json` | Copy for the service, hub and suburb pages (H1, meta, sections, FAQs) |
+| `index.html`, `about.html`, `contact.html`, `areas.html`, `blog.html`, `services.html`, `<service>.html`, `lawn-mowing-*.html`, `thank-you.html`, `404.html` | Built pages (generated, do not hand-edit) |
+| `content/*.json` | Copy for the service, hub, suburb and district pages (H1, meta, sections, FAQs) |
 | `tools/build.py` | Generator: templates, homepage copy, schema, redirects, sitemap |
 | `tools/verify.py` | Checks: one H1 with keyword, title ≤ 60, description 150–160, canonicals, JSON-LD, links, alt text, image caps, keyword density |
 | `tools/serve.py` | Local preview server that maps `/lawn-mowing` → `lawn-mowing.html` and returns a real 404 |
@@ -31,8 +31,8 @@ Requires Python 3.10+ (Pillow only for the image tooling).
 
 - Serve clean URLs: `/lawn-mowing` must serve `lawn-mowing.html` (Netlify and Cloudflare Pages do this by default; Apache uses the rewrite in `.htaccess`).
 - Unknown URLs must return **HTTP 404** with `404.html`.
-- 301 redirects for the old site's URLs are in `_redirects` / `.htaccess`. The six district pages that are not built yet are temporary 302s to the areas section; delete each line when its page goes live.
-- Blog (`/blog`, `/post/…`) is migrated separately and is linked, not rebuilt here. Add the posts to `sitemap.xml` when they are live.
+- 301 redirects for the old site's URLs are in `_redirects` / `.htaccess`.
+- `/blog` is a built index of the 19 existing guides. The posts themselves (`/post/…`) are migrated separately; until they are, those links return 404. Add them to `sitemap.xml` when live.
 
 ## Quote form and CRM tracking
 

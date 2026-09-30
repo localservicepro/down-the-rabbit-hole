@@ -370,7 +370,8 @@ ul{margin:0 0 1em;padding-left:1.2em}
 .aside-card ul a{text-decoration:none;font-weight:600;display:flex;justify-content:space-between;align-items:center}
 .aside-card ul a::after{content:"→";color:var(--orange)}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-.chip{background:var(--tint);color:var(--navy);padding:6px 12px;border-radius:999px;font-size:.85rem;font-weight:600}
+.chip{background:var(--tint);color:var(--navy);padding:6px 12px;border-radius:999px;font-size:.85rem;font-weight:600;text-decoration:none;transition:background-color .2s,color .2s}
+a.chip:hover{background:var(--orange);color:var(--navy-deep)}
 @media (max-width:960px){.article-grid{grid-template-columns:1fr}.aside{position:static}}
 .cta-band{background:var(--orange);color:var(--navy-deep);border-radius:var(--r);padding:32px 36px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
 .cta-band h2{color:var(--navy-deep);margin:0;font-size:1.5rem}
@@ -411,12 +412,12 @@ ul{margin:0 0 1em;padding-left:1.2em}
         </div>
       </div>
       <a href="/about" class="nav-link is-active">About</a>
-      <a href="/#areas" class="nav-link">Areas</a>
-      <a href="#contact" class="nav-link">Contact</a>
+      <a href="/areas" class="nav-link">Areas</a>
+      <a href="/contact" class="nav-link">Contact</a>
     </nav>
     <div class="nav-actions">
       <a href="tel:+61423720317" class="nav-phone"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>0423 720 317</a>
-      <a href="#contact" class="btn btn-primary" data-open-quote>Get a Free Quote</a>
+      <a href="/contact" class="btn btn-primary" data-open-quote>Get a Free Quote</a>
       <button class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -440,12 +441,12 @@ ul{margin:0 0 1em;padding-left:1.2em}
 <a class="dd-item" href="/weed-spraying"><span class="dd-icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M8 9h6l1 12H7z"/><path d="M10 9V6h2v3"/><path d="M10 6h5"/><path d="M18 4l1-1M19 7h1.5M18 10l1 1"/></svg></span><span class="dd-text"><strong>Weed Spraying</strong><em>Bindi &amp; broadleaf control, Belconnen &amp; Weston Creek</em></span></a>
   </div>
   <a class="mp-link" href="/about">About</a>
-  <a class="mp-link" href="/#areas">Areas</a>
-  <a class="mp-link" href="#contact">Contact</a>
-  <div class="mp-cta"><a class="btn btn-primary" href="#contact" data-open-quote>Get a Free Quote</a><a class="btn btn-outline" href="tel:+61423720317"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>Call 0423 720 317</a></div>
+  <a class="mp-link" href="/areas">Areas</a>
+  <a class="mp-link" href="/contact">Contact</a>
+  <div class="mp-cta"><a class="btn btn-primary" href="/contact" data-open-quote>Get a Free Quote</a><a class="btn btn-outline" href="tel:+61423720317"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>Call 0423 720 317</a></div>
   <div class="mp-social social"><a href="https://www.facebook.com/p/Down-the-Rabbit-Hole-AUST-61552753624844/" aria-label="Facebook" rel="noopener" target="_blank"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.3H7.4V14h2.8v8z"/></svg></a><a href="https://www.instagram.com/downtherabbitholeaust" aria-label="Instagram" rel="noopener" target="_blank"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 7.3A4.7 4.7 0 1 0 12 16.7 4.7 4.7 0 0 0 12 7.3zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm5.9-7.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0zM12 3.9c2.6 0 2.9 0 4 .1 2.7.1 3.9 1.4 4 4 .1 1 .1 1.3.1 4s0 3-.1 4c-.1 2.6-1.4 3.9-4 4-1 .1-1.3.1-4 .1s-3 0-4-.1c-2.6-.1-3.9-1.4-4-4-.1-1-.1-1.3-.1-4s0-3 .1-4c.1-2.6 1.4-3.9 4-4 1-.1 1.3-.1 4-.1zM12 2.2c-2.7 0-3 0-4.1.1-3.6.2-5.5 2.1-5.7 5.7C2.2 9 2.2 9.3 2.2 12s0 3 .1 4.1c.2 3.6 2.1 5.5 5.7 5.7 1.1.1 1.4.1 4.1.1s3 0 4.1-.1c3.6-.2 5.5-2.1 5.7-5.7.1-1.1.1-1.4.1-4.1s0-3-.1-4.1c-.2-3.6-2.1-5.5-5.7-5.7-1.1-.1-1.4-.1-4.1-.1z"/></svg></a></div>
 </nav>
-<div class="call-bar"><a href="tel:+61423720317"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>Call 0423 720 317</a><a class="cb-quote" href="#contact" data-open-quote>Get a Free Quote</a></div>
+<div class="call-bar"><a href="tel:+61423720317"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>Call 0423 720 317</a><a class="cb-quote" href="/contact" data-open-quote>Get a Free Quote</a></div>
 <main id="main">
 
 <section class="page-hero">
@@ -473,7 +474,7 @@ ul{margin:0 0 1em;padding-left:1.2em}
         <p>Our core work is scheduled lawn mowing with clean edges and clippings removed. Around that we offer lawn care, gardening and garden maintenance, hedge trimming, weed spraying, yard clean-ups for sales and end of lease, and green waste and rubbish removal. Every service has its own page, and every job finishes with the waste loaded and taken away.</p>
         <ul class="checks"><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><a href="/lawn-mowing">Lawn Mowing</a></li><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><a href="/lawn-care">Lawn Care</a></li><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><a href="/gardening-services">Gardening Services</a></li><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><a href="/garden-maintenance">Garden Maintenance</a></li><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><a href="/hedge-trimming">Hedge Trimming</a></li><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><a href="/yard-clean-ups">Yard Clean-Ups</a></li><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><a href="/green-waste-removal">Green Waste Removal</a></li><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><a href="/rubbish-removal">Rubbish Removal</a></li><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><a href="/dva-lawn-care">DVA Lawn Care</a></li><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><a href="/weed-spraying">Weed Spraying</a></li></ul>
         <h2>Where we work</h2>
-        <p>Weston Creek is our home patch. From there we run regular rounds through Woden Valley, Tuggeranong and Belconnen, and we service the Inner North, Inner South and Queanbeyan, Jerrabomberra and Googong. <a href="/#areas">See the full suburb list.</a></p>
+        <p>Weston Creek is our home patch. From there we run regular rounds through Woden Valley, Tuggeranong and Belconnen, and we service the Inner North, Inner South and Queanbeyan, Jerrabomberra and Googong. <a href="/areas">See the full suburb list.</a></p>
         <h2>How we work</h2>
         <p>Fully insured and ABN registered, we use professional equipment sized for everything from a townhouse courtyard to a large established block. We are respectful of pets, neighbours and gardens, and we keep the same crew on your property wherever we can so you see familiar faces. You do not need to be home while we work, as long as we can get in.</p>
         <h2>Guides and advice</h2>
@@ -580,7 +581,8 @@ ul{margin:0 0 1em;padding-left:1.2em}
       <div><h3 class="fh">Company</h3><ul>
         <li><a href="/about">About us</a></li>
         <li><a href="/blog">Lawn care guides</a></li>
-        <li><a href="/#contact">Get a free quote</a></li>
+        <li><a href="/contact">Contact us</a></li>
+        <li><a href="/areas">Service areas</a></li>
         <li><a href="https://www.google.com/maps/search/?api=1&query=Google&query_place_id=ChIJuzQLsqNMFmsRcFlpp27qAAQ" rel="noopener" target="_blank">Find us on Google</a></li>
         <li><a href="/lawn-mowing-kambah">Lawn mowing Kambah</a></li>
         <li><a href="/lawn-mowing-woden-valley">Lawn mowing Woden Valley</a></li>

@@ -11,8 +11,10 @@ KEYWORDS = {
     "green-waste-removal": "green waste removal canberra", "rubbish-removal": "rubbish removal canberra",
     "dva-lawn-care": "dva gardening services", "weed-spraying": "weed spraying canberra", "services": "lawn and garden services",
     "lawn-mowing-kambah": "lawn mowing kambah", "lawn-mowing-woden-valley": "lawn mowing woden valley",
+    "lawn-mowing-weston-creek": "lawn mowing weston creek", "lawn-mowing-tuggeranong": "lawn mowing tuggeranong", "lawn-mowing-belconnen": "lawn mowing belconnen",
+    "lawn-mowing-inner-north": "lawn mowing inner north", "lawn-mowing-inner-south": "lawn mowing inner south", "lawn-mowing-queanbeyan": "lawn mowing queanbeyan",
 }
-PLACEHOLDER_ROUTES = {"/blog", "/lawn-mowing-weston-creek", "/lawn-mowing-tuggeranong", "/lawn-mowing-belconnen", "/lawn-mowing-inner-north", "/lawn-mowing-inner-south", "/lawn-mowing-queanbeyan"}
+PLACEHOLDER_ROUTES = set()  # only /post/... (blog posts migrated separately) is exempt
 
 
 class Text(HTMLParser):

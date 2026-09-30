@@ -347,7 +347,8 @@ ul{margin:0 0 1em;padding-left:1.2em}
 .aside-card ul a{text-decoration:none;font-weight:600;display:flex;justify-content:space-between;align-items:center}
 .aside-card ul a::after{content:"→";color:var(--orange)}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-.chip{background:var(--tint);color:var(--navy);padding:6px 12px;border-radius:999px;font-size:.85rem;font-weight:600}
+.chip{background:var(--tint);color:var(--navy);padding:6px 12px;border-radius:999px;font-size:.85rem;font-weight:600;text-decoration:none;transition:background-color .2s,color .2s}
+a.chip:hover{background:var(--orange);color:var(--navy-deep)}
 @media (max-width:960px){.article-grid{grid-template-columns:1fr}.aside{position:static}}
 .cta-band{background:var(--orange);color:var(--navy-deep);border-radius:var(--r);padding:32px 36px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
 .cta-band h2{color:var(--navy-deep);margin:0;font-size:1.5rem}

@@ -18,8 +18,6 @@ Redirect 301 /author/down-the-rabbit-hole-lawn-care-team /about
 Redirect 301 /post/grass-mowing-canberra-guide-7692 /post/grass-mowing-canberra-guide
 Redirect 301 /post/ultimate-guide-to-green-waste-disposal-in-Canberra /post/green-waste-canberra-disposal-guide
 RedirectMatch 301 ^/blog/tag/.*$ /blog
-# District pages not yet built (temporary)
-RedirectMatch 302 ^/lawn-mowing-(weston-creek|tuggeranong|belconnen|inner-north|inner-south|queanbeyan)$ /#areas
 
 <IfModule mod_headers.c>
   <FilesMatch "\.(webp|png|woff2|css|js)$">

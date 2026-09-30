@@ -11,10 +11,3 @@
 /post/grass-mowing-canberra-guide-7692             /post/grass-mowing-canberra-guide             301
 /post/ultimate-guide-to-green-waste-disposal-in-Canberra  /post/green-waste-canberra-disposal-guide  301
 /blog/tag/*                                        /blog                                         301
-# District pages not yet built: temporary redirect to the areas section. Remove each line when the page goes live.
-/lawn-mowing-weston-creek                          /#areas                                       302
-/lawn-mowing-tuggeranong                           /#areas                                       302
-/lawn-mowing-belconnen                             /#areas                                       302
-/lawn-mowing-inner-north                           /#areas                                       302
-/lawn-mowing-inner-south                           /#areas                                       302
-/lawn-mowing-queanbeyan                            /#areas                                       302

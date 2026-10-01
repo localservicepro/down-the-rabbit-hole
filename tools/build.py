@@ -370,15 +370,11 @@ def contact_section(heading="Get a free lawn and garden quote", line="Tell us ab
         <h2>{esc(heading)}</h2>
         <p class="lead">{esc(line)}</p>
         <div class="nap">
-          <a href="{TEL}"><span class="ico">{icon("phone")}</span><span>{PHONE}<small>Call for a quick answer</small></span></a>
-          <a href="{SMS}"><span class="ico">{icon("sms")}</span><span>Text {PHONE}<small>Send a photo of the job</small></span></a>
-          <a href="mailto:{EMAIL}"><span class="ico">{icon("mail")}</span><span>{EMAIL}<small>Email us any time</small></span></a>
           <div><span class="ico">{icon("pin")}</span><span>Canberra, ACT, Australia<small>Service-area business: ACT and Queanbeyan region</small></span></div>
           <div><span class="ico">{icon("clock")}</span><span>Hours: {HOURS}<small>{NAME}</small></span></div>
         </div>
       </div>
       <div class="rv rv-d1">
-        <p class="fallback">Prefer to talk? Call or text <a href="{TEL}">{PHONE}</a> (<a href="{SMS}">SMS</a>) or email <a href="mailto:{EMAIL}">{EMAIL}</a></p>
         <div class="form-wrap">
 {quote_form("q")}
         </div>

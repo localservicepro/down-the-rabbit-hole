@@ -281,7 +281,6 @@ def footer():
         <div class="footer-nap">
           <a href="{TEL}">{icon("phone")}{PHONE}</a>
           <a href="{SMS}">{icon("sms")}Text {PHONE}</a>
-          <a href="mailto:{EMAIL}">{icon("mail")}{EMAIL}</a>
           <span>{icon("pin")}Canberra, ACT, Australia (service-area business)</span>
           <span>{icon("clock")}Hours: {HOURS}</span>
         </div>
@@ -867,7 +866,7 @@ def about():
         <div class="intro"><p>Down the Rabbit Hole AUST is the trading name of {LEGAL}, a lawn mowing and garden maintenance business in Canberra. It is owned and run by {OWNER}. Established in 2021, the business is fully insured and ABN registered, and has maintained more than 60 lawns across the ACT and the Queanbeyan region.</p>
         <p>The services suit homeowners, landlords and property managers, strata properties, small businesses and veterans. Residential and commercial properties are both welcome.</p></div>
         <h2>Meet the owner</h2>
-        <p>{OWNER} owns and runs {NAME}. Text {PHONE}, email {EMAIL} or send the quote form, and you will get a clear, upfront quote before any work is booked.</p>
+        <p>{OWNER} owns and runs {NAME}. Text {PHONE} or send the quote form, and you will get a clear, upfront quote before any work is booked.</p>
         <h2>What we do</h2>
         <p>The core work is lawn mowing, on a regular schedule or as a one-off cut, with clean edges and a tidy finish. Around that, the business offers lawn care, one-off gardening jobs and scheduled garden maintenance, hedge trimming, weed spraying, yard clean-ups for sales and end of lease, and green waste and rubbish removal. Every service has its own page.</p>
         <ul class="checks">{"".join(f'<li>{icon("check")}<a href="/{s}">{esc(n)}</a></li>' for s, n, *_ in SERVICES)}</ul>
@@ -880,7 +879,7 @@ def about():
         <div class="cta-band rv" style="margin-top:40px"><div><h2 style="margin-top:0">Want a lawn you do not have to think about?</h2><p>Call, text or send the form and we will quote your property.</p></div><a class="btn btn-navy" href="#contact">Get a Free Quote</a></div>
       </article>
       <aside class="aside">
-        <div class="aside-card navy"><h3>Talk to {OWNER.split()[0]}</h3><p>Text {PHONE}, or email {EMAIL}.</p><a class="btn btn-primary" href="{SMS}">{icon("sms")}Text {PHONE}</a><a class="btn btn-ghost" href="mailto:{EMAIL}">Email us</a></div>
+        <div class="aside-card navy"><h3>Talk to {OWNER.split()[0]}</h3><p>Text {PHONE} or request a free quote.</p><a class="btn btn-primary" href="#contact" data-open-quote>Get a Free Quote</a><a class="btn btn-ghost" href="{SMS}">{icon("sms")}Text {PHONE}</a></div>
         <div class="aside-card"><h3>Business details</h3><ul style="display:grid;gap:8px;list-style:none;padding:0;margin:0"><li><strong>Legal name:</strong> {LEGAL}</li><li><strong>Trading as:</strong> {NAME}</li><li><strong>Owner:</strong> {OWNER}</li><li><strong>ABN:</strong> Registered</li><li><strong>Insurance:</strong> Fully insured</li><li><strong>DVA:</strong> Registered provider</li><li><strong>Established:</strong> 2021</li><li><strong>Base:</strong> Canberra, ACT</li><li><strong>Hours:</strong> {HOURS}</li></ul></div>
         <div class="aside-card"><h3>Find us online</h3><ul><li><a href="{GBP}" rel="noopener" target="_blank">Google Business Profile</a></li><li><a href="{FB}" rel="noopener" target="_blank">Facebook</a></li><li><a href="{IG}" rel="noopener" target="_blank">Instagram</a></li></ul></div>
       </aside>
@@ -1067,7 +1066,7 @@ def contact():
       <div>
         <span class="eyebrow">Contact</span>
         <h1>Contact Down the Rabbit Hole AUST for a Free Lawn or Garden Quote</h1>
-        <p class="lead">Text, call, email or send the form. We reply with a clear, upfront quote during business hours.</p>
+        <p class="lead">Text us or send the form. We reply with a clear, upfront quote during business hours.</p>
         <div class="hero-cta"><a class="btn btn-primary" href="#contact" data-open-quote>Get a Free Quote {icon("arrow")}</a><a class="btn btn-ghost" href="{SMS}">{icon("sms")}Text {PHONE}</a></div>
         <div class="trust-strip"><span>{icon("check")}Fully insured</span><span>{icon("check")}ABN registered</span><span>{icon("check")}Locally operated</span><span>{icon("check")}Est. 2021</span></div>
       </div>
@@ -1086,7 +1085,6 @@ def contact():
           <li>{icon("pin")}<span><strong>Base:</strong> Canberra, ACT, Australia. Service-area business covering the ACT and the Queanbeyan region. <a href="/areas">See all suburbs.</a></span></li>
           <li>{icon("clock")}<span><strong>Hours:</strong> Monday to Thursday 8am–5pm, Friday 9am–5pm, closed Saturday and Sunday</span></li>
           <li>{icon("phone")}<span><strong>Phone:</strong> <a href="{TEL}">{PHONE}</a> (call) or <a href="{SMS}">text</a></span></li>
-          <li>{icon("mail")}<span><strong>Email:</strong> <a href="mailto:{EMAIL}">{EMAIL}</a></span></li>
           <li>{icon("badge")}<span><strong>Legal name:</strong> {LEGAL}, trading as {NAME}. ABN registered, fully insured.</span></li>
         </ul>
         <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:20px"><div class="social" style="margin:0"><a href="{FB}" aria-label="Facebook" rel="noopener" target="_blank" style="background:var(--navy)">{icon("fb")}</a><a href="{IG}" aria-label="Instagram" rel="noopener" target="_blank" style="background:var(--navy)">{icon("ig")}</a></div><a class="btn btn-outline" href="{GBP}" rel="noopener" target="_blank">Find us on Google</a></div>
@@ -1104,7 +1102,7 @@ def contact():
     graph = [business_schema(), {"@type": "ContactPage", "@id": url + "#webpage", "url": url, "name": "Contact Down the Rabbit Hole AUST", "isPartOf": {"@id": SITE + "/#website"}, "about": {"@id": BIZ_ID}},
              breadcrumb_schema([("Home", "/"), ("Contact", "/contact")]), faq_schema(faqs)]
     write("/contact", page(path="/contact", title="Contact Us | Free Lawn Mowing Quote Canberra | DTRH AUST",
-                           description="Contact Down the Rabbit Hole AUST for a free lawn mowing or garden care quote in Canberra. Call or text 0423 720 317, email, or send the form for a fast reply.",
+                           description="Contact Down the Rabbit Hole AUST for a free lawn mowing or garden care quote in Canberra. Text 0423 720 317 or send the quote form and we will reply fast.",
                            body=body, graph=graph, active="contact", over_hero=True, og_image=f"{SITE}/images/garden-tidy-job.webp"))
 
 

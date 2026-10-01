@@ -102,7 +102,6 @@ ul{margin:0 0 1em;padding-left:1.2em}
 .mp-sub .dd-item{padding:8px 6px}
 .mp-cta{display:grid;gap:10px;margin-top:18px}
 .mp-social{display:flex;gap:10px;margin-top:20px}
-.call-bar{display:none}
 @media (max-width:899px){
  :root{--nav-h:68px}
  .nav-main,.nav-phone{display:none}
@@ -110,11 +109,6 @@ ul{margin:0 0 1em;padding-left:1.2em}
  .nav-actions .btn{min-height:42px;padding:9px 16px;font-size:.92rem}
  .brand-name{display:none}
  .brand img{width:46px;height:46px}
- body{padding-bottom:64px}
- .call-bar{position:fixed;left:0;right:0;bottom:0;z-index:900;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--navy-deep)}
- .call-bar a{display:flex;align-items:center;justify-content:center;gap:8px;min-height:60px;font-family:var(--display);font-weight:700;font-size:1rem;text-decoration:none;color:#fff;background:var(--navy);padding-bottom:env(safe-area-inset-bottom)}
- .call-bar a svg{width:20px;height:20px}
- .call-bar a.cb-quote{background:var(--orange);color:var(--navy-deep)}
 }
 /* Hero (home) */
 .hero{position:relative;min-height:min(92vh,860px);display:flex;align-items:flex-end;color:#fff;overflow:hidden;isolation:isolate;padding-top:calc(var(--nav-h) + 40px)}

@@ -266,8 +266,7 @@ def header(active="", over_hero=False):
   <a class="mp-link" href="{contact_href}">Contact</a>
   <div class="mp-cta"><a class="btn btn-primary" href="{contact_href}" data-open-quote>Get a Free Quote</a><a class="btn btn-outline" href="{SMS}">{icon("sms")}Text {PHONE}</a></div>
   <div class="mp-social social"><a href="{FB}" aria-label="Facebook" rel="noopener" target="_blank">{icon("fb")}</a><a href="{IG}" aria-label="Instagram" rel="noopener" target="_blank">{icon("ig")}</a></div>
-</nav>
-<div class="call-bar"><a class="cb-quote" href="{contact_href}" data-open-quote>Get a Free Quote</a><a href="{SMS}">{icon("sms")}Text {PHONE}</a></div>'''
+</nav>'''
 
 
 def footer():

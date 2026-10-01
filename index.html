@@ -167,10 +167,11 @@ ul{margin:0 0 1em;padding-left:1.2em}
 /* Trust bar */
 .trust-bar{background:#fff;border-bottom:1px solid var(--line)}
 .trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding:26px 0}
-.trust-item{display:flex;align-items:center;gap:14px;font-weight:600}
+.trust-item{display:flex;align-items:flex-start;gap:14px;font-weight:600}
+.trust-item strong{display:block;font-weight:700;line-height:1.3;padding-top:2px;color:var(--navy)}
 .trust-item .ico{width:46px;height:46px;border-radius:12px;background:var(--tint);display:grid;place-items:center;flex:none}
 .trust-item .ico svg{width:22px;height:22px;stroke:var(--orange-deep);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.trust-item small{display:block;font-weight:500;color:var(--muted);font-size:.85rem}
+.trust-item small{display:block;margin-top:3px;font-weight:500;color:var(--muted);font-size:.85rem;line-height:1.4}
 @media (max-width:900px){.trust-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:520px){.trust-grid{grid-template-columns:1fr;gap:12px}}
 /* Cards */
@@ -601,10 +602,10 @@ a.chip:hover{background:var(--orange);color:var(--navy-deep)}
 <section class="trust-bar" aria-label="Why customers choose us">
   <div class="wrap">
     <div class="trust-grid">
-      <div class="trust-item rv"><span class="ico"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></span><span>Fully insured<small>Public liability cover on every job</small></span></div>
-      <div class="trust-item rv rv-d1"><span class="ico"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 3l2.2 2 3-.4 1 2.9 2.7 1.4-.8 2.9 1.5 2.6-2.3 2-.2 3-3 .3L14 22l-2-2.2L10 22l-2.1-2.3-3-.3-.2-3-2.3-2 1.5-2.6-.8-2.9L5.8 7.5l1-2.9 3 .4z"/><path d="m9 12 2 2 4-4"/></svg></span><span>ABN registered<small>Down the Rabbit Hole (Aust) Pty Ltd</small></span></div>
-      <div class="trust-item rv rv-d2"><span class="ico"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M3 15h9l2-7h4"/><circle cx="6" cy="17" r="2.5"/><circle cx="17" cy="17" r="2.5"/><path d="M8.5 17h6M12 15l1.5-5"/><path d="M4 12V9h5"/></svg></span><span>60+ Canberra lawns maintained<small>Residential and commercial properties</small></span></div>
-      <div class="trust-item rv rv-d3"><span class="ico"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 21s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></span><span>Locally operated<small>Owned and run by Michael Robinson, est. 2021</small></span></div>
+      <div class="trust-item rv"><span class="ico"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></span><span><strong>Fully insured</strong><small>Public liability cover on every job</small></span></div>
+      <div class="trust-item rv rv-d1"><span class="ico"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 3l2.2 2 3-.4 1 2.9 2.7 1.4-.8 2.9 1.5 2.6-2.3 2-.2 3-3 .3L14 22l-2-2.2L10 22l-2.1-2.3-3-.3-.2-3-2.3-2 1.5-2.6-.8-2.9L5.8 7.5l1-2.9 3 .4z"/><path d="m9 12 2 2 4-4"/></svg></span><span><strong>ABN registered</strong><small>Down the Rabbit Hole (Aust) Pty Ltd</small></span></div>
+      <div class="trust-item rv rv-d2"><span class="ico"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M3 15h9l2-7h4"/><circle cx="6" cy="17" r="2.5"/><circle cx="17" cy="17" r="2.5"/><path d="M8.5 17h6M12 15l1.5-5"/><path d="M4 12V9h5"/></svg></span><span><strong>60+ lawns maintained</strong><small>Canberra homes and businesses</small></span></div>
+      <div class="trust-item rv rv-d3"><span class="ico"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 21s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></span><span><strong>Locally operated</strong><small>Run by Michael Robinson, est. 2021</small></span></div>
     </div>
   </div>
 </section>

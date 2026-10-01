@@ -581,10 +581,10 @@ def home():
 <section class="trust-bar" aria-label="Why customers choose us">
   <div class="wrap">
     <div class="trust-grid">
-      <div class="trust-item rv"><span class="ico">{icon("shield")}</span><span>Fully insured<small>Public liability cover on every job</small></span></div>
-      <div class="trust-item rv rv-d1"><span class="ico">{icon("badge")}</span><span>ABN registered<small>{LEGAL}</small></span></div>
-      <div class="trust-item rv rv-d2"><span class="ico">{icon("mower")}</span><span>60+ Canberra lawns maintained<small>Residential and commercial properties</small></span></div>
-      <div class="trust-item rv rv-d3"><span class="ico">{icon("pin")}</span><span>Locally operated<small>Owned and run by {OWNER}, est. 2021</small></span></div>
+      <div class="trust-item rv"><span class="ico">{icon("shield")}</span><span><strong>Fully insured</strong><small>Public liability cover on every job</small></span></div>
+      <div class="trust-item rv rv-d1"><span class="ico">{icon("badge")}</span><span><strong>ABN registered</strong><small>{LEGAL}</small></span></div>
+      <div class="trust-item rv rv-d2"><span class="ico">{icon("mower")}</span><span><strong>60+ lawns maintained</strong><small>Canberra homes and businesses</small></span></div>
+      <div class="trust-item rv rv-d3"><span class="ico">{icon("pin")}</span><span><strong>Locally operated</strong><small>Run by {OWNER}, est. 2021</small></span></div>
     </div>
   </div>
 </section>

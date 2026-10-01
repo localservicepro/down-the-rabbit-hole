@@ -2,11 +2,12 @@
  *
  * Step 1 (main quote form) creates a ServiceM8 job with status "Quote":
  *   client (company) + client contact, job, job contact, a job note holding every form detail,
- *   and each uploaded photo as a job attachment.
+ *   and each uploaded photo as a Job Diary attachment (single multipart POST to attachment.json).
  * Step 2 ("A few quick questions", new customers) adds the answers as a second note on the same job.
  *
  * Environment variables (Vercel > Project > Settings > Environment Variables):
- *   SERVICEM8_API_KEY   required. ServiceM8 API key, sent as the X-API-Key header.
+ *   SERVICEM8_API_KEY   required. ServiceM8 API key (ServiceM8 > Settings > API Keys), sent as the X-API-Key header.
+ *                       Docs: https://developer.servicem8.com/docs/authentication
  *   SERVICEM8_BASE_URL  optional. Defaults to https://api.servicem8.com/api_1.0 (used for testing).
  *
  * The key never reaches the browser. Without it the function answers 503 and the form still
@@ -113,7 +114,7 @@ async function findOrCreateClient(d, warnings) {
   const phone = clean(d.phone, 40);
   if (email) {
     try {
-      const q = encodeURIComponent(`email eq '${email.replace(/'/g, "''")}'`);
+      const q = encodeURIComponent(`email eq '${email.replace(/'/g, "''")}' and active eq 1`);
       const found = await smGet(`/companycontact.json?%24filter=${q}`);
       const hit = Array.isArray(found) && found.find((c) => c && c.company_uuid && String(c.active) !== '0');
       if (hit) return hit.company_uuid;
@@ -164,13 +165,16 @@ async function attachPhoto(jobUuid, photo, i, warnings) {
     if (!buf.length || buf.length > MAX_PHOTO_BYTES) throw new Error('empty or too large');
     const ext = type === 'image/png' ? '.png' : type === 'image/webp' ? '.webp' : '.jpg';
     const name = `Website photo ${i + 1}${ext}`;
-    const attUuid = await smPost('/attachment.json', {
-      related_object: 'job', related_object_uuid: jobUuid, attachment_name: name, file_type: ext, active: 1,
-    });
+    /* Single multipart POST, as documented in "Attaching files to a Job Diary": the file plus its metadata
+       as form fields. file_type and active are derived by ServiceM8 and must not be sent. Returns 201. */
     const fd = new FormData();
-    fd.append('file', new Blob([buf], { type }), name);
-    const r = await fetch(`${BASE}/Attachment/${attUuid}.file`, { method: 'POST', headers: authHeaders(), body: fd });
-    if (!r.ok) throw new Error(`file upload -> ${r.status}`);
+    fd.append('related_object', 'job');
+    fd.append('related_object_uuid', jobUuid);
+    fd.append('attachment_name', name);
+    fd.append('attachment_source', 'Website quote form');
+    fd.append('file', new Blob([buf], { type }), `website-photo-${i + 1}${ext}`);
+    const r = await fetch(`${BASE}/attachment.json`, { method: 'POST', headers: authHeaders(), body: fd });
+    if (!r.ok) throw new Error(`attachment upload -> ${r.status} ${(await r.text().catch(() => '')).slice(0, 200)}`);
     return true;
   } catch (e) { warnings.push(`photo ${i + 1}: ${e.message}`); return false; }
 }

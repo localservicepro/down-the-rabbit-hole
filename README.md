@@ -65,18 +65,18 @@ Requires Python 3.10+ (Pillow only for the image tooling).
 Every quote form submission also creates a ServiceM8 job, through the Vercel serverless function `api/quote.js`. The API key stays on the server and never reaches the browser.
 
 **Step 1, the quote form (inline or pop-up):**
-- The function looks up an existing client by email (`companycontact`). If there is no match, it creates a client and client contact.
+- The function looks up an existing active client contact by email (`companycontact.json?$filter=email eq '…' and active eq 1`). If there is no match, it creates a client and client contact.
 - It creates a job with status Quote: `job_address` is the property address and postcode, and `job_description` is a short summary.
 - It adds a job contact (`type: JOB`). Phone numbers starting 04 are saved as mobile.
 - It adds a job note with every form detail, the page the form was sent from and the time received.
-- Each photo is attached to the job as "Website photo N.jpg" (`attachment.json`, then `Attachment/{uuid}.file`).
+- Each photo is attached to the Job Diary as "Website photo N.jpg", using one multipart POST to `attachment.json` (the method in ServiceM8's "Attaching files to a Job Diary" guide).
 
 **Step 2, new customers' quick questions:** the answers are added as a second note on the same job. The browser keeps the job UUID with an HMAC token for this tab only, and the function checks the token before writing to the job.
 
 **Photos:** visitors can add up to 5. The browser shrinks each one to a maximum of 1600px as JPEG, typically 100–300KB, so uploads stay under Vercel's 4.5MB request limit. Photos are not sent to GHL.
 
 **Setup**
-1. In ServiceM8, create an API key that can read client contacts and create clients, jobs, job contacts, notes and attachments.
+1. In ServiceM8, go to Settings > API Keys and create a key. ServiceM8's docs say a private-app key is sent in the `X-API-Key` header, which is what the function does. These are the matching permissions, if ServiceM8 asks: `create_jobs`, `manage_customers`, `read_customer_contacts`, `manage_customer_contacts`, `manage_job_contacts`, `publish_job_notes`, `manage_attachments`.
 2. In Vercel, go to Project > Settings > Environment Variables and add `SERVICEM8_API_KEY` for Production, and for Preview if you want to test there. Redeploy.
 3. Send a test quote with a photo and check the job, note and attachment in ServiceM8.
 

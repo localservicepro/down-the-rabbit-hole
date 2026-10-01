@@ -126,8 +126,8 @@ ul{margin:0 0 1em;padding-left:1.2em}
 @media (prefers-reduced-motion:reduce){.hero-video{display:none}}
 .has-video .hero-media img,.has-video .hero-video{object-position:28% center}
 @media (min-width:1000px){
- .has-video .hero-inner{display:flex;flex-direction:column;align-items:flex-end}
- .has-video .hero-inner>*{width:100%;max-width:640px}
+ .has-video .hero-inner{width:min(1240px,100% - 32px);max-width:none;display:flex;flex-direction:column;align-items:flex-end}
+ .has-video .hero-inner>*{width:min(620px,52%)}
  .has-video .hero-scrim{background:linear-gradient(90deg,rgba(8,40,88,.12) 0%,rgba(8,40,88,.35) 40%,rgba(11,47,95,.82) 72%,rgba(11,47,95,.9) 100%),linear-gradient(180deg,rgba(8,40,88,.45) 0%,transparent 30%,rgba(11,47,95,.55) 100%)}
 }
 @media (prefers-reduced-motion:no-preference){.hero-media img{animation:kenburns 18s ease-out both}}

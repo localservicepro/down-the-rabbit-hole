@@ -272,6 +272,10 @@ ul{margin:0 0 1em;padding-left:1.2em}
 .proof-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:36px;align-items:start}
 @media (max-width:960px){.proof-grid{grid-template-columns:1fr}}
 .review-card{background:#fff;border:1px dashed rgba(11,47,95,.35);border-radius:var(--r);padding:26px}
+.reviews-section{background:#fff}
+.review-widget{margin-top:28px;min-height:120px}
+.review-widget iframe{display:block;width:100%;min-height:420px;border:0}
+.review-widget.loaded iframe{min-height:0}
 .review-card .g{display:flex;align-items:center;gap:12px;margin-bottom:12px}
 .review-card .g .score{font-family:var(--display);font-weight:800;font-size:1.6rem;color:var(--navy)}
 /* Guides */

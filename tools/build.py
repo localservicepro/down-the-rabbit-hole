@@ -22,6 +22,8 @@ HOURS = "Mon–Thu 8am–5pm · Fri 9am–5pm · Sat–Sun closed"
 OWNER = "Michael Robinson"
 OWNER_ID = SITE + "/#owner"
 TRACKING_ID = "tk_6f4c1089fe214ae6baa8c2dc37522e82"
+REVIEW_WIDGET_JS = "https://app.downtherabbitholeaust.com/reputation/assets/review-widget.js"
+REVIEW_WIDGET_SRC = "https://app.downtherabbitholeaust.com/reputation/widgets/review_widget/3yb7gzTYYnwm3QAH6nFW?widgetId=6abe618b07d8dcd57f696246"
 THANK_YOU = "/thank-you"
 CSS = open(os.path.join(ROOT, "assets", "site.css"), encoding="utf-8").read()
 JS_VER = hashlib.md5(open(os.path.join(ROOT, "assets", "site.js"), "rb").read()).hexdigest()[:8]
@@ -391,6 +393,20 @@ def contact_section(heading="Get a free lawn and garden quote", line="Tell us ab
 </section>'''
 
 
+def reviews_section(heading="What Canberra customers say", lead="Reviews from Down the Rabbit Hole AUST customers, straight from the review platform."):
+    """Review widget (lead-connector reputation widget). The widget script and iframe load only when the section
+    nears the viewport (see site.js), so the third-party code never delays the first paint."""
+    return f'''<section class="section reviews-section" id="reviews">
+  <div class="wrap">
+    <div class="section-head rv"><div><span class="eyebrow">Reviews</span><h2>{esc(heading)}</h2></div><p class="lead">{esc(lead)} <a href="{GBP}" rel="noopener" target="_blank">Read all reviews on Google</a>.</p></div>
+    <div class="review-widget" data-review-widget data-script="{REVIEW_WIDGET_JS}">
+      <iframe class="lc_reviews_widget" data-src="{REVIEW_WIDGET_SRC}" title="Customer reviews for {NAME}" frameborder="0" scrolling="no" style="min-width:100%;width:100%"></iframe>
+      <noscript><iframe class="lc_reviews_widget" src="{REVIEW_WIDGET_SRC}" title="Customer reviews for {NAME}" frameborder="0" scrolling="no" style="min-width:100%;width:100%;min-height:420px"></iframe></noscript>
+    </div>
+  </div>
+</section>'''
+
+
 def faq_section(faqs, heading="Frequently asked questions", eyebrow="FAQ", lead=None):
     items = "\n".join(
         f'<details class="rv"><summary>{esc(q)}<span class="plus">{icon("plus")}</span></summary><div class="ans"><p>{esc(a)}</p></div></details>'
@@ -665,9 +681,8 @@ def home():
         <div class="review-card">
           <div class="g"><span class="score">4.8</span><span><span class="stars" role="img" aria-label="4.8 out of 5 stars">{icon("star")*5}</span><small style="color:var(--muted)">Google rating, 85 reviews</small></span></div>
           <h3>What Canberra customers say</h3>
-          <!-- REVIEWS: paste 3–5 Google reviews here (reviewer first name, date, review text). Source: {GBP} -->
-          <p style="color:var(--muted)">We are adding recent customer reviews here. Until then, read them straight from our Google Business Profile.</p>
-          <a class="btn btn-navy" href="{GBP}" rel="noopener" target="_blank">Read reviews on Google</a>
+          <p style="color:var(--muted)">Rated 4.8 from 85 Google reviews. Read what customers say about mowing, garden care and clean-ups.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-navy" href="#reviews">See customer reviews</a><a class="btn btn-outline" href="{GBP}" rel="noopener" target="_blank">Google reviews</a></div>
         </div>
         <div class="aside-card" style="margin-top:18px">
           <h3>Commercial and strata grounds</h3>
@@ -678,6 +693,8 @@ def home():
     </div>
   </div>
 </section>
+
+{reviews_section()}
 
 <section class="section" id="guides">
   <div class="wrap">
@@ -898,6 +915,7 @@ def about():
     </div>
   </div>
 </section>
+{reviews_section("What customers say about working with Michael", "Reviews from Down the Rabbit Hole AUST customers across Canberra and Queanbeyan.")}
 {faq_section(faqs, "Common questions about working with us")}
 {contact_section("Get a free quote from a locally operated business", "Tell us about your lawn or garden and we will come back with a clear, upfront quote.")}
 '''

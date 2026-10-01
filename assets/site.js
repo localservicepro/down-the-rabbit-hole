@@ -231,6 +231,29 @@
     });
   });
 
+  /* Review widget: load the reputation script, then the iframe, only when the section nears the viewport. */
+  document.querySelectorAll('[data-review-widget]').forEach(function (box) {
+    var frame = box.querySelector('iframe[data-src]');
+    if (!frame) return;
+    function start() {
+      if (box.dataset.started) return; box.dataset.started = '1';
+      var go = function () { frame.src = frame.getAttribute('data-src'); };
+      frame.addEventListener('load', function () {
+        /* the widget script sizes the iframe; once it has, drop the placeholder height */
+        setTimeout(function () { if (frame.style.height || frame.getAttribute('height')) box.classList.add('loaded'); }, 1500);
+      });
+      if (document.querySelector('script[data-review-widget-js]')) { go(); return; }
+      var sc = document.createElement('script');
+      sc.src = box.getAttribute('data-script'); sc.async = true; sc.setAttribute('data-review-widget-js', '');
+      sc.onload = go; sc.onerror = go;
+      document.body.appendChild(sc);
+    }
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); start(); } }, { rootMargin: '600px 0px' });
+      io.observe(box);
+    } else { start(); }
+  });
+
   /* Facebook pixel: deferred until after first paint / load */
   function loadPixel() {
     if (window.fbq) return;

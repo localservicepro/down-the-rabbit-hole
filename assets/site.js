@@ -167,7 +167,9 @@
     }
     if (!form.checkValidity()) {
       showError(form, true);
-      var bad = form.querySelector(':invalid'); if (bad) bad.focus();
+      var bad = form.querySelector(':invalid');
+      if (bad && bad.classList.contains('ms-value')) { var ms = bad.closest('[data-ms]'); openMs(ms, true); ms.querySelector('.ms-toggle').focus(); }
+      else if (bad) bad.focus();
       return false;
     }
     showError(form, false);
@@ -200,6 +202,28 @@
     if (form.dataset.sending) return; /* our own dispatched event: pass it on to other listeners */
     if (!startSend(form)) e.stopImmediatePropagation(); /* Enter key on an invalid form */
   }, true);
+  /* Multi-select "Service needed": checkboxes write one comma-separated value into the named field,
+     so the CRM receives a single service_needed value. */
+  function openMs(ms, open) {
+    var t = ms.querySelector('.ms-toggle'), p = ms.querySelector('.ms-panel');
+    t.setAttribute('aria-expanded', open ? 'true' : 'false'); p.hidden = !open;
+  }
+  document.querySelectorAll('[data-ms]').forEach(function (ms) {
+    var toggle = ms.querySelector('.ms-toggle'), summary = ms.querySelector('.ms-summary'), value = ms.querySelector('.ms-value');
+    var boxes = ms.querySelectorAll('.ms-opt input');
+    function sync() {
+      var picked = [].filter.call(boxes, function (b) { return b.checked; }).map(function (b) { return b.value; });
+      value.value = picked.join(', ');
+      ms.classList.toggle('has-value', picked.length > 0);
+      summary.textContent = !picked.length ? 'Select…' : picked.length <= 2 ? picked.join(', ') : picked.length + ' services selected';
+      value.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+    toggle.addEventListener('click', function () { openMs(ms, toggle.getAttribute('aria-expanded') !== 'true'); });
+    boxes.forEach(function (b) { b.addEventListener('change', sync); });
+    ms.querySelector('.ms-done').addEventListener('click', function () { openMs(ms, false); toggle.focus(); });
+    ms.addEventListener('keydown', function (e) { if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') { e.stopPropagation(); openMs(ms, false); toggle.focus(); } });
+    document.addEventListener('click', function (e) { if (!ms.contains(e.target)) openMs(ms, false); });
+  });
   document.querySelectorAll('.quote-form').forEach(function (form) {
     var src = form.querySelector('[name=source_page]'); if (src) src.value = location.href;
     form.querySelectorAll('input, select, textarea').forEach(function (c) {

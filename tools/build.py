@@ -330,15 +330,23 @@ def quote_form(prefix, compact=False):
         else:
             ctl = f'<input id="{i}" name="{key}" data-field="{key}" placeholder="{esc(placeholder)}"{extra}{req}>'
         return f'<div class="fld{" span" if span else ""}"><label for="{i}">{esc(label)}{"" if required else " <span>(optional)</span>"}</label>{ctl}</div>'
+    def multi(key, label, options):
+        i = f"{prefix}-{key}"
+        opts = "".join(f'<label class="ms-opt"><input type="checkbox" value="{esc(o)}"><span>{esc(o)}</span></label>' for o in options)
+        return (f'<div class="fld span ms" data-ms><label id="{i}-label" for="{i}-toggle">{esc(label)} <span>(choose one or more)</span></label>'
+                f'<button type="button" class="ms-toggle" id="{i}-toggle" aria-expanded="false" aria-controls="{i}-panel"><span class="ms-summary">Select…</span></button>'
+                f'<div class="ms-panel" id="{i}-panel" role="group" aria-labelledby="{i}-label" hidden><div class="ms-grid">{opts}</div>'
+                f'<button type="button" class="ms-done">Done</button></div>'
+                f'<input class="ms-value" type="text" id="{i}" name="{key}" data-field="{key}" required tabindex="-1" aria-hidden="true" autocomplete="off"></div>')
     return f'''<form class="quote-form{" compact" if compact else ""}" id="{prefix}-form" novalidate="" data-thank-you="{THANK_YOU}" aria-label="Request a free quote">
   <div class="fgrid">
     {f("full_name", "Full name", extra=' type="text" autocomplete="name"', placeholder="Jane Citizen")}
     {f("email", "Email", extra=' type="email" autocomplete="email" inputmode="email"', placeholder="you@example.com")}
     {f("phone", "Phone", extra=' type="tel" autocomplete="tel" inputmode="tel" pattern="[0-9+ ()-]{{8,}}"', placeholder="04xx xxx xxx")}
     {f("postal_code", "Postcode", extra=' type="text" autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{{4}}" maxlength="4"', placeholder="2611")}
-    {f("property_address", "Property address", extra=' type="text" autocomplete="street-address"', span=True, placeholder="12 Example Street, Kambah")}
+    {f("property_address", "Property address", extra=' type="text" autocomplete="street-address"', placeholder="12 Example Street, Kambah")}
     {f("property_size", "Property size", tag="select", options=SIZE_OPTIONS)}
-    {f("service_needed", "Service needed", tag="select", options=SERVICE_OPTIONS)}
+    {multi("service_needed", "Service needed", SERVICE_OPTIONS)}
     {f("job_notes", "Job notes", tag="textarea", required=False, span=True, placeholder="What needs doing, how often, access details, anything we should know.")}
   </div>
   <div class="hp" aria-hidden="true"><label for="{prefix}-qf-extra">Leave this field empty</label><input type="text" id="{prefix}-qf-extra" name="qf_extra" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore="true"></div>

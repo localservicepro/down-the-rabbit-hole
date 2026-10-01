@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Blog posts (/blog and /post/...) are migrated separately; add them to this sitemap when they go live. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://downtherabbitholeaust.com/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
   <url><loc>https://downtherabbitholeaust.com/about</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>

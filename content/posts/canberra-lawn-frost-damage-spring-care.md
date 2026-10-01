@@ -15,7 +15,7 @@ Overseed bare patches to create a dense, weed-resistant turf.
 
 Consider professional help for tasks like aeration and mowing for best results.
 
-Is your Canberra frost damage lawn looking a bit worse for wear? You're not alone. The crisp, cold winters in the ACT can leave lawns looking brown, patchy, and lifeless. But with the first hints of spring, you can take simple, effective steps to revive your turf and encourage lush, green growth. A little early spring lawn care goes a long way in setting your yard up for a beautiful season ahead, a service expertly handled by professionals like Down the Rabbit Hole AUST Pty ltd.
+Is your Canberra frost damage lawn looking a bit worse for wear? You're not alone. The crisp, cold winters in the ACT can leave lawns looking brown, patchy, and lifeless. But with the first hints of spring, you can take simple, effective steps to revive your turf and encourage lush, green growth. A little early spring lawn care goes a long way in setting your yard up for a beautiful season ahead, and Down the Rabbit Hole AUST can help if you would rather hand it over.
 ## What is Frost Damage on a Lawn?
 
 Frost damage on a lawn occurs when the water inside the grass blades freezes, causing the plant cells to rupture and die. This typically results in a discoloured, brown, or straw-like appearance across the turf. While it looks alarming, the grass crowns and roots are often still alive and will recover with proper care as the weather warms up.
@@ -35,7 +35,7 @@ Compacted soil is a major barrier to a healthy lawn, as it prevents water, air, 
 Aerating in early spring breaks up this compaction, allowing the root system to breathe and grow deeper. It creates channels for fertiliser and water to penetrate effectively, giving your lawn the foundation it needs to thrive. For residents in areas like Weston Creek, this can be the single most effective step you take.
 ### Step 2: Fertilising for New Growth
 
-After a long winter, your lawn's nutrient stores are depleted. Applying a balanced, slow-release fertiliser in early spring provides the essential nitrogen, phosphorus, and potassium needed for vigorous growth. A quality fertiliser will help the grass repair itself, develop strong roots, and regain its vibrant green colour. According to industry research, applying fertiliser in the spring can increase turf density by up to 50% by summer.
+After a long winter, your lawn's nutrient stores are depleted. Applying a balanced, slow-release fertiliser in early spring provides the essential nitrogen, phosphorus, and potassium needed for vigorous growth. A quality fertiliser will help the grass repair itself, develop strong roots, and regain its vibrant green colour.
 ### Step 3: Overseeding and Patch Repair
 
 Winter frost can create bare or thin patches in your lawn. Overseeding—the process of sowing new grass seed over your existing turf—is the perfect solution. It helps fill in these weak spots, creating a denser and more resilient lawn that is better equipped to crowd out weeds. Choose a grass seed blend that is well-suited to the Canberra climate for the best results.
@@ -56,11 +56,7 @@ Vary Your Mowing Pattern: Changing your mowing direction each time prevents the 
 |---|---|---|
 | Aeration | Manual spike aerators or rented machines. Can be labour-intensive and less effective than professional equipment. | Uses powerful core aerators for deep, even soil penetration. Ensures optimal results without the physical labour. |
 | Fertilising | Requires purchasing the right fertiliser and a spreader. Risk of uneven application or turf burn. | Applies professional-grade, slow-release fertilisers tailored to your lawn's specific needs for balanced growth. |
-| Mowing | Requires your own equipment and time. Setting the correct height and ensuring sharp blades is key. | Professional mowers and sharp blades provide a clean, even cut at the perfect height. Experts in lawn mowing Weston Creek, like [Down The Rabbit Hole](https://downtherabbitholeaust.com/lawn-mowing), handle it efficiently. |
+| Mowing | Requires your own equipment and time. Setting the correct height and ensuring sharp blades is key. | Professional mowers and sharp blades provide a clean, even cut at the perfect height. A regular [lawn mowing Canberra](/lawn-mowing) service takes the job off your hands. |
 ## Conclusion: Setting Your Lawn Up for Success
 
-Reviving your Canberra frost damage lawn is an achievable goal that pays dividends all year long. By focusing on core tasks like aeration, proper fertilising, and smart mowing practices in early spring, you can effectively heal winter damage and foster a thick, resilient turf. Remember that timing is key, and patience in the first few weeks of spring will lead to a healthier lawn in the long run. If the task seems daunting, the experienced team at [Down the Rabbit Hole AUST Pty Ltd.](https://downtherabbitholeaust.com/) is ready to help with everything from hedge trimming to full seasonal cleanups. Give your lawn the expert care it deserves and enjoy a beautiful outdoor space this season.
-
-[Down The Rabbit Hole Lawn Care Team](https://downtherabbitholeaust.com/blog/author/695b34992c0fabfb5cfaeec8)
-
-The Down The Rabbit Hole Lawn Care Team provides professional lawn mowing and garden maintenance services across Canberra. Our team shares practical lawn care advice based on real on-site experience, local climate conditions, and the needs of Canberra homeowners.
+Reviving your Canberra frost damage lawn is an achievable goal that pays dividends all year long. By focusing on core tasks like aeration, proper fertilising, and smart mowing practices in early spring, you can effectively heal winter damage and foster a thick, resilient turf. Remember that timing is key, and patience in the first few weeks of spring will lead to a healthier lawn in the long run. If the task seems daunting, [Down the Rabbit Hole AUST](https://downtherabbitholeaust.com/), owned and run by Michael Robinson, can help with everything from hedge trimming to yard clean-ups. Give your lawn the expert care it deserves and enjoy a beautiful outdoor space this season.

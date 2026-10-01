@@ -21,7 +21,7 @@ Working with the seasons helps prevent common issues, supports healthier growth,
 💡 Pro Tip: Note key seasonal tasks in a calendar or reminder app so you never miss the best time for pruning, fertilising, or planting.
 ## Lawn Care Basics
 
-A well-kept lawn forms the foundation of most gardens. In Canberra, lawns can struggle due to temperature extremes, so consistent care is important to avoid bare patches and stressed turf.
+A well-kept lawn forms the foundation of most gardens. In Canberra, lawns can struggle due to temperature extremes, so consistent care is important to avoid bare patches and stressed turf. If you want help with feeding, weeds or patchy turf, see the [lawn care Canberra](/lawn-care) service from Down the Rabbit Hole AUST.
 
 Key lawn maintenance tips include:
 
@@ -113,7 +113,3 @@ If your garden is becoming difficult to maintain, you might consider getting ass
 For those looking for guidance or help with ongoing care, you can explore services available at [https://downtherabbitholeaust.com/](https://downtherabbitholeaust.com/) for more information.
 
 💡 Pro Tip: A professional gardener can also help you plan low-maintenance, climate-appropriate planting to suit Canberra’s seasons.
-
-[Down The Rabbit Hole Lawn Care Team](https://downtherabbitholeaust.com/blog/author/695b34992c0fabfb5cfaeec8)
-
-The Down The Rabbit Hole Lawn Care Team provides professional lawn mowing and garden maintenance services across Canberra. Our team shares practical lawn care advice based on real on-site experience, local climate conditions, and the needs of Canberra homeowners.

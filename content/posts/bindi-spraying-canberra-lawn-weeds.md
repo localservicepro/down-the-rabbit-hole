@@ -31,9 +31,9 @@ Requires careful handling and storage of chemicals.
 
 Professionals are trained in safe application and handling procedures.
 
-For a guaranteed, hassle-free solution, consider a local expert. For reliable bindi spraying and lawn care, check out [Down the Rabbit Hole AUST Pty ltd](https://downtherabbitholeaust.com/lawn-mowing) — they have the expertise to get your Canberra lawn ready for summer.
+If you would rather not do it yourself, consider a local professional. Down the Rabbit Hole AUST offers [weed spraying](/weed-spraying) across Canberra and can help get your lawn ready for summer, with a clear, upfront quote before work starts.
 
-Ultimately, preventing bindi and broadleaf weeds is about proactive care. By taking action in the cooler months, you set your lawn up for a successful, enjoyable summer. A little effort in autumn and winter pays big dividends when you can walk across your lawn without a single prickle. If you need help, the team at Down the Rabbit Hole AUST Pty ltd is always ready to lend their expertise.
+Ultimately, preventing bindi and broadleaf weeds is about proactive care. By taking action in the cooler months, you set your lawn up for a successful, enjoyable summer. A little effort in autumn and winter pays big dividends when you can walk across your lawn without a single prickle. If you need help, Down the Rabbit Hole AUST, owned and run by Michael Robinson, can help.
 
 To stop bindi and broadleaf weeds in Canberra, act during autumn and winter. This is when the weeds are young and vulnerable. Use a selective herbicide and maintain a healthy, dense lawn by mowing high and watering deeply. This preventative approach stops them from seeding before summer arrives.
 ## Key takeaways
@@ -68,7 +68,7 @@ Effective weed control involves a combination of chemical and cultural methods. 
 For broadleaf weeds and bindi, a selective herbicide is necessary. These herbicides are designed to kill the weeds without harming your grass. Look for products containing active ingredients like MCPA and Bromoxynil, which are effective on a wide range of broadleaf pests.
 ### Cultural Control Methods
 
-Chemicals are only part of the solution. Healthy lawn care practices are your best long-term strategy. Mowing your lawn at a higher setting helps the grass develop a deep root system and shade the soil, preventing weed seeds from germinating. Regular, deep watering also encourages grass roots to grow stronger than the shallow roots of many weeds. According to industry research, a thick lawn can naturally reduce weed infestation by over 80%.
+Chemicals are only part of the solution. Healthy lawn care practices are your best long-term strategy. Mowing your lawn at a higher setting helps the grass develop a deep root system and shade the soil, preventing weed seeds from germinating. Regular, deep watering also encourages grass roots to grow stronger than the shallow roots of many weeds. A thick lawn naturally leaves less room for weeds to establish.
 ### What is the best time to spray for bindi in Canberra?
 
 The best time for bindi spraying in Canberra is during autumn and winter. This targets the weeds while they are young and actively growing, preventing them from producing their painful, spiky seeds in late spring and summer. It's a proactive approach that is much more effective than reactive spraying.
@@ -84,7 +84,3 @@ No, bindi weeds do not die off in winter. They actually germinate in autumn and 
 ### How do I make my lawn healthier to resist weeds?
 
 To make your lawn healthier, mow at a taller height, water deeply but less frequently, and fertilize appropriately for the season. A dense, thriving lawn will naturally crowd out and shade the soil, preventing weed seeds like bindi from getting the light and space they need to germinate and grow.
-
-[Down The Rabbit Hole Lawn Care Team](https://downtherabbitholeaust.com/blog/author/695b34992c0fabfb5cfaeec8)
-
-The Down The Rabbit Hole Lawn Care Team provides professional lawn mowing and garden maintenance services across Canberra. Our team shares practical lawn care advice based on real on-site experience, local climate conditions, and the needs of Canberra homeowners.

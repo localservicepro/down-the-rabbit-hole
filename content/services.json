@@ -5,25 +5,25 @@
   "description": "Lawn and garden services across Canberra and Queanbeyan: mowing, garden maintenance, hedges, clean-ups, weed spraying and green waste. Get a free quote today.",
   "keyword": "lawn and garden services",
   "eyebrow": "Everything for the yard",
-  "lede": "Mowing, garden maintenance, hedges, clean-ups, weed control and green waste removal from one local, insured Canberra team.",
+  "lede": "Mowing, garden maintenance, hedges, clean-ups, weed control and green waste removal from one local, insured Canberra business.",
   "intro": [
     "Down the Rabbit Hole AUST provides lawn and garden services across Canberra and Queanbeyan for homes, rentals and commercial properties. Regular mowing is the backbone of what we do, but most customers add something to it over time: hedges before summer, a clean-up before a sale or inspection, weed spraying in spring, or a load of green waste that will not fit in the bin.",
-    "We are fully insured, ABN registered and locally operated, and we have maintained 60+ Canberra lawns since 2021. Quotes are free and given upfront before any work starts, and green waste is removed after every mowing, garden maintenance and clean-up job. Taking the headaches away is the whole idea. Pick a service below, or call us and describe the yard."
+    "Down the Rabbit Hole AUST is owned and run by Michael Robinson, so you deal directly with the owner. We are fully insured, ABN registered and locally operated, and we have maintained 60+ Canberra lawns since 2021. Quotes are free and given upfront before any work starts, and green waste removal is available with every mowing, garden maintenance and clean-up job. Taking the headaches away is the whole idea. Pick a service below, or call us and describe the yard."
   ],
   "sections": [
     {
       "h2": "How we work",
       "paras": [
-        "Call, email or use the form and tell us the suburb and what needs doing. We come out, or work from clear photos for small jobs, and give you a written quote for the lawn and garden services you need, with no obligation. If you are happy, we book a day and turn up when we said we would.",
-        "Regular customers get a set schedule that we adjust with the seasons, so visits run fortnightly through the spring growth surge and drop back through the frosty months. One-off jobs are welcome too. Either way, the same standards apply: tidy work, gates closed, waste gone."
+        "Text 0423 720 317 or use the form and tell us the suburb and what needs doing. We come out, or work from clear photos for small jobs, and give you a clear, upfront quote for the lawn and garden services you need, with no obligation. If you are happy, we book a day and turn up when we said we would.",
+        "Regular customers get a set schedule that we adjust with the seasons, so visits run fortnightly through the spring growth surge and drop back through the frosty months. One-off jobs are welcome too. Either way, the same standards apply: tidy work, gates closed, and green waste removal available."
       ],
       "bullets": []
     },
     {
       "h2": "Where we work",
       "paras": [
-        "We cover seven districts for lawn and garden services. Weston Creek is our home base and gets the most regular runs, but every district below is serviced week in, week out.",
-        "We also provide lawn and garden services across the border in Queanbeyan and surrounds in NSW, including Jerrabomberra, Googong and Karabar. If your suburb is not listed, ask, because we can often fit nearby streets into an existing run."
+        "We cover seven districts for lawn and garden services. Weston Creek is our priority area, and every district below is serviced too.",
+        "We also provide lawn and garden services across the border in Queanbeyan and surrounds in NSW, including Jerrabomberra, Googong and Karabar. If your suburb is not listed, ask and we will confirm whether we cover it."
       ],
       "bullets": [
         "Weston Creek: Fisher, Waramanga, Chapman, Weston, Rivett, Duffy and Coombs",
@@ -38,19 +38,19 @@
   "faqs": [
     {
       "q": "Which lawn and garden services do you offer in Canberra?",
-      "a": "Lawn mowing, lawn care such as fertilising and aeration, gardening and garden maintenance, hedge trimming, yard clean-ups, weed spraying, green waste removal and general rubbish removal. We also provide lawn and garden help for veterans and DVA card holders. Every job includes waste removal."
+      "a": "Lawn mowing, lawn care such as fertilising and aeration, gardening and garden maintenance, hedge trimming, yard clean-ups, weed spraying, green waste removal and general rubbish removal. As a registered DVA provider, we also provide lawn and garden help for veterans and DVA card holders. Green waste removal is available with mowing, garden maintenance and clean-up jobs."
     },
     {
       "q": "Do I have to sign up for regular visits?",
-      "a": "No. One-off jobs are welcome, whether it is a single mow, a hedge before Christmas or a clean-up before an inspection. Many customers start with a one-off and move to a schedule once they see how it goes, but there is no contract either way."
+      "a": "No. One-off jobs are welcome, whether it is a single mow, a hedge before Christmas or a clean-up before an inspection. You can start with a one-off and move to a regular schedule later if it suits you."
     },
     {
       "q": "How do I get a quote?",
-      "a": "Call 0423 720 317, email info@downtherabbitholeaust.com or use the form on this page. Tell us the suburb and what needs doing. Quotes are free and given upfront, and nothing starts until you have agreed to it."
+      "a": "Text 0423 720 317 or use the form on this page. Tell us the suburb and what needs doing. Quotes are free and given upfront, and nothing starts until you have agreed to it."
     },
     {
       "q": "Do you do commercial properties as well as homes?",
-      "a": "Yes. Our lawn and garden services cover residential and commercial properties, including rentals, body corporate grounds, small business frontages and community facilities. Commercial work usually runs on a set schedule with the same team each visit."
+      "a": "Yes. Our lawn and garden services cover residential and commercial properties, including rentals, body corporate grounds, small business frontages and community facilities. Commercial work can run on a regular schedule or as one-off visits."
     }
   ],
   "suburbs": [
@@ -84,7 +84,7 @@
     "yard-clean-ups": "One-off clean-ups for overgrown yards, rentals, sales and inspections, finished in a single visit where possible.",
     "green-waste-removal": "Grass, prunings, leaves and branches loaded and taken away when the green bin is not enough.",
     "rubbish-removal": "General rubbish cleared from yards, sheds and garages as part of a clean-up or on its own.",
-    "dva-lawn-care": "Regular mowing and garden upkeep for veterans and DVA card holders, with a consistent, respectful team.",
-    "weed-spraying": "Bindi, broadleaf and garden bed weed control, timed for Canberra's seasons and safe once dry."
+    "dva-lawn-care": "Registered DVA provider: regular mowing and garden upkeep for veterans and DVA card holders.",
+    "weed-spraying": "Bindi, broadleaf and garden bed weed control, timed for Canberra's seasons."
   }
 }

@@ -50,7 +50,7 @@ Regular mowing encourages a thicker, healthier lawn.
 
 Consider professional help for tasks like aeration and weed control.
 
-As winter's chill fades, many Canberra residents wonder about spring lawn mowing. Getting the timing right for that first cut is crucial for a lush, healthy lawn all season. This guide will walk you through the key signals your lawn will give you, ensuring you set it up for success. With a little knowledge, you can avoid common mistakes and get a head start on a beautiful yard with help from experts like Down the Rabbit Hole AUST Pty ltd.
+As winter's chill fades, many Canberra residents wonder about spring lawn mowing. Getting the timing right for that first cut is crucial for a lush, healthy lawn all season. This guide will walk you through the key signals your lawn will give you, ensuring you set it up for success. With a little knowledge, you can avoid common mistakes and get a head start on a beautiful yard with help from Down the Rabbit Hole AUST.
 ## When is the best time to start mowing your lawn in Spring?
 
 The best time for the first spring mow is when your grass has actively started growing, typically reaching a height of 7-8 cm. This usually happens in Canberra from late August to mid-September, once the soil warms up and consistent growth replaces winter dormancy. Mowing too early can stress the grass, while waiting too long can encourage pests and disease.
@@ -68,17 +68,17 @@ Early spring lawn care involves more than just mowing; it's about waking your la
 Your lawn is likely covered in leaves, twigs, and other organic debris after winter. Rake this up thoroughly. This not only makes the yard look tidier but also allows sunlight and air to reach the grass shoots. It’s also the perfect time to spot any bare patches or signs of lawn disease that need attention.
 ### Step 2: Aeration and De-Thatching
 
-Winter can leave lawns compacted and thatched (a layer of dead grass between the green blades and the soil). Aeration—the process of creating small holes in the soil—allows water, air, and nutrients to penetrate the grassroots. If your lawn feels spongy, it might need de-thatching. Industry research suggests that a thatch layer thicker than 1.5 cm can prevent essential resources from reaching the soil.
+Winter can leave lawns compacted and thatched (a layer of dead grass between the green blades and the soil). Aeration—the process of creating small holes in the soil—allows water, air, and nutrients to penetrate the grassroots. If your lawn feels spongy, it might need de-thatching. A thick thatch layer can stop water and nutrients from reaching the soil.
 ### Step 3: Weed Control
 
 Spring is when weeds like bindii and clover start their offensive. It’s far easier to remove them when they are young before they have a chance to spread and set seed. Hand-pulling is effective for small infestations, but for more widespread issues in areas like Weston Creek, a targeted weed spraying service might be necessary.
 ## Why is regular mowing important in spring?
 
-Regular mowing during spring is vital because it encourages the grass to thicken up, creating a dense, carpet-like lawn. Each cut stimulates the grass plants to produce new shoots, or "tillers," from their base. This process, known as tillering, is what transforms a sparse lawn into a thick, robust turf that is naturally more resistant to weeds and pests. A study by the University of New England found that consistent mowing can increase turf density by up to 40% over a single season.
+Regular mowing during spring is vital because it encourages the grass to thicken up, creating a dense, carpet-like lawn. Each cut stimulates the grass plants to produce new shoots, or "tillers," from their base. This process, known as tillering, is what transforms a sparse lawn into a thick, robust turf that is naturally more resistant to weeds and pests.
 
-Furthermore, maintaining a consistent schedule, whether you're in Giralang or Waramanga, prevents the lawn from becoming overgrown and stressed. It keeps the yard looking neat and makes it more enjoyable for outdoor activities. If you find it hard to keep up with a regular schedule, a professional service can be a huge help. For comprehensive lawn care, from the first cut to seasonal maintenance, you can check out [Down The Rabbit Hole](https://downtherabbitholeaust.com/lawn-mowing) — they have what you need.
+Furthermore, maintaining a consistent schedule, whether you're in Giralang or Waramanga, prevents the lawn from becoming overgrown and stressed. It keeps the yard looking neat and makes it more enjoyable for outdoor activities. If you find it hard to keep up with a regular schedule, a professional service can be a huge help. If you would rather hand it over, see the [lawn mowing Canberra](/lawn-mowing) service from Down the Rabbit Hole AUST, with one-off and regular scheduled visits.
 
-As you move through spring, your lawn will thank you for the careful attention you gave it at the start of the season. By waiting for the right moment for that first mow, clearing away debris, and establishing a regular cutting schedule, you set the stage for a healthy, green lawn. Down the Rabbit Hole AUST Pty ltd is always ready to assist with expert advice and services to keep your Canberra property looking its best. Don't hesitate to reach out on their website to learn more about their lawn care and maintenance programs.
+As you move through spring, your lawn will thank you for the careful attention you gave it at the start of the season. By waiting for the right moment for that first mow, clearing away debris, and establishing a regular cutting schedule, you set the stage for a healthy, green lawn. Down the Rabbit Hole AUST can help with lawn mowing, lawn care and garden maintenance to keep your Canberra property looking its best. Visit the website or call 0423 720 317 to learn more.
 ### What is the best height to cut my lawn in spring in Canberra?
 
 For the first spring mow, set your blades high to trim the grass to about 5-6 cm. As the season progresses and growth becomes more vigorous, you can gradually lower the height to your preferred level, typically around 3-4 cm for most common Canberra grass types.
@@ -94,7 +94,3 @@ Spring is an excellent time to fix bare patches. Rake the patch to remove dead g
 ### Is it okay to mow a wet lawn?
 
 No, you should avoid mowing a wet lawn. Mowing wet grass results in an uneven cut, can clog your mower, and contributes to soil compaction. It also creates clumps of clippings on the lawn that can smother the grass underneath and promote disease.
-
-[Down The Rabbit Hole Lawn Care Team](https://downtherabbitholeaust.com/blog/author/695b34992c0fabfb5cfaeec8)
-
-The Down The Rabbit Hole Lawn Care Team provides professional lawn mowing and garden maintenance services across Canberra. Our team shares practical lawn care advice based on real on-site experience, local climate conditions, and the needs of Canberra homeowners.

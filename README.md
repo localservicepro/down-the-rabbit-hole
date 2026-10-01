@@ -77,7 +77,7 @@ Canberra searchers use the city name, not the district, so one page owns each "[
 ## Launch checks
 
 - Redirects are 301 in `vercel.json`, `_redirects` and `.htaccess`. After deploy, confirm each old URL returns 301 (not 302) with a header checker, and pull the Search Console page list for any indexed URL the old sitemap missed.
-- `*.vercel.app` hosts send `X-Robots-Tag: noindex, nofollow` (see `VERCEL["headers"]`), so previews stay out of the index. Confirm the production domain does not send it.
+- No noindex header is sent on any host, so PageSpeed scores the `.vercel.app` preview the same as production. Every page's canonical points to https://downtherabbitholeaust.com, which tells Google which copy to index.
 - All 19 posts are in `sitemap.xml`; confirm they return 200 after launch.
 
 ## Business facts used in copy

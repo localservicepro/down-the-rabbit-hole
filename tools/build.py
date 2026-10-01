@@ -1492,8 +1492,6 @@ VERCEL = {
     ],
     "headers": [
         {"source": "/(.*)\\.(webp|png|woff2|css|js)", "headers": [{"key": "Cache-Control", "value": "public, max-age=31536000, immutable"}]},
-        # Keep Vercel preview/staging hosts (*.vercel.app) out of the index; the production domain is unaffected.
-        {"source": "/(.*)", "has": [{"type": "host", "value": ".*\\.vercel\\.app"}], "headers": [{"key": "X-Robots-Tag", "value": "noindex, nofollow"}]},
     ],
 }
 

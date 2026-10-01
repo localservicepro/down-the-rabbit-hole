@@ -190,6 +190,46 @@ ul{margin:0 0 1em;padding-left:1.2em}
 .card .more svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2;transition:transform .2s}
 .card:hover .more{color:var(--orange-deep)}
 .card:hover .more svg{transform:translateX(3px)}
+/* Homepage service cards: job photo reveal on hover, photo banner on touch screens */
+.svc-card{overflow:hidden;isolation:isolate;min-height:280px;transition:transform .45s var(--ease),box-shadow .45s var(--ease),border-color .45s}
+.svc-card::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:4px;background:var(--orange);transform:scaleX(0);transform-origin:left;transition:transform .55s var(--ease)}
+.svc-media{position:absolute;inset:0;z-index:-1;opacity:0;transition:opacity .5s var(--ease);background:var(--navy)}
+.svc-media img{width:100%;height:100%;object-fit:cover;transform:scale(1.15);transition:transform 1.1s var(--ease)}
+.svc-media::after{content:"";position:absolute;inset:0;background:linear-gradient(165deg,rgba(11,47,95,.5) 0%,rgba(8,40,88,.88) 62%,rgba(8,40,88,.96) 100%)}
+.svc-num{position:absolute;top:20px;right:24px;font-family:var(--display);font-weight:800;font-size:2.6rem;line-height:1;letter-spacing:-.04em;color:var(--navy);opacity:.07;transition:color .45s,opacity .45s,transform .45s var(--ease)}
+.svc-card h3,.svc-card p{transition:color .35s}
+.svc-card .ico{transition:background-color .35s,transform .45s var(--ease)}
+.svc-card .ico svg{transition:stroke .35s}
+.svc-card .more{transition:color .35s}
+@media (hover:hover){
+ .svc-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:transparent}
+ .svc-card:hover .svc-media{opacity:1}
+ .svc-card:hover .svc-media img{transform:scale(1)}
+ .svc-card:hover::after{transform:scaleX(1)}
+ .svc-card:hover h3{color:#fff}
+ .svc-card:hover p{color:rgba(255,255,255,.86)}
+ .svc-card:hover .more{color:var(--amber)}
+ .svc-card:hover .ico{background:var(--orange);transform:rotate(-8deg) scale(1.06)}
+ .svc-card:hover .ico svg{stroke:var(--navy-deep)}
+ .svc-card:hover .svc-num{color:#fff;opacity:.28;transform:translateY(-2px)}
+}
+.svc-card:focus-visible{outline:3px solid var(--orange);outline-offset:3px;transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.svc-card:focus-visible .svc-media{opacity:1}
+.svc-card:focus-visible .svc-media img{transform:scale(1)}
+.svc-card:focus-visible h3{color:#fff}
+.svc-card:focus-visible p{color:rgba(255,255,255,.86)}
+.svc-card:focus-visible .more{color:var(--amber)}
+.svc-card:focus-visible .ico{background:var(--orange)}
+.svc-card:focus-visible .ico svg{stroke:var(--navy-deep)}
+@media (hover:none){
+ .svc-card{min-height:0}
+ .svc-media{position:relative;inset:auto;z-index:auto;opacity:1;display:block;height:160px;margin:-26px -26px 0}
+ .svc-media img{transform:none}
+ .svc-media::after{background:linear-gradient(180deg,rgba(8,40,88,0) 45%,rgba(8,40,88,.45) 100%)}
+ .svc-card .ico{position:relative;z-index:1;margin-top:-44px;background:#fff;box-shadow:0 8px 20px rgba(11,47,95,.18)}
+ .svc-num{color:#fff;opacity:.92;text-shadow:0 2px 10px rgba(0,0,0,.35);font-size:2rem;top:16px;right:18px}
+}
+@media (prefers-reduced-motion:reduce){.svc-card,.svc-card:hover,.svc-media img,.svc-card .ico{transition:none;transform:none!important}}
 .section-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:36px}
 .section-head h2{margin:0;max-width:22ch;text-wrap:balance}
 .section-head .lead{margin:0}
@@ -447,7 +487,7 @@ a.chip:hover{background:var(--orange);color:var(--navy-deep)}
 @media (max-width:900px){.pin-tip{width:200px}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"LocalBusiness","@id":"https://downtherabbitholeaust.com/#business","name":"Down the Rabbit Hole AUST","legalName":"Down the Rabbit Hole (Aust) Pty Ltd","alternateName":"Down the Rabbit Hole (Aust) Pty Ltd","slogan":"Taking the headaches away","foundingDate":"2021","telephone":"+61 423 720 317","email":"info@downtherabbitholeaust.com","url":"https://downtherabbitholeaust.com/","image":"https://downtherabbitholeaust.com/images/hero-video-poster.webp","logo":"https://downtherabbitholeaust.com/images/dtrh-logo.png","priceRange":"$$","address":{"@type":"PostalAddress","addressLocality":"Canberra","addressRegion":"ACT","addressCountry":"AU"},"areaServed":[{"@type":"City","name":"Canberra"},{"@type":"Place","name":"Weston Creek"},{"@type":"Place","name":"Woden Valley"},{"@type":"Place","name":"Tuggeranong"},{"@type":"Place","name":"Belconnen"},{"@type":"Place","name":"Inner North"},{"@type":"Place","name":"Inner South"},{"@type":"Place","name":"Queanbeyan"}],"sameAs":["https://www.facebook.com/p/Down-the-Rabbit-Hole-AUST-61552753624844/","https://www.instagram.com/downtherabbitholeaust","https://maps.app.goo.gl/kx6sMBaVZok5tBfw6","https://www.google.com/maps/search/?api=1&query=Google&query_place_id=ChIJuzQLsqNMFmsRcFlpp27qAAQ"],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday"],"opens":"08:00","closes":"17:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Friday"],"opens":"09:00","closes":"17:00"}],"hasOfferCatalog":{"@type":"OfferCatalog","name":"Lawn and garden services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Lawn Mowing","url":"https://downtherabbitholeaust.com/lawn-mowing"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Lawn Care","url":"https://downtherabbitholeaust.com/lawn-care"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Gardening Services","url":"https://downtherabbitholeaust.com/gardening-services"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Garden Maintenance","url":"https://downtherabbitholeaust.com/garden-maintenance"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Hedge Trimming","url":"https://downtherabbitholeaust.com/hedge-trimming"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Yard Clean-Ups","url":"https://downtherabbitholeaust.com/yard-clean-ups"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Green Waste Removal","url":"https://downtherabbitholeaust.com/green-waste-removal"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Rubbish Removal","url":"https://downtherabbitholeaust.com/rubbish-removal"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"DVA Lawn Care","url":"https://downtherabbitholeaust.com/dva-lawn-care"}}]}},{"@type":"Service","@id":"https://downtherabbitholeaust.com/lawn-mowing-weston-creek#service","name":"Lawn Mowing Weston Creek","serviceType":"Lawn mowing","description":"Lawn mowing Weston Creek you can set and forget. Local, insured mowing, edging and garden care from Fisher to Denman Prospect, green waste removed. Free quotes.","url":"https://downtherabbitholeaust.com/lawn-mowing-weston-creek","image":"https://downtherabbitholeaust.com/images/garden-tidy-after.webp","provider":{"@id":"https://downtherabbitholeaust.com/#business"},"areaServed":[{"@type":"Place","name":"Fisher"},{"@type":"Place","name":"Waramanga"},{"@type":"Place","name":"Chapman"},{"@type":"Place","name":"Weston"},{"@type":"Place","name":"Rivett"},{"@type":"Place","name":"Stirling"},{"@type":"Place","name":"Holder"},{"@type":"Place","name":"Duffy"},{"@type":"Place","name":"Coombs"},{"@type":"Place","name":"Denman Prospect"},{"@type":"Place","name":"Wright"},{"@type":"City","name":"Canberra"}],"offers":{"@type":"Offer","availability":"https://schema.org/InStock","priceCurrency":"AUD","url":"https://downtherabbitholeaust.com/lawn-mowing-weston-creek#contact","description":"Free upfront quote"}},{"@type":"WebPage","@id":"https://downtherabbitholeaust.com/lawn-mowing-weston-creek#webpage","url":"https://downtherabbitholeaust.com/lawn-mowing-weston-creek","name":"Lawn Mowing Weston Creek | Down the Rabbit Hole AUST","description":"Lawn mowing Weston Creek you can set and forget. Local, insured mowing, edging and garden care from Fisher to Denman Prospect, green waste removed. Free quotes.","isPartOf":{"@id":"https://downtherabbitholeaust.com/#website"},"breadcrumb":{"@id":"https://downtherabbitholeaust.com/lawn-mowing-weston-creek#breadcrumb"},"primaryImageOfPage":"https://downtherabbitholeaust.com/images/garden-tidy-after.webp"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://downtherabbitholeaust.com/"},{"@type":"ListItem","position":2,"name":"Service areas","item":"https://downtherabbitholeaust.com/areas"},{"@type":"ListItem","position":3,"name":"Lawn Mowing Weston Creek","item":"https://downtherabbitholeaust.com/lawn-mowing-weston-creek"}],"@id":"https://downtherabbitholeaust.com/lawn-mowing-weston-creek#breadcrumb"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Which Weston Creek suburbs do you cover?","acceptedAnswer":{"@type":"Answer","text":"All of them. Our lawn mowing Weston Creek service covers Fisher, Waramanga, Chapman, Weston, Rivett, Stirling, Holder and Duffy, plus Coombs, Denman Prospect and Wright. Weston Creek is our priority area, for one-off and regular scheduled visits."}},{"@type":"Question","name":"How much does mowing cost in Weston Creek?","acceptedAnswer":{"@type":"Answer","text":"It depends on the size of the block, the state of the lawn and what else is included, so we quote each lawn mowing Weston Creek job individually. Quotes are free and upfront, and we will not guess a price without seeing the block."}},{"@type":"Question","name":"Can you mow newly laid turf in Coombs or Denman Prospect?","acceptedAnswer":{"@type":"Answer","text":"Yes. New turf needs establishment mowing: waiting until it has rooted, cutting high and removing only a little each time. We check the lawn before the first cut and bring it down gradually as it settles."}},{"@type":"Question","name":"Do you take the grass clippings and green waste away?","acceptedAnswer":{"@type":"Answer","text":"Yes. Green waste removal is available with every mowing visit, and with garden maintenance and clean-ups too. If you would rather keep some clippings for compost or mulch, tell us and we will leave what you want."}}]}]}</script>
-<script src="/assets/site.js" defer></script>
+<script src="/assets/site.js?v=bae446ba" defer></script>
 <script 
   src="https://app.downtherabbitholeaust.com/js/external-tracking.js"
   data-tracking-id="tk_6f4c1089fe214ae6baa8c2dc37522e82" defer>

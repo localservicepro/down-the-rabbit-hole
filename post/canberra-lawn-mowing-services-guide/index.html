@@ -190,6 +190,46 @@ ul{margin:0 0 1em;padding-left:1.2em}
 .card .more svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2;transition:transform .2s}
 .card:hover .more{color:var(--orange-deep)}
 .card:hover .more svg{transform:translateX(3px)}
+/* Homepage service cards: job photo reveal on hover, photo banner on touch screens */
+.svc-card{overflow:hidden;isolation:isolate;min-height:280px;transition:transform .45s var(--ease),box-shadow .45s var(--ease),border-color .45s}
+.svc-card::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:4px;background:var(--orange);transform:scaleX(0);transform-origin:left;transition:transform .55s var(--ease)}
+.svc-media{position:absolute;inset:0;z-index:-1;opacity:0;transition:opacity .5s var(--ease);background:var(--navy)}
+.svc-media img{width:100%;height:100%;object-fit:cover;transform:scale(1.15);transition:transform 1.1s var(--ease)}
+.svc-media::after{content:"";position:absolute;inset:0;background:linear-gradient(165deg,rgba(11,47,95,.5) 0%,rgba(8,40,88,.88) 62%,rgba(8,40,88,.96) 100%)}
+.svc-num{position:absolute;top:20px;right:24px;font-family:var(--display);font-weight:800;font-size:2.6rem;line-height:1;letter-spacing:-.04em;color:var(--navy);opacity:.07;transition:color .45s,opacity .45s,transform .45s var(--ease)}
+.svc-card h3,.svc-card p{transition:color .35s}
+.svc-card .ico{transition:background-color .35s,transform .45s var(--ease)}
+.svc-card .ico svg{transition:stroke .35s}
+.svc-card .more{transition:color .35s}
+@media (hover:hover){
+ .svc-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:transparent}
+ .svc-card:hover .svc-media{opacity:1}
+ .svc-card:hover .svc-media img{transform:scale(1)}
+ .svc-card:hover::after{transform:scaleX(1)}
+ .svc-card:hover h3{color:#fff}
+ .svc-card:hover p{color:rgba(255,255,255,.86)}
+ .svc-card:hover .more{color:var(--amber)}
+ .svc-card:hover .ico{background:var(--orange);transform:rotate(-8deg) scale(1.06)}
+ .svc-card:hover .ico svg{stroke:var(--navy-deep)}
+ .svc-card:hover .svc-num{color:#fff;opacity:.28;transform:translateY(-2px)}
+}
+.svc-card:focus-visible{outline:3px solid var(--orange);outline-offset:3px;transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.svc-card:focus-visible .svc-media{opacity:1}
+.svc-card:focus-visible .svc-media img{transform:scale(1)}
+.svc-card:focus-visible h3{color:#fff}
+.svc-card:focus-visible p{color:rgba(255,255,255,.86)}
+.svc-card:focus-visible .more{color:var(--amber)}
+.svc-card:focus-visible .ico{background:var(--orange)}
+.svc-card:focus-visible .ico svg{stroke:var(--navy-deep)}
+@media (hover:none){
+ .svc-card{min-height:0}
+ .svc-media{position:relative;inset:auto;z-index:auto;opacity:1;display:block;height:160px;margin:-26px -26px 0}
+ .svc-media img{transform:none}
+ .svc-media::after{background:linear-gradient(180deg,rgba(8,40,88,0) 45%,rgba(8,40,88,.45) 100%)}
+ .svc-card .ico{position:relative;z-index:1;margin-top:-44px;background:#fff;box-shadow:0 8px 20px rgba(11,47,95,.18)}
+ .svc-num{color:#fff;opacity:.92;text-shadow:0 2px 10px rgba(0,0,0,.35);font-size:2rem;top:16px;right:18px}
+}
+@media (prefers-reduced-motion:reduce){.svc-card,.svc-card:hover,.svc-media img,.svc-card .ico{transition:none;transform:none!important}}
 .section-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:36px}
 .section-head h2{margin:0;max-width:22ch;text-wrap:balance}
 .section-head .lead{margin:0}
@@ -447,7 +487,7 @@ a.chip:hover{background:var(--orange);color:var(--navy-deep)}
 @media (max-width:900px){.pin-tip{width:200px}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"LocalBusiness","@id":"https://downtherabbitholeaust.com/#business","name":"Down the Rabbit Hole AUST","legalName":"Down the Rabbit Hole (Aust) Pty Ltd","alternateName":"Down the Rabbit Hole (Aust) Pty Ltd","slogan":"Taking the headaches away","foundingDate":"2021","telephone":"+61 423 720 317","email":"info@downtherabbitholeaust.com","url":"https://downtherabbitholeaust.com/","image":"https://downtherabbitholeaust.com/images/hero-video-poster.webp","logo":"https://downtherabbitholeaust.com/images/dtrh-logo.png","priceRange":"$$","address":{"@type":"PostalAddress","addressLocality":"Canberra","addressRegion":"ACT","addressCountry":"AU"},"areaServed":[{"@type":"City","name":"Canberra"},{"@type":"Place","name":"Weston Creek"},{"@type":"Place","name":"Woden Valley"},{"@type":"Place","name":"Tuggeranong"},{"@type":"Place","name":"Belconnen"},{"@type":"Place","name":"Inner North"},{"@type":"Place","name":"Inner South"},{"@type":"Place","name":"Queanbeyan"}],"sameAs":["https://www.facebook.com/p/Down-the-Rabbit-Hole-AUST-61552753624844/","https://www.instagram.com/downtherabbitholeaust","https://maps.app.goo.gl/kx6sMBaVZok5tBfw6","https://www.google.com/maps/search/?api=1&query=Google&query_place_id=ChIJuzQLsqNMFmsRcFlpp27qAAQ"],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday"],"opens":"08:00","closes":"17:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Friday"],"opens":"09:00","closes":"17:00"}],"hasOfferCatalog":{"@type":"OfferCatalog","name":"Lawn and garden services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Lawn Mowing","url":"https://downtherabbitholeaust.com/lawn-mowing"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Lawn Care","url":"https://downtherabbitholeaust.com/lawn-care"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Gardening Services","url":"https://downtherabbitholeaust.com/gardening-services"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Garden Maintenance","url":"https://downtherabbitholeaust.com/garden-maintenance"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Hedge Trimming","url":"https://downtherabbitholeaust.com/hedge-trimming"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Yard Clean-Ups","url":"https://downtherabbitholeaust.com/yard-clean-ups"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Green Waste Removal","url":"https://downtherabbitholeaust.com/green-waste-removal"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Rubbish Removal","url":"https://downtherabbitholeaust.com/rubbish-removal"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"DVA Lawn Care","url":"https://downtherabbitholeaust.com/dva-lawn-care"}}]}},{"@type":"Article","@id":"https://downtherabbitholeaust.com/post/canberra-lawn-mowing-services-guide#article","headline":"Paying Someone to Mow Your Lawn in Canberra: What to Expect","description":"Thinking of paying someone to mow your lawn in Canberra? What a mowing visit includes, how often to book, what affects the price and what to ask first.","url":"https://downtherabbitholeaust.com/post/canberra-lawn-mowing-services-guide","mainEntityOfPage":"https://downtherabbitholeaust.com/post/canberra-lawn-mowing-services-guide","image":"https://downtherabbitholeaust.com/images/garden-tidy-after.webp","author":{"@type":"Organization","name":"Down the Rabbit Hole AUST","url":"https://downtherabbitholeaust.com/about"},"publisher":{"@id":"https://downtherabbitholeaust.com/#business"},"inLanguage":"en-AU"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://downtherabbitholeaust.com/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://downtherabbitholeaust.com/blog"},{"@type":"ListItem","position":3,"name":"Paying Someone to Mow Your Lawn in Canberra: What to Expect","item":"https://downtherabbitholeaust.com/post/canberra-lawn-mowing-services-guide"}],"@id":"https://downtherabbitholeaust.com/post/canberra-lawn-mowing-services-guide#breadcrumb"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much does lawn mowing cost in Canberra?","acceptedAnswer":{"@type":"Answer","text":"The cost of lawn mowing in Canberra varies based on lawn size, grass length, and accessibility. Every lawn is different, so the best way to get an accurate price is to request a free quote. Down the Rabbit Hole AUST gives a clear, upfront quote before any work starts."}},{"@type":"Question","name":"Do I need to be home for the lawn mowing service?","acceptedAnswer":{"@type":"Answer","text":"Most lawn care companies do not require you to be home for the service, as long as they have safe access to the areas that need mowing. It's always best to confirm access arrangements beforehand, especially for properties with pets or locked gates."}},{"@type":"Question","name":"What's included in a standard lawn mowing service?","acceptedAnswer":{"@type":"Answer","text":"A standard service typically includes mowing the entire lawn, trimming the edges for a neat finish, and blowing grass clippings off paths and driveways. Some companies may also include clipping removal or offer it for an additional fee."}},{"@type":"Question","name":"Why is professional edging important?","acceptedAnswer":{"@type":"Answer","text":"Professional edging creates a clean, sharp line between your lawn and other surfaces like sidewalks, driveways, and garden beds. This detail significantly enhances curb appeal and gives your property a professionally manicured look that mowing alone cannot achieve."}},{"@type":"Question","name":"Can a lawn be mowed when it's wet?","acceptedAnswer":{"@type":"Answer","text":"Mowing wet grass is generally not recommended. It can result in an uneven cut, clog the mower, and leave clumps of wet clippings on the lawn which can smother the grass underneath. Professional services will often reschedule if the lawn is too wet to ensure a quality result."}}]}]}</script>
-<script src="/assets/site.js" defer></script>
+<script src="/assets/site.js?v=bae446ba" defer></script>
 <script 
   src="https://app.downtherabbitholeaust.com/js/external-tracking.js"
   data-tracking-id="tk_6f4c1089fe214ae6baa8c2dc37522e82" defer>

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Static site generator for downtherabbitholeaust.com.
 Run: python3 tools/build.py  → writes *.html, sitemap.xml, _redirects, .htaccess into the repo root."""
-import html, json, os, re
+import hashlib, html, json, os, re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 COPY = os.environ.get("COPY_DIR", os.path.join(ROOT, "content"))
@@ -24,6 +24,7 @@ OWNER_ID = SITE + "/#owner"
 TRACKING_ID = "tk_6f4c1089fe214ae6baa8c2dc37522e82"
 THANK_YOU = "/thank-you"
 CSS = open(os.path.join(ROOT, "assets", "site.css"), encoding="utf-8").read()
+JS_VER = hashlib.md5(open(os.path.join(ROOT, "assets", "site.js"), "rb").read()).hexdigest()[:8]
 try:
     IMG = json.load(open(os.path.join(ROOT, "images", "manifest.json")))
 except FileNotFoundError:
@@ -487,7 +488,7 @@ def page(*, path, title, description, body, graph, active="", over_hero=False, o
 <link rel="preload" href="/assets/fonts/hanken-grotesk-var.woff2" as="font" type="font/woff2" crossorigin>
 <style>{CSS}</style>
 {jsonld(graph)}
-<script src="/assets/site.js" defer></script>
+<script src="/assets/site.js?v={JS_VER}" defer></script>
 <script 
   src="https://app.downtherabbitholeaust.com/js/external-tracking.js"
   data-tracking-id="tk_6f4c1089fe214ae6baa8c2dc37522e82" defer>
@@ -524,8 +525,14 @@ def write(path, content):
 # ---------- homepage ----------
 
 def home():
+    def svc_media(slug):
+        img = SERVICE_IMAGES[slug][0]
+        w, h = img_dims(img, True)
+        return (f'<span class="svc-media" aria-hidden="true"><img src="/images/{img}-400.webp" '
+                f'srcset="/images/{img}-400.webp 400w, /images/{img}-800.webp 800w" sizes="(max-width: 640px) 100vw, (max-width: 980px) 50vw, 400px" '
+                f'width="{w}" height="{h}" alt="" loading="lazy" decoding="async"></span>')
     cards = "\n".join(
-        f'<a class="card rv rv-d{i%3}" href="/{s}"><span class="ico">{icon(ic)}</span><h3>{esc(n)}</h3><p>{esc(blurb)}</p><span class="more">{esc(n)} Canberra {icon("arrow")}</span></a>'
+        f'<a class="card svc-card rv rv-d{i%3}" href="/{s}">{svc_media(s)}<span class="svc-num" aria-hidden="true">{i+1:02d}</span><span class="ico">{icon(ic)}</span><h3>{esc(n)}</h3><p>{esc(blurb)}</p><span class="more">{esc(n)} Canberra {icon("arrow")}</span></a>'
         for i, (s, n, _, ic, blurb) in enumerate(SERVICES[:9]))
     districts = "\n".join(
         f'<div class="district rv"><h3><a href="{u}">{esc(n)}</a></h3><p>{esc(", ".join(subs))}</p></div>'

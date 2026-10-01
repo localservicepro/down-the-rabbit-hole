@@ -38,7 +38,7 @@
   "faqs": [
     {
       "q": "Which lawn and garden services do you offer in Canberra?",
-      "a": "Lawn mowing, lawn care such as fertilising and aeration, gardening and garden maintenance, hedge trimming, yard clean-ups, weed spraying, green waste removal and general rubbish removal. We also provide lawn and garden help for veterans and DVA card holders. Green waste removal is available with mowing, garden maintenance and clean-up jobs."
+      "a": "Lawn mowing, lawn care such as fertilising and aeration, gardening and garden maintenance, hedge trimming, yard clean-ups, weed spraying, green waste removal and general rubbish removal. As a registered DVA provider, we also provide lawn and garden help for veterans and DVA card holders. Green waste removal is available with mowing, garden maintenance and clean-up jobs."
     },
     {
       "q": "Do I have to sign up for regular visits?",
@@ -84,7 +84,7 @@
     "yard-clean-ups": "One-off clean-ups for overgrown yards, rentals, sales and inspections, finished in a single visit where possible.",
     "green-waste-removal": "Grass, prunings, leaves and branches loaded and taken away when the green bin is not enough.",
     "rubbish-removal": "General rubbish cleared from yards, sheds and garages as part of a clean-up or on its own.",
-    "dva-lawn-care": "Regular mowing and garden upkeep for veterans and DVA card holders, from a local, owner-operated business.",
+    "dva-lawn-care": "Registered DVA provider: regular mowing and garden upkeep for veterans and DVA card holders.",
     "weed-spraying": "Bindi, broadleaf and garden bed weed control, timed for Canberra's seasons."
   }
 }

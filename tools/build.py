@@ -43,7 +43,7 @@ SERVICES = [
     ("yard-clean-ups", "Yard Clean-Ups", "Pre-sale & end of lease, Tuggeranong to Belconnen", "broom", "Overgrown yards, pre-sale tidies and end-of-lease clean-ups done in a day."),
     ("green-waste-removal", "Green Waste Removal", "Clippings, branches & leaves, Canberra wide", "leaf", "Clippings, branches, leaves and garden debris loaded and gone."),
     ("rubbish-removal", "Rubbish Removal", "Garden, yard & household junk, ACT & Queanbeyan", "bin", "Garden, yard and household junk collected without a trip to the tip."),
-    ("dva-lawn-care", "DVA Lawn Care", "Veterans in Tuggeranong, Belconnen & Queanbeyan", "medal", "Lawn and garden care for veterans and DVA card holders across Canberra."),
+    ("dva-lawn-care", "DVA Lawn Care", "Veterans in Tuggeranong, Belconnen & Queanbeyan", "medal", "Registered DVA provider: lawn and garden care for veterans and DVA card holders across Canberra."),
     ("weed-spraying", "Weed Spraying", "Bindi & broadleaf control, Belconnen & Weston Creek", "spray", "Bindi, broadleaf and garden bed weed control timed for Canberra seasons."),
 ]
 SERVICE_NAMES = {s[0]: s[1] for s in SERVICES}
@@ -886,7 +886,7 @@ def about():
       </article>
       <aside class="aside">
         <div class="aside-card navy"><h3>Talk to {OWNER.split()[0]}</h3><p>Text {PHONE}, or email {EMAIL}.</p><a class="btn btn-primary" href="{SMS}">{icon("sms")}Text {PHONE}</a><a class="btn btn-ghost" href="mailto:{EMAIL}">Email us</a></div>
-        <div class="aside-card"><h3>Business details</h3><ul style="display:grid;gap:8px;list-style:none;padding:0;margin:0"><li><strong>Legal name:</strong> {LEGAL}</li><li><strong>Trading as:</strong> {NAME}</li><li><strong>Owner:</strong> {OWNER}</li><li><strong>ABN:</strong> Registered</li><li><strong>Insurance:</strong> Fully insured</li><li><strong>Established:</strong> 2021</li><li><strong>Base:</strong> Canberra, ACT</li><li><strong>Hours:</strong> {HOURS}</li></ul></div>
+        <div class="aside-card"><h3>Business details</h3><ul style="display:grid;gap:8px;list-style:none;padding:0;margin:0"><li><strong>Legal name:</strong> {LEGAL}</li><li><strong>Trading as:</strong> {NAME}</li><li><strong>Owner:</strong> {OWNER}</li><li><strong>ABN:</strong> Registered</li><li><strong>Insurance:</strong> Fully insured</li><li><strong>DVA:</strong> Registered provider</li><li><strong>Established:</strong> 2021</li><li><strong>Base:</strong> Canberra, ACT</li><li><strong>Hours:</strong> {HOURS}</li></ul></div>
         <div class="aside-card"><h3>Find us online</h3><ul><li><a href="{GBP}" rel="noopener" target="_blank">Google Business Profile</a></li><li><a href="{FB}" rel="noopener" target="_blank">Facebook</a></li><li><a href="{IG}" rel="noopener" target="_blank">Instagram</a></li></ul></div>
       </aside>
     </div>
@@ -1130,7 +1130,7 @@ BLOG_META = {
     "/post/garden-maintenance-canberra-guide": "Seasonal care, lawn health and pruning tips to keep a Canberra garden neat and thriving all year round.",
     "/post/grass-mowing-canberra-guide": "How often to mow and how high to cut a Canberra lawn, season by season, with the one-third rule explained.",
     "/post/canberra-lawn-mowing-services-guide": "What paying someone to mow your lawn involves: how often, what is included and what to ask before you book.",
-    "/post/dva-lawn-care-services-canberra-5929": "DVA lawn care services in Canberra: eligibility, how to access support and what to check with DVA before booking.",
+    "/post/dva-lawn-care-services-canberra-5929": "DVA lawn care services in Canberra: eligibility, how to access support and booking a registered DVA provider.",
     "/post/best-lawn-mowing-services-canberra": "Five things to check before you choose a lawn mowing service: scheduling, cutting heights, edging, local knowledge and communication.",
     "/post/top-rated-canberra-lawn-maintenance-providers": "How to compare lawn maintenance providers in Canberra, common mistakes homeowners make, and when DIY makes more sense.",
     "/post/the-ultimate-guide-to-commercial-yard-maintenance-in-Australia": "A strategic mulching and maintenance programme for commercial landscapes through the Australian summer.",

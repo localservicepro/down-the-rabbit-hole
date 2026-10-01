@@ -68,7 +68,7 @@ Investing in a professional Canberra lawn mowing service is an investment in you
 Ready to transform your yard? Contact a local business like Down the Rabbit Hole AUST to discuss your lawn care needs. Visit their website at downtherabbitholeaust.com to get started.
 ### How much does lawn mowing cost in Canberra?
 
-The cost of lawn mowing in Canberra varies based on lawn size, grass length, and accessibility. On average, you can expect to pay between $60 and $90 for a standard residential lawn. However, requesting a direct quote is the best way to get an accurate price.
+The cost of lawn mowing in Canberra varies based on lawn size, grass length, and accessibility. Every lawn is different, so the best way to get an accurate price is to request a free quote. Down the Rabbit Hole AUST gives a clear, upfront quote before any work starts.
 ### Do I need to be home for the lawn mowing service?
 
 Most lawn care companies do not require you to be home for the service, as long as they have safe access to the areas that need mowing. It's always best to confirm access arrangements beforehand, especially for properties with pets or locked gates.

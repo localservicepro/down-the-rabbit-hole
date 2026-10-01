@@ -1,13 +1,13 @@
 # Garden Service Canberra: Your Ultimate Guide to a Perfect Yard
 ## How Much Does Gardening Cost in Canberra?
-| Service Type | Common Pricing Model | Estimated Cost Range (Canberra) |
+| Service Type | Common Pricing Model | What Affects the Price |
 |---|
-| Regular Mowing & Edging | Per Visit / Monthly Subscription | $60 - $120 per visit |
-| Hedge Trimming | Hourly Rate / Per Project | $70 - $100 per hour |
-| Seasonal Cleanup | Fixed Project Fee | $300 - $1,000+ |
-| Weed Spraying & Mulching | Per Project (Size Dependent) | $150 - $500+ |
+| Regular Mowing & Edging | Per visit or ongoing schedule | Lawn size, grass length and how often it is mowed |
+| Hedge Trimming | Per job | Hedge length, height and how overgrown it is |
+| Seasonal Cleanup | Fixed job price | Size of the yard and how much green waste there is |
+| Weed Spraying & Mulching | Per job | Area covered and the type of weeds or mulch |
 
-Gardening costs in Canberra vary based on factors like garden size, service complexity, and frequency. Most professionals charge an hourly rate, which typically ranges from $60 to $100 per hour, while others may offer a fixed price for specific projects like a yard cleanup.
+Gardening costs in Canberra vary based on factors like garden size, service complexity, and frequency. Because every garden is different, the most reliable way to know the cost is to [get a free quote](/contact). Down the Rabbit Hole AUST gives a clear, upfront quote before any work starts.
 
 A well-maintained garden also adds to a property's street appeal, which matters if you plan to sell or lease. Here’s a look at common pricing structures:
 
@@ -82,7 +82,7 @@ A gardener focuses on maintaining and caring for an existing garden space throug
 Yes, most professional garden services include rubbish removal. They will collect all leaves, clippings, and other green waste generated during the service and haul it away, leaving your property clean and tidy.
 ### Do you offer services for DVA clients?
 
-Down the Rabbit Hole AUST offers lawn and garden care to veterans and DVA card holders and gives a free upfront quote, but does not decide eligibility or coverage. DVA decides who is eligible and what is covered, so confirm your entitlement with DVA before booking. See [DVA lawn care](/dva-lawn-care) for details.
+Yes. Down the Rabbit Hole AUST is a registered DVA provider offering lawn and garden care to veterans and DVA card holders, with a free upfront quote. DVA still decides eligibility and coverage. DVA decides who is eligible and what is covered, so confirm your entitlement with DVA before booking. See [DVA lawn care](/dva-lawn-care) for details.
 ### Do I need to be home for a garden service?
 
 Generally, no. As long as there is safe and clear access to all the areas that need work (like unlocked gates), you do not need to be present for the service to be completed.

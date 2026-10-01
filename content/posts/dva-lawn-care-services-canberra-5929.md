@@ -14,7 +14,7 @@ Here’s a breakdown of commonly included services:
 
 Quick answer: DVA lawn care services in Canberra provide government-funded garden maintenance for eligible veterans to ensure their property is safe and manageable. DVA decides eligibility and what is covered, usually after an assessment of your needs, so confirm your entitlement with DVA before booking.
 
-Accessing DVA lawn care services in Canberra is a vital way for our nation’s veterans to maintain a safe and welcoming home environment. These services are designed to alleviate the physical strain of garden maintenance, allowing eligible veterans to enjoy their independence with peace of mind. Down the Rabbit Hole AUST offers [lawn and garden care to veterans and DVA card holders](/dva-lawn-care) and gives a free upfront quote, but does not decide eligibility or coverage.
+Accessing DVA lawn care services in Canberra is a vital way for our nation’s veterans to maintain a safe and welcoming home environment. These services are designed to alleviate the physical strain of garden maintenance, allowing eligible veterans to enjoy their independence with peace of mind. Down the Rabbit Hole AUST is a registered DVA provider offering [lawn and garden care to veterans and DVA card holders](/dva-lawn-care), with a free upfront quote. DVA still decides eligibility and coverage.
 ## Key takeaways
 
 DVA lawn care helps veterans maintain a safe and tidy home.
@@ -25,7 +25,7 @@ Speak with DVA or your GP to find out how to start.
 
 Services include mowing, trimming, weeding, and waste removal.
 
-Check with DVA which providers it will fund before you book.
+Book a registered DVA provider for the work.
 ## What Are DVA Lawn Care Services?
 
 DVA lawn care services are government-funded maintenance programs for eligible Australian veterans. The primary goal is to ensure a veteran’s home and garden are safe, accessible, and well-maintained, reducing the risks of falls or injury and removing the physical burden of yard work.
@@ -46,18 +46,18 @@ Complete any assessment DVA asks for.
 
 DVA decides eligibility and which services are covered.
 
-Check with DVA which providers it will fund.
+Choose a registered DVA provider and get a quote.
 
 Get a quote and book the work.
 ## Why is Professional DVA Lawn Care Important?
 
-Using a professional provider means the work is done safely and to a consistent standard. If DVA is funding the work, check with DVA which providers it will fund and how billing works before you book, so there are no surprises.
+Using a professional provider means the work is done safely and to a consistent standard. If DVA is funding the work, choose a registered DVA provider and confirm with DVA how billing works before you book, so there are no surprises.
 ### Safety and Reliability
 
 Professional providers have the right equipment and expertise to do the job safely and efficiently. This minimizes risks for both the worker and the homeowner. Keeping lawns short and paths clear also removes trip hazards around the home. Choosing an insured, reliable provider helps ensure consistent service.
 ### Understanding DVA Requirements
 
-DVA sets the rules on eligibility, coverage, quotes and invoicing, so confirm the details with DVA before work starts. For veterans in Canberra suburbs from Weetangera to Wanniassa, a reliable local provider makes the job easier. Down the Rabbit Hole AUST can give you a clear, upfront quote, but what is funded is up to DVA.
+DVA sets the rules on eligibility, coverage, quotes and invoicing, so confirm the details with DVA before work starts. For veterans in Canberra suburbs from Weetangera to Wanniassa, a reliable local provider makes the job easier. Down the Rabbit Hole AUST is a registered DVA provider and can give you a clear, upfront quote, but what is funded is up to DVA.
 
 Ultimately, DVA lawn care services are an essential support system for veterans in Canberra. They promote independence, ensure safety, and provide valuable peace of mind. By working with a reliable, experienced provider, veterans can enjoy a well-maintained home without the physical and mental stress of doing the work themselves. If you believe you are eligible, speaking with DVA or your GP is a good first step towards a safer and more manageable home life. For a quote, contact Down the Rabbit Hole AUST on 0423 720 317 or visit downtherabbitholeaust.com.
 ### Who pays for DVA lawn care services?
@@ -68,7 +68,7 @@ DVA decides what it will fund for eligible veterans, and how payment works can d
 DVA decides how often it will fund a service, based on your assessed needs, so check your entitlement with DVA. Lawns generally need more frequent mowing in the growing seasons than in winter.
 ### Can I choose my own lawn care provider?
 
-Check with DVA which providers it will fund before you book. DVA can also explain how billing works for the provider you choose.
+You can choose a registered DVA provider such as Down the Rabbit Hole AUST. DVA can explain how billing works for the provider you choose.
 ### Does DVA lawn care cover major landscaping?
 
 No, the program is designed for essential maintenance, not major landscaping projects. Services focus on tasks like mowing, edging, and pruning to maintain safety and accessibility. It does not include things like planting new gardens, building retaining walls, or installing irrigation systems.

@@ -66,7 +66,7 @@ Achieving a beautiful lawn in Canberra is a rewarding challenge that enhances yo
 Cool-season grasses like Tall Fescue and Kentucky Bluegrass are popular for their resilience in Canberra's cold winters. For drought tolerance in summer, warm-season grasses like Kikuyu and Couch are also excellent choices, though they may go dormant and brown in winter.
 ### How much does lawn mowing cost in Canberra?
 
-The cost for grass mowing in Canberra typically ranges from $60 to $120 for a standard residential lawn. Prices vary based on lawn size, grass length, accessibility, and whether services like edging or clipping removal are included.
+The cost depends on lawn size, grass length, accessibility, how often it is mowed and whether edging or clipping removal is included. The best way to find out is to get a free quote. Down the Rabbit Hole AUST gives a clear, upfront price before any work starts.
 ### Should I water my lawn before or after mowing?
 
 It is best to water your lawn a day or two before mowing, not immediately before or after. Mowing wet grass is difficult and can damage the lawn and mower. Watering right after mowing can also stress the freshly cut grass blades.

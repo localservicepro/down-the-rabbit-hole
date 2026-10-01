@@ -53,6 +53,11 @@ Requires Python 3.10+ (Pillow only for the image tooling).
 - Field `name`/`data-field` attributes match the GoHighLevel contact fields: `full_name`, `email`, `phone`, `property_address`, `postal_code`, `property_size`, `service_needed`, `job_notes`. A hidden `source_page` carries the page URL and `qf_extra` is a honeypot (named so browser autofill ignores it; a filled honeypot goes straight to the thank-you page without passing the submission on).
 - The CRM tracking script (`external-tracking.js`, tracking id `tk_6f4c…`) is loaded deferred in every page's `<head>` and captures the native `submit` event; the page then redirects to `/thank-you` (noindex). There is no form endpoint.
 - **Service needed is multi-select.** Checkboxes write one comma-separated value (for example `Lawn Mowing, Hedge Trimming`) into the single `service_needed` field, so the CRM still receives one value. At least one service is required. In GHL, `contact.service_needed` should be a text field (or a multi-option field), because a single-option dropdown cannot hold the combined value.
+- **Returning or new customer.** The form opens with a required "Have you used Down the Rabbit Hole AUST before?" question (`returning_customer` = `Yes` / `No`).
+  - **Yes:** the form is sent and the visitor goes to `/thank-you`, which says "Thanks for coming back, <first name>!".
+  - **No:** the form is sent first, so the lead is captured even if they stop, then the visitor goes to `/quote-details` (noindex, not in the sitemap). There, seven qualifying questions are sent as a second submission that carries the same `full_name`, `email` and `phone`, so the CRM matches it to the same contact. Then `/thank-you` shows the new-customer message.
+  - The first name and contact details pass between pages in `sessionStorage` (this tab only), never in the URL. Opening `/quote-details` directly shows the contact fields instead.
+  - The qualifying field keys need matching custom fields in GHL: `returning_customer`, `service_frequency`, `start_timeframe`, `property_type`, `customer_role`, `yard_condition`, `dva_card_holder`, `lead_source` and `form_step`. Questions and options live in `QUALIFY_QUESTIONS` in `tools/build.py`.
 - Both forms use native validation (required fields, email, 4-digit postcode, phone pattern) with an inline error message.
 
 ## Business hours

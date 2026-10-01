@@ -341,6 +341,33 @@ ul{margin:0 0 1em;padding-left:1.2em}
 .fld select:invalid{color:var(--muted)}
 .fld textarea{min-height:88px;resize:vertical}
 .fgrid{align-items:start}
+.quote-form input,.quote-form select,.quote-form textarea,.quote-form button{scroll-margin-top:calc(var(--nav-h) + 70px)}
+/* Pill radio questions (used-us-before + qualifying questions) */
+.pills-fld{border:0;margin:0;padding:0;min-width:0}
+.pills-fld legend{padding:0;margin-bottom:8px;font-family:var(--display);font-weight:700;font-size:.9rem;color:var(--navy);letter-spacing:.01em}
+.pill-group{display:flex;flex-wrap:wrap;gap:8px}
+.quote-form .pill{position:relative;display:inline-flex;font-family:var(--body)}
+.quote-form .pill input{position:absolute;inset:0;width:100%!important;height:100%;min-height:0!important;margin:0;padding:0!important;opacity:0;border:0!important;cursor:pointer}
+.pill span{display:inline-flex;align-items:center;min-height:44px;padding:9px 18px;border:1.5px solid var(--line);border-radius:999px;background:var(--paper);font-family:var(--body);font-weight:600;font-size:.95rem;color:var(--ink);transition:background-color .2s,border-color .2s,color .2s,box-shadow .2s;user-select:none}
+.pill:hover span{border-color:#B9C3D3}
+.pill input:checked+span{background:var(--navy);border-color:var(--navy);color:#fff}
+.pill input:focus-visible+span{box-shadow:0 0 0 4px rgba(248,144,24,.3);border-color:var(--orange)}
+.quote-form.touched .pills-fld:has(input:invalid) .pill span{border-color:#D6453D}
+.quote-form.touched .pills-fld:has(input:invalid) legend{color:#B83A33}
+.quote-form.compact .pill span{min-height:40px;padding:7px 16px;font-size:.92rem}
+.qualify-form .pills-fld{padding:18px 0 4px;box-shadow:inset 0 1px 0 var(--line)}
+.qualify-form .pills-fld:first-of-type{box-shadow:none;padding-top:0}
+.pills-fld legend{float:left;width:100%}
+.pills-fld .pill-group{clear:both}
+.qf-contact[hidden]{display:none}
+.qd-steps{display:flex;flex-wrap:wrap;gap:8px 22px;list-style:none;padding:0;margin:0 0 22px;font-weight:600;font-size:.92rem;color:var(--muted)}
+.qd-steps li{display:flex;align-items:center;gap:8px}
+.qd-steps li span{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--line);color:var(--navy);font-size:.8rem;font-weight:700}
+.qd-steps li span svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:3}
+.qd-steps li.done span{background:var(--navy)}
+.qd-steps li.current{color:var(--navy)}
+.qd-steps li.current span{background:var(--orange);color:var(--navy-deep)}
+.qualify-page{padding-top:calc(var(--nav-h) + 48px)}
 .ms{position:relative}
 .ms-toggle{width:100%;min-height:48px;padding:11px 40px 11px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' fill='none' stroke='%230B2F5F' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 14px center/12px;font:inherit;font-size:1rem;color:var(--ink);text-align:left;cursor:pointer;transition:border-color .2s,box-shadow .2s,background-color .2s}
 .ms-toggle:hover{border-color:#B9C3D3}
@@ -492,7 +519,7 @@ a.chip:hover{background:var(--orange);color:var(--navy-deep)}
 @media (max-width:900px){.pin-tip{width:200px}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"LocalBusiness","@id":"https://downtherabbitholeaust.com/#business","name":"Down the Rabbit Hole AUST","legalName":"Down the Rabbit Hole (Aust) Pty Ltd","alternateName":"Down the Rabbit Hole (Aust) Pty Ltd","slogan":"Taking the headaches away","foundingDate":"2021","telephone":"+61 423 720 317","email":"info@downtherabbitholeaust.com","url":"https://downtherabbitholeaust.com/","image":"https://downtherabbitholeaust.com/images/hero-video-poster.webp","logo":"https://downtherabbitholeaust.com/images/dtrh-logo.png","priceRange":"$$","address":{"@type":"PostalAddress","addressLocality":"Canberra","addressRegion":"ACT","addressCountry":"AU"},"areaServed":[{"@type":"City","name":"Canberra"},{"@type":"Place","name":"Weston Creek"},{"@type":"Place","name":"Woden Valley"},{"@type":"Place","name":"Tuggeranong"},{"@type":"Place","name":"Belconnen"},{"@type":"Place","name":"Inner North"},{"@type":"Place","name":"Inner South"},{"@type":"Place","name":"Queanbeyan"}],"sameAs":["https://www.facebook.com/p/Down-the-Rabbit-Hole-AUST-61552753624844/","https://www.instagram.com/downtherabbitholeaust","https://maps.app.goo.gl/kx6sMBaVZok5tBfw6","https://www.google.com/maps/search/?api=1&query=Google&query_place_id=ChIJuzQLsqNMFmsRcFlpp27qAAQ"],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday"],"opens":"08:00","closes":"17:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Friday"],"opens":"09:00","closes":"17:00"}],"hasOfferCatalog":{"@type":"OfferCatalog","name":"Lawn and garden services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Lawn Mowing","url":"https://downtherabbitholeaust.com/lawn-mowing"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Lawn Care","url":"https://downtherabbitholeaust.com/lawn-care"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Gardening Services","url":"https://downtherabbitholeaust.com/gardening-services"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Garden Maintenance","url":"https://downtherabbitholeaust.com/garden-maintenance"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Hedge Trimming","url":"https://downtherabbitholeaust.com/hedge-trimming"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Yard Clean-Ups","url":"https://downtherabbitholeaust.com/yard-clean-ups"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Green Waste Removal","url":"https://downtherabbitholeaust.com/green-waste-removal"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Rubbish Removal","url":"https://downtherabbitholeaust.com/rubbish-removal"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"DVA Lawn Care","url":"https://downtherabbitholeaust.com/dva-lawn-care"}}]}},{"@type":"Service","@id":"https://downtherabbitholeaust.com/dva-lawn-care#service","name":"DVA Lawn Care & Gardening Services Canberra for Veterans","serviceType":"DVA lawn care and gardening","description":"DVA gardening services in Canberra from a registered DVA provider. Regular mowing and garden upkeep for Gold and White Card holders. Get a free quote today.","url":"https://downtherabbitholeaust.com/dva-lawn-care","image":"https://downtherabbitholeaust.com/images/service-dva-lawn-care.webp","provider":{"@id":"https://downtherabbitholeaust.com/#business"},"areaServed":[{"@type":"Place","name":"Kambah"},{"@type":"Place","name":"Wanniassa"},{"@type":"Place","name":"Kaleen"},{"@type":"Place","name":"Queanbeyan"},{"@type":"Place","name":"Jerrabomberra"},{"@type":"City","name":"Canberra"}],"offers":{"@type":"Offer","availability":"https://schema.org/InStock","priceCurrency":"AUD","url":"https://downtherabbitholeaust.com/dva-lawn-care#contact","description":"Free upfront quote"}},{"@type":"WebPage","@id":"https://downtherabbitholeaust.com/dva-lawn-care#webpage","url":"https://downtherabbitholeaust.com/dva-lawn-care","name":"DVA Gardening Services Canberra | Down the Rabbit Hole","description":"DVA gardening services in Canberra from a registered DVA provider. Regular mowing and garden upkeep for Gold and White Card holders. Get a free quote today.","isPartOf":{"@id":"https://downtherabbitholeaust.com/#website"},"breadcrumb":{"@id":"https://downtherabbitholeaust.com/dva-lawn-care#breadcrumb"},"primaryImageOfPage":"https://downtherabbitholeaust.com/images/service-dva-lawn-care.webp"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://downtherabbitholeaust.com/"},{"@type":"ListItem","position":2,"name":"Services","item":"https://downtherabbitholeaust.com/services"},{"@type":"ListItem","position":3,"name":"DVA Lawn Care & Gardening Services Canberra","item":"https://downtherabbitholeaust.com/dva-lawn-care"}],"@id":"https://downtherabbitholeaust.com/dva-lawn-care#breadcrumb"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Will DVA pay for my lawn mowing?","acceptedAnswer":{"@type":"Answer","text":"We cannot tell you that, and we will not guess. Approvals sit with the Department of Veterans' Affairs. As a registered DVA provider, we can give you a free, upfront quote for the work. If your request is approved, we get started."}},{"@type":"Question","name":"Do you provide DVA gardening services to White Card holders as well as Gold Card holders?","acceptedAnswer":{"@type":"Answer","text":"We provide the service to any veteran or family member who asks. Whether DVA supports the cost depends on your card, your circumstances and DVA's own rules, which we cannot assess. Confirm your entitlement with DVA or your provider first, then call us for a quote."}},{"@type":"Question","name":"Can my son or daughter organise the visits on my behalf?","acceptedAnswer":{"@type":"Answer","text":"Yes. DVA gardening services can be arranged by a family member who lives elsewhere in Canberra or interstate. They can book, receive the quote and handle the scheduling by text or phone, so the household does not have to."}},{"@type":"Question","name":"Are you a registered DVA provider?","acceptedAnswer":{"@type":"Answer","text":"Yes. Down the Rabbit Hole AUST is a registered DVA provider for lawn and garden care in Canberra and Queanbeyan. DVA still decides who is eligible and what it will fund, so confirm your entitlement with DVA before you book."}},{"@type":"Question","name":"Will I be dealing with someone different each time?","acceptedAnswer":{"@type":"Answer","text":"No. Down the Rabbit Hole AUST is a small, owner-operated business, so you are not dealing with a rotating roster of strangers. That makes DVA gardening services easier to trust. Tell us about the gate, the dog or anything else about the yard when you book."}},{"@type":"Question","name":"Do you take the green waste away after a DVA garden visit in Tuggeranong?","acceptedAnswer":{"@type":"Answer","text":"Yes. Green waste removal is available with every mowing, garden maintenance and clean-up job, whether you are in Tuggeranong, Belconnen or Queanbeyan. Nothing needs to be left on the nature strip for you to deal with later."}}]}]}</script>
-<script src="/assets/site.js?v=8d33e473" defer></script>
+<script src="/assets/site.js?v=e886ee80" defer></script>
 <script 
   src="https://app.downtherabbitholeaust.com/js/external-tracking.js"
   data-tracking-id="tk_6f4c1089fe214ae6baa8c2dc37522e82" defer>
@@ -680,8 +707,9 @@ a.chip:hover{background:var(--orange);color:var(--navy-deep)}
       </div>
       <div class="rv rv-d1">
         <div class="form-wrap">
-<form class="quote-form" id="q-form" novalidate="" data-thank-you="/thank-you" aria-label="Request a free quote">
+<form class="quote-form" id="q-form" novalidate="" data-thank-you="/thank-you" data-next="/quote-details" aria-label="Request a free quote">
   <div class="fgrid">
+    <fieldset class="fld span pills-fld" id="q-returning_customer"><legend>Have you used Down the Rabbit Hole AUST before?</legend><div class="pill-group"><label class="pill"><input type="radio" name="returning_customer" data-field="returning_customer" value="Yes" required><span>Yes, I have</span></label><label class="pill"><input type="radio" name="returning_customer" data-field="returning_customer" value="No" required><span>No, I&#x27;m new</span></label></div></fieldset>
     <div class="fld"><label for="q-full_name">Full name</label><input id="q-full_name" name="full_name" data-field="full_name" placeholder="Jane Citizen" type="text" autocomplete="name" required></div>
     <div class="fld"><label for="q-email">Email</label><input id="q-email" name="email" data-field="email" placeholder="you@example.com" type="email" autocomplete="email" inputmode="email" required></div>
     <div class="fld"><label for="q-phone">Phone</label><input id="q-phone" name="phone" data-field="phone" placeholder="04xx xxx xxx" type="tel" autocomplete="tel" inputmode="tel" pattern="[0-9+ ()-]{{8,}}" required></div>
@@ -693,7 +721,7 @@ a.chip:hover{background:var(--orange);color:var(--navy-deep)}
   </div>
   <div class="hp" aria-hidden="true"><label for="q-qf-extra">Leave this field empty</label><input type="text" id="q-qf-extra" name="qf_extra" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore="true"></div>
   <input type="hidden" name="source_page" value="">
-  <button class="btn btn-primary fsubmit" type="submit">Send my quote request <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  <button class="btn btn-primary fsubmit" type="submit"><span class="fsubmit-label">Send my quote request</span> <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
   <p class="fnote">Free, no-obligation quote. We reply by phone or email during business hours. Or text <a href="sms:+61423720317">0423 720 317</a>.</p>
   <p class="ferror" role="alert" hidden>Please check the highlighted fields.</p>
 </form>
@@ -760,8 +788,9 @@ a.chip:hover{background:var(--orange);color:var(--navy-deep)}
   <div class="qm">
     <button class="qm-close" type="button" aria-label="Close quote form"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     <div class="qm-head"><img src="/images/dtrh-logo-104.webp" width="48" height="48" alt="" loading="lazy" decoding="async"><div><span class="eyebrow">Free quote</span><h2 id="qm-title">Tell us about the job</h2><p>Takes about a minute. We come back with a clear, upfront quote.</p></div></div>
-    <form class="quote-form compact" id="m-form" novalidate="" data-thank-you="/thank-you" aria-label="Request a free quote">
+    <form class="quote-form compact" id="m-form" novalidate="" data-thank-you="/thank-you" data-next="/quote-details" aria-label="Request a free quote">
   <div class="fgrid">
+    <fieldset class="fld span pills-fld" id="m-returning_customer"><legend>Have you used Down the Rabbit Hole AUST before?</legend><div class="pill-group"><label class="pill"><input type="radio" name="returning_customer" data-field="returning_customer" value="Yes" required><span>Yes, I have</span></label><label class="pill"><input type="radio" name="returning_customer" data-field="returning_customer" value="No" required><span>No, I&#x27;m new</span></label></div></fieldset>
     <div class="fld"><label for="m-full_name">Full name</label><input id="m-full_name" name="full_name" data-field="full_name" placeholder="Jane Citizen" type="text" autocomplete="name" required></div>
     <div class="fld"><label for="m-email">Email</label><input id="m-email" name="email" data-field="email" placeholder="you@example.com" type="email" autocomplete="email" inputmode="email" required></div>
     <div class="fld"><label for="m-phone">Phone</label><input id="m-phone" name="phone" data-field="phone" placeholder="04xx xxx xxx" type="tel" autocomplete="tel" inputmode="tel" pattern="[0-9+ ()-]{{8,}}" required></div>
@@ -773,7 +802,7 @@ a.chip:hover{background:var(--orange);color:var(--navy-deep)}
   </div>
   <div class="hp" aria-hidden="true"><label for="m-qf-extra">Leave this field empty</label><input type="text" id="m-qf-extra" name="qf_extra" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore="true"></div>
   <input type="hidden" name="source_page" value="">
-  <button class="btn btn-primary fsubmit" type="submit">Send my quote request <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  <button class="btn btn-primary fsubmit" type="submit"><span class="fsubmit-label">Send my quote request</span> <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
   <p class="fnote">Free, no-obligation quote. We reply by phone or email during business hours. Or text <a href="sms:+61423720317">0423 720 317</a>.</p>
   <p class="ferror" role="alert" hidden>Please check the highlighted fields.</p>
 </form>

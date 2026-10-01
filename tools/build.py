@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Static site generator for downtherabbitholeaust.com.
 Run: python3 tools/build.py  → writes *.html, sitemap.xml, _redirects, .htaccess into the repo root."""
-import html, json, os, re
+import hashlib, html, json, os, re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 COPY = os.environ.get("COPY_DIR", os.path.join(ROOT, "content"))
@@ -22,8 +22,11 @@ HOURS = "Mon–Thu 8am–5pm · Fri 9am–5pm · Sat–Sun closed"
 OWNER = "Michael Robinson"
 OWNER_ID = SITE + "/#owner"
 TRACKING_ID = "tk_6f4c1089fe214ae6baa8c2dc37522e82"
+REVIEW_WIDGET_JS = "https://app.downtherabbitholeaust.com/reputation/assets/review-widget.js"
+REVIEW_WIDGET_SRC = "https://app.downtherabbitholeaust.com/reputation/widgets/review_widget/3yb7gzTYYnwm3QAH6nFW?widgetId=6abe618b07d8dcd57f696246"
 THANK_YOU = "/thank-you"
 CSS = open(os.path.join(ROOT, "assets", "site.css"), encoding="utf-8").read()
+JS_VER = hashlib.md5(open(os.path.join(ROOT, "assets", "site.js"), "rb").read()).hexdigest()[:8]
 try:
     IMG = json.load(open(os.path.join(ROOT, "images", "manifest.json")))
 except FileNotFoundError:
@@ -390,6 +393,20 @@ def contact_section(heading="Get a free lawn and garden quote", line="Tell us ab
 </section>'''
 
 
+def reviews_section(heading="What Canberra customers say", lead="Reviews from Down the Rabbit Hole AUST customers, straight from the review platform."):
+    """Review widget (lead-connector reputation widget). The widget script and iframe load only when the section
+    nears the viewport (see site.js), so the third-party code never delays the first paint."""
+    return f'''<section class="section reviews-section" id="reviews">
+  <div class="wrap">
+    <div class="section-head rv"><div><span class="eyebrow">Reviews</span><h2>{esc(heading)}</h2></div><p class="lead">{esc(lead)} <a href="{GBP}" rel="noopener" target="_blank">Read all reviews on Google</a>.</p></div>
+    <div class="review-widget" data-review-widget data-script="{REVIEW_WIDGET_JS}">
+      <iframe class="lc_reviews_widget" data-src="{REVIEW_WIDGET_SRC}" title="Customer reviews for {NAME}" frameborder="0" scrolling="no" style="min-width:100%;width:100%"></iframe>
+      <noscript><iframe class="lc_reviews_widget" src="{REVIEW_WIDGET_SRC}" title="Customer reviews for {NAME}" frameborder="0" scrolling="no" style="min-width:100%;width:100%;min-height:420px"></iframe></noscript>
+    </div>
+  </div>
+</section>'''
+
+
 def faq_section(faqs, heading="Frequently asked questions", eyebrow="FAQ", lead=None):
     items = "\n".join(
         f'<details class="rv"><summary>{esc(q)}<span class="plus">{icon("plus")}</span></summary><div class="ans"><p>{esc(a)}</p></div></details>'
@@ -487,7 +504,7 @@ def page(*, path, title, description, body, graph, active="", over_hero=False, o
 <link rel="preload" href="/assets/fonts/hanken-grotesk-var.woff2" as="font" type="font/woff2" crossorigin>
 <style>{CSS}</style>
 {jsonld(graph)}
-<script src="/assets/site.js" defer></script>
+<script src="/assets/site.js?v={JS_VER}" defer></script>
 <script 
   src="https://app.downtherabbitholeaust.com/js/external-tracking.js"
   data-tracking-id="tk_6f4c1089fe214ae6baa8c2dc37522e82" defer>
@@ -524,8 +541,14 @@ def write(path, content):
 # ---------- homepage ----------
 
 def home():
+    def svc_media(slug):
+        img = SERVICE_IMAGES[slug][0]
+        w, h = img_dims(img, True)
+        return (f'<span class="svc-media" aria-hidden="true"><img src="/images/{img}-400.webp" '
+                f'srcset="/images/{img}-400.webp 400w, /images/{img}-800.webp 800w" sizes="(max-width: 640px) 100vw, (max-width: 980px) 50vw, 400px" '
+                f'width="{w}" height="{h}" alt="" loading="lazy" decoding="async"></span>')
     cards = "\n".join(
-        f'<a class="card rv rv-d{i%3}" href="/{s}"><span class="ico">{icon(ic)}</span><h3>{esc(n)}</h3><p>{esc(blurb)}</p><span class="more">{esc(n)} Canberra {icon("arrow")}</span></a>'
+        f'<a class="card svc-card rv rv-d{i%3}" href="/{s}">{svc_media(s)}<span class="svc-num" aria-hidden="true">{i+1:02d}</span><span class="ico">{icon(ic)}</span><h3>{esc(n)}</h3><p>{esc(blurb)}</p><span class="more">{esc(n)} Canberra {icon("arrow")}</span></a>'
         for i, (s, n, _, ic, blurb) in enumerate(SERVICES[:9]))
     districts = "\n".join(
         f'<div class="district rv"><h3><a href="{u}">{esc(n)}</a></h3><p>{esc(", ".join(subs))}</p></div>'
@@ -658,9 +681,8 @@ def home():
         <div class="review-card">
           <div class="g"><span class="score">4.8</span><span><span class="stars" role="img" aria-label="4.8 out of 5 stars">{icon("star")*5}</span><small style="color:var(--muted)">Google rating, 85 reviews</small></span></div>
           <h3>What Canberra customers say</h3>
-          <!-- REVIEWS: paste 3–5 Google reviews here (reviewer first name, date, review text). Source: {GBP} -->
-          <p style="color:var(--muted)">We are adding recent customer reviews here. Until then, read them straight from our Google Business Profile.</p>
-          <a class="btn btn-navy" href="{GBP}" rel="noopener" target="_blank">Read reviews on Google</a>
+          <p style="color:var(--muted)">Rated 4.8 from 85 Google reviews. Read what customers say about mowing, garden care and clean-ups.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-navy" href="#reviews">See customer reviews</a><a class="btn btn-outline" href="{GBP}" rel="noopener" target="_blank">Google reviews</a></div>
         </div>
         <div class="aside-card" style="margin-top:18px">
           <h3>Commercial and strata grounds</h3>
@@ -671,6 +693,8 @@ def home():
     </div>
   </div>
 </section>
+
+{reviews_section()}
 
 <section class="section" id="guides">
   <div class="wrap">
@@ -891,6 +915,7 @@ def about():
     </div>
   </div>
 </section>
+{reviews_section("What customers say about working with Michael", "Reviews from Down the Rabbit Hole AUST customers across Canberra and Queanbeyan.")}
 {faq_section(faqs, "Common questions about working with us")}
 {contact_section("Get a free quote from a locally operated business", "Tell us about your lawn or garden and we will come back with a clear, upfront quote.")}
 '''

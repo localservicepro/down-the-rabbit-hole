@@ -85,7 +85,10 @@ Canberra searchers use the city name, not the district, so one page owns each "[
 
 The owner is Michael Robinson. The business is owner-operated, so copy never refers to a team, crew or staff. Copy only states: fully insured, ABN registered, 60+ Canberra lawns maintained, residential and commercial, locally operated, est. 2021, upfront quotes, green waste removal *available* with mowing, garden maintenance and clean-ups, and no need to be home with clear access. It is a registered DVA provider (confirmed by the client), but copy never says DVA will approve or fund a job; eligibility is DVA's call. It does not state prices or price ranges (copy points to a free quote instead), reply times, travel-charge policies or statistics without a source.
 
+## Reviews widget
+
+The homepage (after the before-and-after gallery) and the About page show the review widget from the CRM's reputation module (`REVIEW_WIDGET_JS` / `REVIEW_WIDGET_SRC` in `tools/build.py`). `site.js` loads the widget script and iframe only when the section is about 600px from the viewport, so it does not slow the first paint.
+
 ## Placeholders still to fill
 
-- `<!-- REVIEWS: paste 3–5 Google reviews here -->` in `tools/build.py` (homepage proof section).
 - ABN number is not published; the site says "ABN Registered".

@@ -153,6 +153,9 @@
      1. catch the submit button click in the capture phase on window (runs before every other listener),
      2. validate, then dispatch our own submit event so the tracking script can still read the fields,
      3. redirect to the thank-you page on a timer that no other listener can cancel. */
+  function loadLead() { try { return JSON.parse(sessionStorage.getItem('dtrh_lead') || '{}') || {}; } catch (x) { return {}; } }
+  function saveLead(d) { try { sessionStorage.setItem('dtrh_lead', JSON.stringify(d)); } catch (x) {} }
+  function firstName(full) { var f = (full || '').trim().split(/\s+/)[0] || ''; return f ? f.charAt(0).toUpperCase() + f.slice(1) : ''; }
   function quoteFormOf(el) { return el && el.closest ? el.closest('.quote-form') : null; }
   function showError(form, show) { var err = form.querySelector('.ferror'); if (err) err.hidden = !show; }
   function startSend(form) {
@@ -176,8 +179,16 @@
     form.dataset.sending = '1';
     var btn = form.querySelector('.fsubmit');
     if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
-    if (window.fbq) { try { window.fbq('track', 'Lead'); } catch (x) {} }
     var dest = form.dataset.thankYou || '/thank-you';
+    var ret = form.querySelector('[name=returning_customer]:checked');
+    if (ret) {
+      /* Step 1: remember who this is for the thank-you message and step 2 (this tab only, never in the URL). */
+      var val = function (n) { var el = form.querySelector('[name=' + n + ']'); return el ? el.value.trim() : ''; };
+      saveLead({ name: val('full_name'), email: val('email'), phone: val('phone'), returning: ret.value });
+      if (ret.value === 'No' && form.dataset.next) dest = form.dataset.next;
+    }
+    if (form.dataset.step === 'qualify') { var l = loadLead(); l.qualified = true; saveLead(l); }
+    else if (window.fbq) { try { window.fbq('track', 'Lead'); } catch (x) {} }
     setTimeout(function () { window.location.assign(dest); }, 800);
     setTimeout(function () { if (location.pathname.indexOf('thank-you') === -1) window.location.href = dest; }, 2500);
     return true;
@@ -230,6 +241,45 @@
       c.addEventListener('input', function () { if (form.checkValidity()) showError(form, false); });
     });
   });
+
+  /* "Used us before?" Yes sends straight through; No goes on to a few quick questions, so relabel the button. */
+  document.querySelectorAll('.quote-form [name=returning_customer]').forEach(function (r) {
+    r.addEventListener('change', function () {
+      var form = quoteFormOf(r), lbl = form && form.querySelector('.fsubmit-label');
+      if (lbl && !form.dataset.sending) lbl.textContent = r.value === 'No' ? 'Next: a few quick questions' : 'Send my quote request';
+    });
+  });
+
+  /* Step 2 (qualifying questions): greet by name and carry the contact details over so the CRM matches the contact. */
+  var qd = document.querySelector('.qualify-form');
+  if (qd) {
+    var lead = loadLead(), box = qd.querySelector('.qf-contact');
+    if (lead.email || lead.phone) {
+      ['full_name', 'email', 'phone'].forEach(function (k) {
+        var el = qd.querySelector('[name=' + k + ']'), v = lead[k === 'full_name' ? 'name' : k];
+        if (el && v) el.value = v;
+      });
+      var t = document.getElementById('qd-title'), fn = firstName(lead.name);
+      if (t && fn) t.textContent = 'Thanks, ' + fn + '. Just a few quick questions';
+    } else if (box) {
+      /* Opened directly, without step 1: ask for contact details here instead. */
+      box.hidden = false;
+      box.querySelectorAll('input').forEach(function (i) { i.required = true; });
+    }
+  }
+
+  /* Thank-you page: personal message for returning and new customers. */
+  var tyTitle = document.getElementById('ty-title');
+  if (tyTitle) {
+    var ld = loadLead(), name = firstName(ld.name), tyLead = document.getElementById('ty-lead');
+    if (ld.returning === 'Yes') {
+      tyTitle.textContent = name ? 'Thanks for coming back, ' + name + '!' : 'Thanks for coming back!';
+      if (tyLead) tyLead.textContent = 'Great to hear from you again. Michael has your request and will be in touch during business hours to get you booked in. If it is urgent, text 0423 720 317.';
+    } else if (ld.returning === 'No') {
+      tyTitle.textContent = name ? 'Thanks, ' + name + ', your quote request is in' : 'Thanks, your quote request is in';
+      if (tyLead) tyLead.textContent = (ld.qualified ? 'Thanks for answering those questions. ' : '') + 'Welcome to Down the Rabbit Hole AUST. Michael will review your details and come back to you with a clear, upfront quote during business hours. If it is urgent, text 0423 720 317.';
+    }
+  }
 
   /* Review widget: load the reputation script, then the iframe, only when the section nears the viewport. */
   document.querySelectorAll('[data-review-widget]').forEach(function (box) {

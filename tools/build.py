@@ -25,6 +25,7 @@ TRACKING_ID = "tk_6f4c1089fe214ae6baa8c2dc37522e82"
 REVIEW_WIDGET_JS = "https://app.downtherabbitholeaust.com/reputation/assets/review-widget.js"
 REVIEW_WIDGET_SRC = "https://app.downtherabbitholeaust.com/reputation/widgets/review_widget/3yb7gzTYYnwm3QAH6nFW?widgetId=6abe618b07d8dcd57f696246"
 THANK_YOU = "/thank-you"
+QUALIFY = "/quote-details"
 CSS = open(os.path.join(ROOT, "assets", "site.css"), encoding="utf-8").read()
 JS_VER = hashlib.md5(open(os.path.join(ROOT, "assets", "site.js"), "rb").read()).hexdigest()[:8]
 try:
@@ -318,6 +319,15 @@ SERVICE_OPTIONS = [n for _, n, *_ in SERVICES] + ["Something else / not sure"]
 SIZE_OPTIONS = ["Courtyard or unit (under 200 m²)", "Standard block (200–600 m²)", "Large block (600–1,000 m²)", "Acreage or commercial site", "Not sure"]
 
 
+def pills(prefix, key, label, options, hint=""):
+    """Required single-choice question rendered as pill buttons (native radios, so validation and the
+    CRM tracking script both see a normal named field)."""
+    opts = "".join(f'<label class="pill"><input type="radio" name="{key}" data-field="{key}" value="{esc(v)}" required><span>{esc(t)}</span></label>'
+                   for v, t in options)
+    hint_html = f' <span>{esc(hint)}</span>' if hint else ""
+    return f'<fieldset class="fld span pills-fld" id="{prefix}-{key}"><legend>{esc(label)}{hint_html}</legend><div class="pill-group">{opts}</div></fieldset>'
+
+
 def quote_form(prefix, compact=False):
     """Custom quote form. Field names match the GHL contact fields: full_name, email, phone,
     property_address, postal_code, property_size, service_needed, job_notes. The external
@@ -341,8 +351,11 @@ def quote_form(prefix, compact=False):
                 f'<div class="ms-panel" id="{i}-panel" role="group" aria-labelledby="{i}-label" hidden><div class="ms-grid">{opts}</div>'
                 f'<button type="button" class="ms-done">Done</button></div>'
                 f'<input class="ms-value" type="text" id="{i}" name="{key}" data-field="{key}" required tabindex="-1" aria-hidden="true" autocomplete="off"></div>')
-    return f'''<form class="quote-form{" compact" if compact else ""}" id="{prefix}-form" novalidate="" data-thank-you="{THANK_YOU}" aria-label="Request a free quote">
+    returning = pills(prefix, "returning_customer", "Have you used Down the Rabbit Hole AUST before?",
+                      [("Yes", "Yes, I have"), ("No", "No, I'm new")])
+    return f'''<form class="quote-form{" compact" if compact else ""}" id="{prefix}-form" novalidate="" data-thank-you="{THANK_YOU}" data-next="{QUALIFY}" aria-label="Request a free quote">
   <div class="fgrid">
+    {returning}
     {f("full_name", "Full name", extra=' type="text" autocomplete="name"', placeholder="Jane Citizen")}
     {f("email", "Email", extra=' type="email" autocomplete="email" inputmode="email"', placeholder="you@example.com")}
     {f("phone", "Phone", extra=' type="tel" autocomplete="tel" inputmode="tel" pattern="[0-9+ ()-]{{8,}}"', placeholder="04xx xxx xxx")}
@@ -354,7 +367,7 @@ def quote_form(prefix, compact=False):
   </div>
   <div class="hp" aria-hidden="true"><label for="{prefix}-qf-extra">Leave this field empty</label><input type="text" id="{prefix}-qf-extra" name="qf_extra" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore="true"></div>
   <input type="hidden" name="source_page" value="">
-  <button class="btn btn-primary fsubmit" type="submit">Send my quote request {icon("arrow")}</button>
+  <button class="btn btn-primary fsubmit" type="submit"><span class="fsubmit-label">Send my quote request</span> {icon("arrow")}</button>
   <p class="fnote">Free, no-obligation quote. We reply by phone or email during business hours. Or text <a href="{SMS}">{PHONE}</a>.</p>
   <p class="ferror" role="alert" hidden>Please check the highlighted fields.</p>
 </form>'''
@@ -516,7 +529,7 @@ def page(*, path, title, description, body, graph, active="", over_hero=False, o
 {body}
 </main>
 {footer()}
-{quote_modal() if active != "thanks" else ""}
+{quote_modal() if active not in ("thanks", "qualify") else ""}
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=25766325546287202&ev=PageView&noscript=1"></noscript>
 </body>
 </html>
@@ -954,8 +967,8 @@ def thankyou():
 <section class="notfound" style="min-height:60vh">
   <div class="wrap" style="max-width:720px">
     <span class="ico" style="width:72px;height:72px;border-radius:50%;background:var(--tint);display:grid;place-items:center;margin:0 auto 20px">{tick}</span>
-    <h1 style="font-size:clamp(1.9rem,3.6vw,2.8rem)">Thanks, your quote request is in</h1>
-    <p class="lead" style="margin-inline:auto">We have your details and will come back to you by phone or email during business hours. If it is urgent, text {PHONE} now.</p>
+    <h1 id="ty-title" style="font-size:clamp(1.9rem,3.6vw,2.8rem)">Thanks, your quote request is in</h1>
+    <p class="lead" id="ty-lead" style="margin-inline:auto">We have your details and will come back to you by phone or email during business hours. If it is urgent, text {PHONE} now.</p>
     <div class="hero-cta" style="justify-content:center"><a class="btn btn-primary" href="{SMS}">{icon("sms")}Text {PHONE}</a><a class="btn btn-outline" href="/">Back to the homepage</a></div>
     <div class="steps" style="grid-template-columns:repeat(3,1fr);margin-top:36px;text-align:left">
       <div class="step" style="background:#fff;border-color:var(--line)"><span class="num">1</span><h3 style="color:var(--navy)">We read your notes</h3><p style="color:var(--muted)">Service, property size and suburb tell us what the job needs.</p></div>
@@ -970,6 +983,67 @@ def thankyou():
     write(THANK_YOU, page(path=THANK_YOU, title="Thanks, Your Quote Request Is In | Down the Rabbit Hole",
                           description="Thanks for requesting a quote from Down the Rabbit Hole AUST. We reply by phone or email during business hours. Need it sooner? Text or call 0423 720 317.",
                           body=body, graph=graph, active="thanks", over_hero=False, robots="noindex, nofollow"))
+
+
+QUALIFY_QUESTIONS = [
+    # GHL contact field key, question, [(value, label)]
+    ("service_frequency", "How often do you need the service?",
+     [("One-off job", "One-off job"), ("Weekly", "Weekly"), ("Fortnightly", "Fortnightly"), ("Monthly", "Monthly"), ("Not sure yet", "Not sure yet")]),
+    ("start_timeframe", "When would you like the work done?",
+     [("As soon as possible", "As soon as possible"), ("Within 2 weeks", "Within 2 weeks"), ("Within a month", "Within a month"), ("Just comparing quotes", "Just comparing quotes")]),
+    ("property_type", "What type of property is it?",
+     [("House", "House"), ("Townhouse or unit", "Townhouse or unit"), ("Rental property", "Rental property"), ("Commercial or strata", "Commercial or strata")]),
+    ("customer_role", "What is your connection to the property?",
+     [("Owner", "Owner"), ("Tenant", "Tenant"), ("Property manager", "Property manager"), ("Family member or carer", "Family member or carer")]),
+    ("yard_condition", "What condition is the lawn or garden in now?",
+     [("Well kept", "Well kept"), ("A bit overgrown", "A bit overgrown"), ("Very overgrown", "Very overgrown")]),
+    ("dva_card_holder", "Are you a DVA card holder?",
+     [("Yes", "Yes"), ("No", "No")]),
+    ("lead_source", "How did you hear about us?",
+     [("Google search", "Google search"), ("Google Maps", "Google Maps"), ("Facebook or Instagram", "Facebook or Instagram"), ("Friend or neighbour", "Friend or neighbour"), ("Saw the ute or trailer", "Saw the ute or trailer"), ("Other", "Other")]),
+]
+
+
+def qualify_form():
+    """Step 2 for new customers. The contact fields are pre-filled from step 1 (sessionStorage) and stay hidden,
+    so the CRM can match this submission to the same contact; they are shown only if step 1 data is missing."""
+    qs = "\n    ".join(pills("qd", k, q, opts) for k, q, opts in QUALIFY_QUESTIONS)
+    return f'''<form class="quote-form qualify-form" id="qd-form" novalidate="" data-thank-you="{THANK_YOU}" data-step="qualify" aria-label="A few quick questions">
+  <div class="fgrid">
+    <div class="fld span qf-contact" hidden>
+      <div class="fgrid">
+        <div class="fld"><label for="qd-full_name">Full name</label><input id="qd-full_name" name="full_name" data-field="full_name" type="text" autocomplete="name" placeholder="Jane Citizen"></div>
+        <div class="fld"><label for="qd-email">Email</label><input id="qd-email" name="email" data-field="email" type="email" autocomplete="email" placeholder="you@example.com"></div>
+        <div class="fld span"><label for="qd-phone">Phone</label><input id="qd-phone" name="phone" data-field="phone" type="tel" autocomplete="tel" pattern="[0-9+ ()-]{{8,}}" placeholder="04xx xxx xxx"></div>
+      </div>
+    </div>
+    {qs}
+  </div>
+  <div class="hp" aria-hidden="true"><label for="qd-qf-extra">Leave this field empty</label><input type="text" id="qd-qf-extra" name="qf_extra" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore="true"></div>
+  <input type="hidden" name="source_page" value="">
+  <input type="hidden" name="form_step" value="Qualifying questions">
+  <button class="btn btn-primary fsubmit" type="submit"><span class="fsubmit-label">Send my answers</span> {icon("arrow")}</button>
+  <p class="fnote">Prefer to skip? <a href="{THANK_YOU}">Your quote request is already in</a>.</p>
+  <p class="ferror" role="alert" hidden>Please answer the highlighted questions.</p>
+</form>'''
+
+
+def qualify_page():
+    body = f'''
+<section class="section qualify-page">
+  <div class="wrap" style="max-width:860px">
+    <ol class="qd-steps" aria-label="Progress"><li class="done"><span>{icon("check")}</span>Your details</li><li class="current" aria-current="step"><span>2</span>A few quick questions</li><li><span>3</span>Done</li></ol>
+    <h1 id="qd-title" style="font-size:clamp(1.8rem,3.4vw,2.6rem)">Thanks, your details are in. Just a few quick questions</h1>
+    <p class="lead">These help Michael quote accurately and book the right time for your first visit. It takes about 30 seconds.</p>
+    <div class="form-wrap" style="margin-top:26px">
+{qualify_form()}
+    </div>
+  </div>
+</section>
+'''
+    write(QUALIFY, page(path=QUALIFY, title="A Few Quick Questions | Down the Rabbit Hole AUST",
+                        description="A few quick questions so Down the Rabbit Hole AUST can quote your Canberra lawn or garden job accurately and book the right time for your first visit.",
+                        body=body, graph=[business_schema()], active="qualify", over_hero=False, robots="noindex, nofollow"))
 
 
 def area_map():
@@ -1530,7 +1604,7 @@ def static_files(pages):
     json.dump(VERCEL, open(os.path.join(ROOT, "vercel.json"), "w"), indent=2)
     open(os.path.join(ROOT, "_redirects"), "w").write(REDIRECTS)
     open(os.path.join(ROOT, ".htaccess"), "w").write(HTACCESS)
-    open(os.path.join(ROOT, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDisallow: /404\nDisallow: /thank-you\nSitemap: {SITE}/sitemap.xml\n")
+    open(os.path.join(ROOT, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDisallow: /404\nDisallow: /thank-you\nDisallow: /quote-details\nSitemap: {SITE}/sitemap.xml\n")
     urls = "".join(f"  <url><loc>{SITE}{p}</loc><changefreq>monthly</changefreq><priority>{'1.0' if p=='/' else '0.8'}</priority></url>\n" for p in pages)
     open(os.path.join(ROOT, "sitemap.xml"), "w").write(
         '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -1542,6 +1616,7 @@ def main():
     about()
     notfound()
     thankyou()
+    qualify_page()
     pages = ["/", "/about", "/services"]
     for slug in ["services"] + [s[0] for s in SERVICES]:
         service_page(slug)

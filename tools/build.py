@@ -453,7 +453,7 @@ def page(*, path, title, description, body, graph, active="", over_hero=False, o
     assert 150 <= len(description) <= 160, f"description length {len(description)}: {path}"
     canonical = SITE + ("/" if path == "/" else path)
     og_image = og_image or f"{SITE}/images/{HERO_IMAGE}.webp"
-    robots_tag = f'<meta name="robots" content="{robots}">' if robots else ""
+    robots_tag = f'<meta name="robots" content="{robots or "index, follow, max-image-preview:large"}">'
     return f'''<!DOCTYPE html>
 <html lang="en-AU">
 <head>

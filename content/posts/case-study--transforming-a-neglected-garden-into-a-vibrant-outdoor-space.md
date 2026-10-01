@@ -8,7 +8,7 @@ The garden was heavily overgrown, the soil had become hydrophobic, and the origi
 
 The first phase of any garden transformation is what we call the "strategic reset." This particular property had a significant "fuel load"—a build-up of dry, fallen branches and thick eucalyptus leaf litter that posed a serious fire risk.
 
-Debris Logistics: Our team began with a massive green waste removal operation. We specialise in high-capacity clearing, ensuring that every trailer load is hauled away and disposed of according to local ACT environmental regulations.
+Debris Logistics: The job began with a large green waste removal, with every trailer load hauled away and disposed of in line with local ACT environmental regulations.
 
 Weed Eradication: We focused on removing invasive woody weeds that were choking the established native shrubs. By systematically clearing the undergrowth, we allowed the primary plants to breathe and regain access to much-needed sunlight.
 
@@ -25,7 +25,7 @@ To give the garden an immediate professional edge, we moved on to structural pru
 
 The Heavy Cut-Back: We performed a structural reduction on overgrown hedges that had encroached onto walkways and fences.
 
-The Result: Clean, sharp lines were restored to the property boundaries. Precision hedging doesn’t just improve aesthetics; it encourages healthier, denser growth and prevents the "woody" look common in unmanaged shrubs. This level of detail is a hallmark of the Down The Rabbit Hole service.
+The Result: Clean, sharp lines were restored to the property boundaries. Precision hedging doesn’t just improve aesthetics; it encourages healthier, denser growth and prevents the "woody" look common in unmanaged shrubs.
 ### 4. Protecting the Investment: Professional Mulching
 
 The final, most critical touch in this case study was the application of premium organic mulch.
@@ -35,10 +35,6 @@ Thermal Protection: To prevent weeds from returning and to lock in vital moistur
 Sustainability: This provides a vital thermal barrier against Canberra’s frost and heatwaves, ensuring the garden remains resilient with minimal supplemental watering. The result is a "display home" finish that requires far less manual labour to maintain in the future.
 ### Does Your Garden Need a Professional Reset?
 
-Whether you have a neglected backyard that needs a total overhaul or a property that simply needs to be brought back to life for a sale, Down The Rabbit Hole has the local expertise and the heavy-duty equipment to get the job done. We turn overgrown outdoor spaces into vibrant, manageable landscapes that you can be proud of.
+Whether you have a neglected backyard that needs a total overhaul or a property that simply needs to be brought back to life for a sale, Down the Rabbit Hole AUST, owned and run by Michael Robinson, can help with yard clean-ups, green waste removal, hedge trimming and garden maintenance, with a clear, upfront quote before any work starts.
 
-[Request Your Garden Restoration Audit Now](https://downtherabbitholeaust.com/rubbish-removal)
-
-[Down The Rabbit Hole Lawn Care Team](https://downtherabbitholeaust.com/blog/author/695b34992c0fabfb5cfaeec8)
-
-The Down The Rabbit Hole Lawn Care Team provides professional lawn mowing and garden maintenance services across Canberra. Our team shares practical lawn care advice based on real on-site experience, local climate conditions, and the needs of Canberra homeowners.
+[Request a Yard Clean-Up Quote](/yard-clean-ups)

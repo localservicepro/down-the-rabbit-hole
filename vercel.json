@@ -5,57 +5,57 @@
     {
       "source": "/home",
       "destination": "/",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/hedge-trimming--lawn-care",
       "destination": "/hedge-trimming",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/dva-lawncare-services",
       "destination": "/dva-lawn-care",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/weed-spraying-prevention",
       "destination": "/weed-spraying",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/blog/category/canberra-lawn-care-tips-guides",
       "destination": "/blog",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/categories/canberra-lawn-care-tips-guides",
       "destination": "/blog",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/blog/author/695b34992c0fabfb5cfaeec8",
       "destination": "/about",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/author/down-the-rabbit-hole-lawn-care-team",
       "destination": "/about",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/post/grass-mowing-canberra-guide-7692",
       "destination": "/post/grass-mowing-canberra-guide",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/post/ultimate-guide-to-green-waste-disposal-in-Canberra",
       "destination": "/post/green-waste-canberra-disposal-guide",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/blog/tag/:tag*",
       "destination": "/blog",
-      "permanent": true
+      "statusCode": 301
     }
   ],
   "headers": [
@@ -65,6 +65,21 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": ".*\\.vercel\\.app"
+        }
+      ],
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
         }
       ]
     }

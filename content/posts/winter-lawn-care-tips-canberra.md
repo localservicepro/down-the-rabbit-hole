@@ -47,7 +47,7 @@ You should reduce watering significantly in winter, as dormant grass requires ve
 
 It’s also best to avoid applying fertilizer during the middle of winter. The ideal time for a pre-winter feed is in late autumn, using a slow-release fertilizer designed to strengthen the roots. Applying fertilizer to dormant grass can encourage weak, leggy growth that is highly susceptible to frost burn. Wait until the first signs of strong growth in late winter or early spring before you fertilize again. For more tailored strategies, especially when it comes to mowing and seasonal care, you might want to check out a professional service. For homeowners looking for comprehensive lawn care, [Down The Rabbit Hole](https://downtherabbitholeaust.com/lawn-mowing) offers tailored solutions.
 
-Winter lawn care isn’t about striving for a perfect green carpet; it's about protection, maintenance, and preparation. By following these simple tips—keeping it clean, mowing high and infrequently, and staying off it—you give your lawn the best possible chance to survive the cold. When spring arrives, you’ll be rewarded with a healthy, vibrant lawn that’s the envy of the neighborhood. If you need a hand getting your yard ready, the team at Down the Rabbit Hole AUST Pty ltd is ready to help. Visit their website at downtherabbitholeaust.com to learn more about their Lawn Mowing and Yard Cleanups for Sale or Lease services.
+Winter lawn care isn’t about striving for a perfect green carpet; it's about protection, maintenance, and preparation. By following these simple tips—keeping it clean, mowing high and infrequently, and staying off it—you give your lawn the best possible chance to survive the cold. When spring arrives, you’ll be rewarded with a healthy, vibrant lawn that’s the envy of the neighborhood. If you need a hand getting your yard ready, Down the Rabbit Hole AUST, owned and run by Michael Robinson, can help. Visit downtherabbitholeaust.com to learn more about lawn mowing and yard clean-ups.
 ### Can I put fertilizer on my lawn in winter?
 
 It's best to avoid fertilizing during peak winter. A slow-release fertilizer in late autumn is better. Applying it mid-winter can encourage weak growth that is susceptible to frost and disease. Wait until late winter or early spring for the next application.
@@ -66,7 +66,3 @@ Brown patches in winter are common and can be caused by a few things. It could s
 ### When should I start my spring lawn care routine?
 
 Begin your spring lawn care routine as the weather consistently warms and you see signs of new growth. This is typically in late winter or early spring. This is the right time to start mowing more regularly, apply a quality fertilizer, and address any weeds.
-
-[Down The Rabbit Hole Lawn Care Team](https://downtherabbitholeaust.com/blog/author/695b34992c0fabfb5cfaeec8)
-
-The Down The Rabbit Hole Lawn Care Team provides professional lawn mowing and garden maintenance services across Canberra. Our team shares practical lawn care advice based on real on-site experience, local climate conditions, and the needs of Canberra homeowners.

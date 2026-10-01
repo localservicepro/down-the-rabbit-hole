@@ -5,7 +5,7 @@ from html.parser import HTMLParser
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 KEYWORDS = {
-    "index": "lawn mowing canberra", "lawn-mowing": "grass mowing canberra", "lawn-care": "lawn care canberra",
+    "index": "lawn & garden care", "lawn-mowing": "lawn mowing canberra", "lawn-care": "lawn care canberra",
     "gardening-services": "gardener canberra", "garden-maintenance": "garden maintenance canberra",
     "hedge-trimming": "hedge trimming canberra", "yard-clean-ups": "yard clean up canberra",
     "green-waste-removal": "green waste removal canberra", "rubbish-removal": "rubbish removal canberra",

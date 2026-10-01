@@ -46,8 +46,6 @@ Succulent gardens, pathways, and modern landscape designs.
 Garden mulching in Canberra involves applying a 5-10cm layer of material like bark or straw to your soil. This is vital in the ACT climate to conserve soil moisture, suppress weeds, and regulate soil temperature. For best results, weed and water before applying mulch annually in spring or autumn.
 ## Key takeaways
 
-Mulching can reduce water evaporation by up to 70%.
-
 Apply mulch in a layer 5-10cm deep for best results.
 
 Keep mulch away from plant stems to prevent rot.
@@ -58,7 +56,7 @@ Reapply mulch annually, ideally in spring or autumn.
 
 Mulching is crucial for managing Canberra's hot summers and frosty winters.
 
-Effective garden mulching in Canberra is one of the smartest investments you can make for your landscape. It not only elevates your home's curb appeal but also creates a healthier, more resilient environment for your plants to thrive in the unique ACT climate. Whether you're in Weston Creek or Giralang, understanding the right way to mulch can save you time, water, and effort. Let's dig into how you can transform your garden beds with this simple yet powerful technique, with a little help from experts like Down the Rabbit Hole AUST Pty ltd.
+Effective garden mulching in Canberra is one of the smartest investments you can make for your landscape. It not only elevates your home's curb appeal but also creates a healthier, more resilient environment for your plants to thrive in the unique ACT climate. Whether you're in Weston Creek or Giralang, understanding the right way to mulch can save you time, water, and effort. Let's dig into how you can transform your garden beds with this simple yet powerful technique, with a little help from Down the Rabbit Hole AUST.
 ## What is Garden Mulching?
 
 Garden mulching is the process of applying a layer of material to the surface of your soil. This simple act protects your soil, conserves moisture, suppresses weeds, and improves the overall health and fertility of your garden beds. Think of it as a protective blanket for your garden's foundation.
@@ -68,7 +66,7 @@ Mulch can be organic, like bark or straw, or inorganic, such as pebbles or grave
 
 Mulching is crucial in the Australian Capital Territory due to our distinct seasons. It helps regulate soil temperature, keeping plant roots cooler during hot summers and warmer during frosty winters. The difference a good layer of mulch makes can be significant for plant survival and growth.
 
-Furthermore, Canberra is known for its periods of low rainfall. A proper mulch layer can reduce water evaporation from the soil surface by up to 70%, according to industry research. This means less time spent watering and a more sustainable garden. It also drastically reduces weed growth, freeing you from the constant battle of pulling unwanted invaders.
+Furthermore, Canberra is known for its periods of low rainfall. A proper mulch layer helps reduce evaporation from the soil surface. This means less time spent watering and a more sustainable garden. It also drastically reduces weed growth, freeing you from the constant battle of pulling unwanted invaders.
 ### The Core Benefits of Mulching Your Garden Beds
 
 Moisture Retention: Slows evaporation, keeping soil moist for longer periods and reducing your water bills.
@@ -95,10 +93,10 @@ You should reapply mulch whenever it has broken down and thinned out. For organi
 Check the depth of your mulch layer every few months. If you can easily see the soil through it, or the layer is less than 5cm deep, it's time for a top-up. Keeping the layer consistent is key to maintaining soil moisture and weed control throughout the year.
 ### Your Local Mulching Solution
 
-Seasonal mulching and garden restoration can feel like a big job. If you want a professional touch to ensure it's done right, the team at [Down The Rabbit Hole](https://downtherabbitholeaust.com/lawn-mowing) provides expert mulching services. Proper application saves water and keeps your garden looking pristine.
+Seasonal mulching and garden restoration can feel like a big job. If you want a professional touch, Down the Rabbit Hole AUST offers [garden maintenance](/garden-maintenance) across Canberra; ask about mulching when you request a quote. Proper application saves water and keeps your garden looking pristine.
 ## Conclusion
 
-Garden mulching is a fundamental part of successful gardening in Canberra. It protects your soil, saves water, and builds a healthier foundation for your plants. By choosing the right type of mulch and applying it correctly, you can create a beautiful, low-maintenance garden that thrives in every season. Whether you're an avid DIYer or prefer to call in the experts, mulching is a task that pays dividends. For assistance with your garden needs, from mulching to complete yard cleanups, the team at Down the Rabbit Hole AUST Pty ltd is ready to help you create the garden of your dreams. Visit their website or call to get started.
+Garden mulching is a fundamental part of successful gardening in Canberra. It protects your soil, saves water, and builds a healthier foundation for your plants. By choosing the right type of mulch and applying it correctly, you can create a beautiful, low-maintenance garden that thrives in every season. Whether you're an avid DIYer or prefer to call in the experts, mulching is a task that pays dividends. For help with your garden, from garden maintenance to complete yard clean-ups, Down the Rabbit Hole AUST, owned and run by Michael Robinson, can help. Visit the website or call 0423 720 317 to get started.
 ### How much mulch do I need for my Canberra garden?
 
 To calculate your needs, measure the length and width of your garden bed in meters. Multiply length by width to get the area in square meters. For a 7.5cm (0.075m) layer, multiply your area by 0.075 to find the cubic meters of mulch required. Most suppliers sell mulch by the cubic meter.
@@ -117,7 +115,3 @@ Mulching significantly reduces weed growth by blocking sunlight from reaching se
 ### What is the cheapest mulch option?
 
 Generally, locally sourced materials are the most affordable. In many areas, arborists will offer wood chips for free or a low cost. Sugar cane and lucerne hay can also be cost-effective, but they break down faster and require more frequent reapplication than bark or wood chip mulches, so consider the long-term cost.
-
-[Down The Rabbit Hole Lawn Care Team](https://downtherabbitholeaust.com/blog/author/695b34992c0fabfb5cfaeec8)
-
-The Down The Rabbit Hole Lawn Care Team provides professional lawn mowing and garden maintenance services across Canberra. Our team shares practical lawn care advice based on real on-site experience, local climate conditions, and the needs of Canberra homeowners.

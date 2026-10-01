@@ -9,11 +9,11 @@
 
 Gardening costs in Canberra vary based on factors like garden size, service complexity, and frequency. Most professionals charge an hourly rate, which typically ranges from $60 to $100 per hour, while others may offer a fixed price for specific projects like a yard cleanup.
 
-Industry research suggests that investing in professional garden maintenance can have a significant return. According to a 2023 report by Domain, curb appeal is a major factor for buyers, and a well-maintained garden can add thousands to your property value. Here’s a look at common pricing structures:
+A well-maintained garden also adds to a property's street appeal, which matters if you plan to sell or lease. Here’s a look at common pricing structures:
 
 Quick answer: A professional garden service in Canberra helps you maintain a beautiful and healthy yard year-round. Services range from lawn mowing and hedge trimming to full yard cleanups and rubbish removal. Choosing an insured, local expert is key to protecting your property value and handling Canberra's unique climate.
 
-A professional garden service in Canberra can transform your outdoor space from a weekend chore into a stunning oasis. With our busy lives, finding the time and energy to keep up with nature can be tough. That's where the experts step in, ensuring your yard is pristine year-round. For residents in the ACT, a well-maintained garden is not just a luxury; it’s a core part of the local lifestyle, and a team like Down the Rabbit Hole AUST Pty ltd has the local expertise to make it happen.
+A professional garden service in Canberra can transform your outdoor space from a weekend chore into a stunning oasis. With our busy lives, finding the time and energy to keep up with nature can be tough. That's where the experts step in, ensuring your yard is pristine year-round. For residents in the ACT, a well-maintained garden is not just a luxury; it’s a core part of the local lifestyle, and Down the Rabbit Hole AUST, owned and run by Michael Robinson, can help make it happen.
 ## Key takeaways
 
 Garden services offer everything from basic lawn mowing to complete garden restorations.
@@ -48,14 +48,13 @@ Professional garden maintenance is crucial for protecting your property's value,
 
 A tidy, well-kept garden significantly boosts your home's curb appeal. This is especially important if you are planning on selling or leasing your property. For residents in suburbs like Fisher or Mawson, a beautiful garden complements the leafy character of the area. Furthermore, a neglected yard can become a haven for pests like spiders, rodents, and termites. Regular maintenance clears away debris and overgrowth where these pests like to hide.
 
-"A proactive approach to garden care isn’t just about aesthetics; it’s about asset management. In the Canberra market, we regularly see that homes with well-maintained gardens sell faster and for a higher price. It’s the first impression that counts." — David Sloane, Principal Agent, ACT Realty Group
 ## When Should I Book a Garden Service?
 
 You should book seasonal services like spring cleanups or autumn mulching at least a few weeks in advance, as these are busy periods. For regular maintenance like lawn mowing, it’s best to establish a recurring schedule with your chosen provider.
 
 Here’s a general guide for the Canberra region:
 
-Spring (Sep-Nov): The busiest season. Book early for cleanups, planting, fertilizing, and to get your lawn on a regular mowing schedule as growth takes off. Estimates suggest that lawn growth can double in spring, requiring more frequent cuts.
+Spring (Sep-Nov): The busiest season. Book early for cleanups, planting, fertilizing, and to get your lawn on a regular mowing schedule as growth takes off. Lawn growth speeds up in spring, so cuts need to be more frequent.
 
 Summer (Dec-Feb): Focus on watering, mowing, and weed control. This is a great time to ensure your irrigation systems are working correctly.
 
@@ -66,9 +65,9 @@ Winter (Jun-Aug): The quietest period. A great time for structural work, heavy p
 For ongoing tasks like lawn care, setting up a consistent service is key. For reliable and professional lawn mowing, check out [Down The Rabbit Hole](https://downtherabbitholeaust.com/lawn-mowing) — they have the equipment and expertise to keep your lawn looking its best year-round.
 ## Choosing the Right Gardener for You
 
-Finding the right garden service provider means looking for a combination of reliability, expertise, and good value. Start by asking for quotes from a few different companies. Ensure they are insured, have good online reviews, and can provide clear details about what their service includes. Companies like Down the Rabbit Hole AUST Pty ltd which list their services—from hedge trimming to DVA Homes Maintenance—offer transparency that gives customers peace of mind. A local provider will understand the specific soil types, weather patterns, and common plant species in the Canberra area, leading to better results for your garden.
+Finding the right garden service provider means looking for a combination of reliability, expertise, and good value. Start by asking for quotes from a few different companies. Ensure they are insured, have good online reviews, and can provide clear details about what their service includes. Down the Rabbit Hole AUST lists its services, from hedge trimming to DVA lawn care, and gives a clear, upfront quote before work starts. If you need a [gardener Canberra](/gardening-services) homeowners can call for one-off jobs or regular visits, that is a good place to start. A local provider will understand the specific soil types, weather patterns, and common plant species in the Canberra area, leading to better results for your garden.
 
-Don't let your garden become a source of stress. With the right professional garden service in Canberra, you can reclaim your weekends and enjoy a beautiful, thriving outdoor space. Whether you need a simple lawn mow, a seasonal cleanup, or ongoing maintenance, the experts are ready to help. To get started on your garden transformation, reach out to a trusted local team like Down the Rabbit Hole AUST Pty ltd to see how they can help you achieve your dream yard.
+Don't let your garden become a source of stress. With the right professional garden service in Canberra, you can reclaim your weekends and enjoy a beautiful, thriving outdoor space. Whether you need a simple lawn mow, a seasonal cleanup, or ongoing maintenance, local help is available. To get started on your garden transformation, reach out to a local business like Down the Rabbit Hole AUST to see how they can help you achieve your dream yard.
 ### How often should I have my lawn mowed in Canberra?
 
 It depends on the season. In spring and summer, lawn growth is rapid, requiring mowing every 1-2 weeks. During the slower growth of autumn and winter, every 3-4 weeks is usually sufficient to keep it tidy.
@@ -83,11 +82,7 @@ A gardener focuses on maintaining and caring for an existing garden space throug
 Yes, most professional garden services include rubbish removal. They will collect all leaves, clippings, and other green waste generated during the service and haul it away, leaving your property clean and tidy.
 ### Do you offer services for DVA clients?
 
-Yes, many reputable garden service providers in Canberra, including Down the Rabbit Hole, are experienced in providing DVA Homes Maintenance. They understand the requirements and can provide reliable, scheduled care for eligible veterans.
-### Do I need to be home when the gardeners come?
+Down the Rabbit Hole AUST offers lawn and garden care to veterans and DVA card holders and gives a free upfront quote, but does not decide eligibility or coverage. DVA decides who is eligible and what is covered, so confirm your entitlement with DVA before booking. See [DVA lawn care](/dva-lawn-care) for details.
+### Do I need to be home for a garden service?
 
-Generally, no. As long as the gardening team has safe and clear access to all the areas they need to work on (like unlocked gates), you do not need to be present for the service to be completed.
-
-[Down The Rabbit Hole Lawn Care Team](https://downtherabbitholeaust.com/blog/author/695b34992c0fabfb5cfaeec8)
-
-The Down The Rabbit Hole Lawn Care Team provides professional lawn mowing and garden maintenance services across Canberra. Our team shares practical lawn care advice based on real on-site experience, local climate conditions, and the needs of Canberra homeowners.
+Generally, no. As long as there is safe and clear access to all the areas that need work (like unlocked gates), you do not need to be present for the service to be completed.

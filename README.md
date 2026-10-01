@@ -32,7 +32,7 @@ Requires Python 3.10+ (Pillow only for the image tooling).
 
 - Serve clean URLs: `/lawn-mowing` must serve `lawn-mowing.html` (Netlify and Cloudflare Pages do this by default; Apache uses the rewrite in `.htaccess`).
 - Unknown URLs must return **HTTP 404** with `404.html`.
-- 301 redirects for the old site's URLs are in `_redirects` / `.htaccess`.
+- 301 redirects for the old site's URLs are in `vercel.json`, `_redirects` and `.htaccess`.
 - `/blog` is the guides index and the 19 posts are built from `content/posts/*.md` into `post/<slug>.html`.
 - Every page is written twice: `page.html` and `page/index.html`, so `/page` resolves on hosts with or without clean-URL support. `vercel.json` covers Vercel (clean URLs plus the 301 map); `_redirects` covers Netlify/Cloudflare; `.htaccess` covers Apache; meta-refresh stubs cover the old URLs on hosts that ignore all three.
 
@@ -57,6 +57,32 @@ Requires Python 3.10+ (Pillow only for the image tooling).
 ## Business hours
 
 Mon–Thu 8am–5pm, Fri 9am–5pm, closed weekends. Set in `HOURS` and `openingHoursSpecification` in `tools/build.py`.
+
+## Keyword ownership (data-backed review, Oct 2026)
+
+Canberra searchers use the city name, not the district, so one page owns each "[service] Canberra" phrase:
+
+| Phrase | Page | Notes |
+|---|---|---|
+| gardener canberra | `/gardening-services` | One-off and project jobs only |
+| garden maintenance canberra | `/garden-maintenance` | Recurring visits only; cross-linked once each way with `/gardening-services` |
+| lawn mowing canberra | `/lawn-mowing` | No "grass mowing" in the title (same query). The homepage, areas hub and every district page link here with the anchor "lawn mowing Canberra" |
+| lawn care canberra | `/lawn-care` | The garden maintenance guide links here |
+| (business entity) | `/` | H1 "Lawn & Garden Care Across Canberra"; the exact mowing phrase is used naturally, not repeated |
+
+- Four posts that competed for the mowing phrase were retitled to informational angles and link to `/lawn-mowing`: `grass-mowing-canberra-guide`, `canberra-lawn-mowing-services-guide`, `best-lawn-mowing-services-canberra`, `top-rated-canberra-lawn-maintenance-providers`. URLs are unchanged.
+- In JSON copy, `[anchor](/path)` in intro, paragraph and bullet strings renders as an internal link.
+- Expect the homepage's positions for the mowing cluster to dip while `/lawn-mowing` picks them up.
+
+## Launch checks
+
+- Redirects are 301 in `vercel.json`, `_redirects` and `.htaccess`. After deploy, confirm each old URL returns 301 (not 302) with a header checker, and pull the Search Console page list for any indexed URL the old sitemap missed.
+- `*.vercel.app` hosts send `X-Robots-Tag: noindex, nofollow` (see `VERCEL["headers"]`), so previews stay out of the index. Confirm the production domain does not send it.
+- All 19 posts are in `sitemap.xml`; confirm they return 200 after launch.
+
+## Business facts used in copy
+
+The owner is Michael Robinson. The business is owner-operated, so copy never refers to a team, crew or staff. Copy only states: fully insured, ABN registered, 60+ Canberra lawns maintained, residential and commercial, locally operated, est. 2021, upfront quotes, green waste removal *available* with mowing, garden maintenance and clean-ups, and no need to be home with clear access. It does not claim DVA registration or approval, reply times, travel-charge policies or statistics without a source.
 
 ## Placeholders still to fill
 

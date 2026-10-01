@@ -171,6 +171,7 @@ ICONS = {
     "star": '<svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg>',
     "fb": '<svg viewBox="0 0 24 24"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.3H7.4V14h2.8v8z"/></svg>',
     "ig": '<svg viewBox="0 0 24 24"><path d="M12 7.3A4.7 4.7 0 1 0 12 16.7 4.7 4.7 0 0 0 12 7.3zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm5.9-7.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0zM12 3.9c2.6 0 2.9 0 4 .1 2.7.1 3.9 1.4 4 4 .1 1 .1 1.3.1 4s0 3-.1 4c-.1 2.6-1.4 3.9-4 4-1 .1-1.3.1-4 .1s-3 0-4-.1c-2.6-.1-3.9-1.4-4-4-.1-1-.1-1.3-.1-4s0-3 .1-4c.1-2.6 1.4-3.9 4-4 1-.1 1.3-.1 4-.1zM12 2.2c-2.7 0-3 0-4.1.1-3.6.2-5.5 2.1-5.7 5.7C2.2 9 2.2 9.3 2.2 12s0 3 .1 4.1c.2 3.6 2.1 5.5 5.7 5.7 1.1.1 1.4.1 4.1.1s3 0 4.1-.1c3.6-.2 5.5-2.1 5.7-5.7.1-1.1.1-1.4.1-4.1s0-3-.1-4.1c-.2-3.6-2.1-5.5-5.7-5.7-1.1-.1-1.4-.1-4.1-.1z"/></svg>',
+    "camera": '<svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>',
     "menu": '<svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
     "close": '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>',
 }
@@ -364,6 +365,13 @@ def quote_form(prefix, compact=False):
     {f("property_size", "Property size", tag="select", options=SIZE_OPTIONS)}
     {multi("service_needed", "Service needed", SERVICE_OPTIONS)}
     {f("job_notes", "Job notes", tag="textarea", required=False, span=True, placeholder="What needs doing, how often, access details, anything we should know.")}
+    <div class="fld span photos" data-photos>
+      <span class="photos-label" id="{prefix}-photos-label">Photos of the job <span>(optional, up to 5)</span></span>
+      <label class="photo-add" for="{prefix}-photos">{icon("camera")}<span><strong>Add photos</strong><small>A few snaps of the lawn or garden help Michael quote accurately</small></span></label>
+      <input class="photo-input" type="file" id="{prefix}-photos" accept="image/*" multiple aria-labelledby="{prefix}-photos-label">
+      <ul class="photo-list" aria-live="polite"></ul>
+      <p class="photo-msg" role="status" hidden></p>
+    </div>
   </div>
   <div class="hp" aria-hidden="true"><label for="{prefix}-qf-extra">Leave this field empty</label><input type="text" id="{prefix}-qf-extra" name="qf_extra" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore="true"></div>
   <input type="hidden" name="source_page" value="">
@@ -1594,6 +1602,7 @@ VERCEL = {
         {"source": "/post/ultimate-guide-to-green-waste-disposal-in-Canberra", "destination": "/post/green-waste-canberra-disposal-guide", "statusCode": 301},
         {"source": "/blog/tag/:tag*", "destination": "/blog", "statusCode": 301},
     ],
+    "functions": {"api/quote.js": {"maxDuration": 30}},
     "headers": [
         {"source": "/(.*)\\.(webp|png|woff2|css|js)", "headers": [{"key": "Cache-Control", "value": "public, max-age=31536000, immutable"}]},
     ],

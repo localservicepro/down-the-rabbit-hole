@@ -58,6 +58,11 @@
       "statusCode": 301
     }
   ],
+  "functions": {
+    "api/quote.js": {
+      "maxDuration": 30
+    }
+  },
   "headers": [
     {
       "source": "/(.*)\\.(webp|png|woff2|css|js)",

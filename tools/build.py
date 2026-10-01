@@ -544,9 +544,6 @@ def home():
       <a class="btn btn-primary" href="#contact" data-open-quote>Get a Free Quote {icon("arrow")}</a>
       <a class="btn btn-ghost" href="{SMS}">{icon("sms")}Text {PHONE}</a>
     </div>
-    <div class="trust-strip">
-      <span>{icon("check")}Fully insured</span><span>{icon("check")}ABN registered</span><span>{icon("check")}60+ Canberra lawns maintained</span><span>{icon("check")}Locally operated</span><span>{icon("check")}Est. 2021</span>
-    </div>
   </div>
 </section>
 

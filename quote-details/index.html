@@ -341,6 +341,25 @@ ul{margin:0 0 1em;padding-left:1.2em}
 .fld select:invalid{color:var(--muted)}
 .fld textarea{min-height:88px;resize:vertical}
 .fgrid{align-items:start}
+/* Photo upload */
+.photos-label{display:block;font-family:var(--display);font-weight:700;font-size:.9rem;color:var(--navy);letter-spacing:.01em}
+.photos-label span{font-family:var(--body);font-weight:500;color:var(--muted);font-size:.82rem}
+.photo-add{display:flex!important;align-items:center;gap:14px;padding:14px 16px;border:1.5px dashed #B9C3D3;border-radius:12px;background:var(--paper);cursor:pointer;transition:border-color .2s,background-color .2s}
+.photo-add:hover{border-color:var(--orange);background:#fff}
+.photo-add svg{width:28px;height:28px;flex:none;stroke:var(--orange-deep);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.photo-add strong{display:block;font-family:var(--display);font-size:.95rem;color:var(--navy)}
+.photo-add small{display:block;font-family:var(--body);font-weight:500;font-size:.85rem;color:var(--muted)}
+.quote-form .fld .photo-input{position:absolute;width:1px!important;height:1px;min-height:0!important;padding:0!important;border:0!important;opacity:0;pointer-events:none}
+.photo-input:focus-visible+.photo-list,.photo-add:focus-within{outline:none}
+.photos:focus-within .photo-add{border-color:var(--orange);box-shadow:0 0 0 4px rgba(248,144,24,.18)}
+.photo-list{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:0;padding:0}
+.photos:not(.has-photos) .photo-list{display:none}
+.photo-list li{position:relative;width:72px;height:72px}
+.photo-list img{width:72px;height:72px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
+.photo-rm{position:absolute;top:-8px;right:-8px;width:26px;height:26px;border-radius:50%;border:0;background:var(--navy);color:#fff;font-size:18px;line-height:1;cursor:pointer;display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.photo-rm:hover{background:#D6453D}
+.photo-msg{margin:0;font-size:.85rem;color:var(--muted)}
+.quote-form.compact .photo-add{padding:10px 14px}
 .quote-form input,.quote-form select,.quote-form textarea,.quote-form button{scroll-margin-top:calc(var(--nav-h) + 70px)}
 /* Pill radio questions (used-us-before + qualifying questions) */
 .pills-fld{border:0;margin:0;padding:0;min-width:0}
@@ -519,7 +538,7 @@ a.chip:hover{background:var(--orange);color:var(--navy-deep)}
 @media (max-width:900px){.pin-tip{width:200px}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"LocalBusiness","@id":"https://downtherabbitholeaust.com/#business","name":"Down the Rabbit Hole AUST","legalName":"Down the Rabbit Hole (Aust) Pty Ltd","alternateName":"Down the Rabbit Hole (Aust) Pty Ltd","slogan":"Taking the headaches away","foundingDate":"2021","telephone":"+61 423 720 317","email":"info@downtherabbitholeaust.com","url":"https://downtherabbitholeaust.com/","image":"https://downtherabbitholeaust.com/images/hero-video-poster.webp","logo":"https://downtherabbitholeaust.com/images/dtrh-logo.png","priceRange":"$$","address":{"@type":"PostalAddress","addressLocality":"Canberra","addressRegion":"ACT","addressCountry":"AU"},"areaServed":[{"@type":"City","name":"Canberra"},{"@type":"Place","name":"Weston Creek"},{"@type":"Place","name":"Woden Valley"},{"@type":"Place","name":"Tuggeranong"},{"@type":"Place","name":"Belconnen"},{"@type":"Place","name":"Inner North"},{"@type":"Place","name":"Inner South"},{"@type":"Place","name":"Queanbeyan"}],"sameAs":["https://www.facebook.com/p/Down-the-Rabbit-Hole-AUST-61552753624844/","https://www.instagram.com/downtherabbitholeaust","https://maps.app.goo.gl/kx6sMBaVZok5tBfw6","https://www.google.com/maps/search/?api=1&query=Google&query_place_id=ChIJuzQLsqNMFmsRcFlpp27qAAQ"],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday"],"opens":"08:00","closes":"17:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Friday"],"opens":"09:00","closes":"17:00"}],"hasOfferCatalog":{"@type":"OfferCatalog","name":"Lawn and garden services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Lawn Mowing","url":"https://downtherabbitholeaust.com/lawn-mowing"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Lawn Care","url":"https://downtherabbitholeaust.com/lawn-care"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Gardening Services","url":"https://downtherabbitholeaust.com/gardening-services"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Garden Maintenance","url":"https://downtherabbitholeaust.com/garden-maintenance"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Hedge Trimming","url":"https://downtherabbitholeaust.com/hedge-trimming"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Yard Clean-Ups","url":"https://downtherabbitholeaust.com/yard-clean-ups"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Green Waste Removal","url":"https://downtherabbitholeaust.com/green-waste-removal"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Rubbish Removal","url":"https://downtherabbitholeaust.com/rubbish-removal"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"DVA Lawn Care","url":"https://downtherabbitholeaust.com/dva-lawn-care"}}]}}]}</script>
-<script src="/assets/site.js?v=e886ee80" defer></script>
+<script src="/assets/site.js?v=7e53425e" defer></script>
 <script 
   src="https://app.downtherabbitholeaust.com/js/external-tracking.js"
   data-tracking-id="tk_6f4c1089fe214ae6baa8c2dc37522e82" defer>

@@ -156,6 +156,82 @@
   function loadLead() { try { return JSON.parse(sessionStorage.getItem('dtrh_lead') || '{}') || {}; } catch (x) { return {}; } }
   function saveLead(d) { try { sessionStorage.setItem('dtrh_lead', JSON.stringify(d)); } catch (x) {} }
   function firstName(full) { var f = (full || '').trim().split(/\s+/)[0] || ''; return f ? f.charAt(0).toUpperCase() + f.slice(1) : ''; }
+  /* ServiceM8: the server function creates the job (step 1) or adds the qualifying answers (step 2). */
+  function sendToServiceM8(form) {
+    if (!window.fetch) return Promise.resolve();
+    var fields = {};
+    new FormData(form).forEach(function (v, k) { if (typeof v === 'string') fields[k] = v; });
+    var qualify = form.dataset.step === 'qualify', lead = loadLead();
+    var payload = { step: qualify ? 'qualify' : 'quote', fields: fields, page: location.href };
+    if (qualify && lead.sm8) { payload.job = lead.sm8.job; payload.token = lead.sm8.token; }
+    if (!qualify) payload.photos = (form._photos || []).map(function (p) { return { data: p.data }; });
+    return fetch('/api/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), credentials: 'same-origin' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) { if (j && j.ok && j.job && j.token) { var l = loadLead(); l.sm8 = { job: j.job, token: j.token }; saveLead(l); } })
+      .catch(function () {});
+  }
+
+  /* Photo picker: shrink each photo in the browser (max 1600px JPEG) so uploads are quick and fit the request limit. */
+  var MAX_PHOTOS = 5, PHOTO_BUDGET = 3500000;
+  function shrink(file) {
+    return new Promise(function (resolve, reject) {
+      var url = URL.createObjectURL(file), img = new Image();
+      img.onload = function () {
+        try {
+          var draw = function (max, q) {
+            var s = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
+            var c = document.createElement('canvas');
+            c.width = Math.round(img.naturalWidth * s); c.height = Math.round(img.naturalHeight * s);
+            c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+            return c.toDataURL('image/jpeg', q);
+          };
+          var data = draw(1600, 0.8);
+          if (data.length > 900000) data = draw(1280, 0.72);
+          URL.revokeObjectURL(url); resolve(data);
+        } catch (e) { URL.revokeObjectURL(url); reject(e); }
+      };
+      img.onerror = function () { URL.revokeObjectURL(url); reject(new Error('decode')); };
+      img.src = url;
+    });
+  }
+  document.querySelectorAll('[data-photos]').forEach(function (box) {
+    var form = box.closest('.quote-form'), input = box.querySelector('.photo-input'),
+        list = box.querySelector('.photo-list'), msg = box.querySelector('.photo-msg');
+    form._photos = [];
+    function say(t) { msg.textContent = t || ''; msg.hidden = !t; }
+    function render() {
+      list.innerHTML = '';
+      form._photos.forEach(function (p, i) {
+        var li = document.createElement('li'), im = document.createElement('img'), rm = document.createElement('button');
+        im.src = p.data; im.alt = 'Photo ' + (i + 1); im.width = 72; im.height = 72;
+        rm.type = 'button'; rm.className = 'photo-rm'; rm.setAttribute('aria-label', 'Remove photo ' + (i + 1)); rm.textContent = '×';
+        rm.addEventListener('click', function () { form._photos.splice(i, 1); render(); say(''); });
+        li.appendChild(im); li.appendChild(rm); list.appendChild(li);
+      });
+      box.classList.toggle('has-photos', form._photos.length > 0);
+    }
+    input.addEventListener('change', function () {
+      var files = [].slice.call(input.files || []).filter(function (f) { return /^image\//.test(f.type) || /\.(jpe?g|png|webp|heic|heif)$/i.test(f.name); });
+      input.value = '';
+      if (!files.length) return;
+      var room = MAX_PHOTOS - form._photos.length;
+      if (room <= 0) { say('You can add up to ' + MAX_PHOTOS + ' photos.'); return; }
+      if (files.length > room) say('Only the first ' + room + ' photo' + (room > 1 ? 's were' : ' was') + ' added (up to ' + MAX_PHOTOS + ').'); else say('Preparing photos…');
+      var skipped = 0;
+      files.slice(0, room).reduce(function (chain, f) {
+        return chain.then(function () {
+          return shrink(f).then(function (data) {
+            var used = form._photos.reduce(function (n, p) { return n + p.data.length; }, 0);
+            if (used + data.length > PHOTO_BUDGET) { skipped++; return; }
+            form._photos.push({ data: data }); render();
+          }, function () { skipped++; });
+        });
+      }, Promise.resolve()).then(function () {
+        say(skipped ? skipped + ' photo' + (skipped > 1 ? 's' : '') + ' could not be added. Try a JPEG or PNG, or fewer photos.' : (files.length > room ? msg.textContent : ''));
+      });
+    });
+  });
+
   function quoteFormOf(el) { return el && el.closest ? el.closest('.quote-form') : null; }
   function showError(form, show) { var err = form.querySelector('.ferror'); if (err) err.hidden = !show; }
   function startSend(form) {
@@ -178,7 +254,7 @@
     showError(form, false);
     form.dataset.sending = '1';
     var btn = form.querySelector('.fsubmit');
-    if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+    if (btn) { btn.disabled = true; btn.textContent = (form._photos && form._photos.length) ? 'Uploading photos…' : 'Sending…'; }
     var dest = form.dataset.thankYou || '/thank-you';
     var ret = form.querySelector('[name=returning_customer]:checked');
     if (ret) {
@@ -189,8 +265,13 @@
     }
     if (form.dataset.step === 'qualify') { var l = loadLead(); l.qualified = true; saveLead(l); }
     else if (window.fbq) { try { window.fbq('track', 'Lead'); } catch (x) {} }
-    setTimeout(function () { window.location.assign(dest); }, 800);
-    setTimeout(function () { if (location.pathname.indexOf('thank-you') === -1) window.location.href = dest; }, 2500);
+    /* Send to ServiceM8 (server function) and give the CRM tracking script a moment, then move on.
+       The page waits for the upload so photos are not cut off, but never longer than 25 seconds. */
+    var went = false;
+    var go = function () { if (!went) { went = true; window.location.assign(dest); } };
+    var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+    Promise.all([wait(900), Promise.race([sendToServiceM8(form), wait(25000)])]).then(go, go);
+    setTimeout(go, 30000);
     return true;
   }
   window.addEventListener('click', function (e) {

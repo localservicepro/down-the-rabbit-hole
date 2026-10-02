@@ -501,7 +501,7 @@ def page(*, path, title, description, body, graph, active="", over_hero=False, o
     og_image = og_image or f"{SITE}/images/{HERO_IMAGE}.webp"
     robots_tag = f'<meta name="robots" content="{robots or "index, follow, max-image-preview:large"}">'
     return f'''<!DOCTYPE html>
-<html lang="en-AU">
+<html lang="en-AU" data-tracking-id="{TRACKING_ID}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -526,10 +526,6 @@ def page(*, path, title, description, body, graph, active="", over_hero=False, o
 <style>{CSS}</style>
 {jsonld(graph)}
 <script src="/assets/site.js?v={JS_VER}" defer></script>
-<script 
-  src="https://app.downtherabbitholeaust.com/js/external-tracking.js"
-  data-tracking-id="tk_6f4c1089fe214ae6baa8c2dc37522e82" defer>
-</script>
 </head>
 <body>
 {header(active, over_hero)}
@@ -564,10 +560,10 @@ def write(path, content):
 def home():
     def svc_media(slug):
         img = SERVICE_IMAGES[slug][0]
-        w, h = img_dims(img, True)
-        return (f'<span class="svc-media" aria-hidden="true"><img src="/images/{img}-400.webp" '
-                f'srcset="/images/{img}-400.webp 400w, /images/{img}-800.webp 800w" sizes="(max-width: 640px) 100vw, (max-width: 980px) 50vw, 400px" '
-                f'width="{w}" height="{h}" alt="" loading="lazy" decoding="async"></span>')
+        # -card.webp is a 560x420 crop made for these cards (they only ever show a landscape crop)
+        return (f'<span class="svc-media" aria-hidden="true"><img src="/images/{img}-card.webp" '
+                f'srcset="/images/{img}-400.webp 400w, /images/{img}-card.webp 560w" sizes="(max-width: 640px) 92vw, (max-width: 980px) 46vw, 380px" '
+                f'width="560" height="420" alt="" loading="lazy" decoding="async"></span>')
     cards = "\n".join(
         f'<a class="card svc-card rv rv-d{i%3}" href="/{s}">{svc_media(s)}<span class="svc-num" aria-hidden="true">{i+1:02d}</span><span class="ico">{icon(ic)}</span><h3>{esc(n)}</h3><p>{esc(blurb)}</p><span class="more">{esc(n)} Canberra {icon("arrow")}</span></a>'
         for i, (s, n, _, ic, blurb) in enumerate(SERVICES[:9]))
@@ -583,7 +579,7 @@ def home():
         for i, u in enumerate(LATEST_POSTS))
     hw, hh = img_dims(HERO_IMAGE)
     has_video = os.path.exists(os.path.join(ROOT, "images", "hero-video.mp4"))
-    video_html = ('''<video class="hero-video" autoplay muted loop playsinline preload="none" poster="/images/hero-video-poster.webp" aria-hidden="true" tabindex="-1"><source src="/images/hero-video.webm" type="video/webm"><source src="/images/hero-video.mp4" type="video/mp4"></video>''' if has_video else "")
+    video_html = ('''<video class="hero-video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"><source src="/images/hero-video.webm" type="video/webm"><source src="/images/hero-video.mp4" type="video/mp4"></video>''' if has_video else "")
     body = f'''
 <section class="hero{" has-video" if has_video else ""}">
   <div class="hero-media"><img src="/images/{HERO_IMAGE}.webp" srcset="/images/{HERO_IMAGE}-800.webp 800w, /images/{HERO_IMAGE}.webp {hw}w" sizes="100vw" width="{hw}" height="{hh}" alt="{HERO_ALT}" fetchpriority="high" decoding="async">{video_html}</div>

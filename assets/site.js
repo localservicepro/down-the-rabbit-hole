@@ -65,17 +65,30 @@
   }
 
   /* Hero background video: load after first paint, only when motion and data allow */
+  /* Run fn on the visitor's first interaction, or `ms` after the load event, whichever comes first.
+     Keeps third-party scripts and the hero video off the critical path. */
+  function whenIdleOrInteracted(fn, ms) {
+    var done = false, evs = ['pointerdown', 'keydown', 'touchstart', 'scroll', 'mousemove'];
+    function run() { if (done) return; done = true; evs.forEach(function (e) { window.removeEventListener(e, run, { passive: true }); }); fn(); }
+    evs.forEach(function (e) { window.addEventListener(e, run, { passive: true, once: true }); });
+    var later = function () { setTimeout(run, ms); };
+    if (document.readyState === 'complete') later(); else window.addEventListener('load', later);
+  }
+
   var hv = document.querySelector('.hero-video');
   if (hv) {
     var conn = navigator.connection || {};
     var okData = !conn.saveData && !/2g/.test(conn.effectiveType || '');
     var okMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (okData && okMotion) {
-      window.addEventListener('load', function () {
+      var startVideo = function () {
         hv.preload = 'auto';
         hv.addEventListener('canplay', function () { hv.classList.add('ready'); var p = hv.play(); if (p && p.catch) p.catch(function () {}); }, { once: true });
         hv.load();
-      });
+      };
+      /* Phones: wait for a first interaction (or 5s) so the 700KB video never competes with the first paint. */
+      if (window.matchMedia('(max-width: 760px)').matches) whenIdleOrInteracted(startVideo, 5000);
+      else window.addEventListener('load', startVideo);
     }
   }
 
@@ -270,7 +283,7 @@
     var went = false;
     var go = function () { if (!went) { went = true; window.location.assign(dest); } };
     var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
-    Promise.all([wait(900), Promise.race([sendToServiceM8(form), wait(25000)])]).then(go, go);
+    Promise.all([ensureTracker().then(function () { return wait(900); }), Promise.race([sendToServiceM8(form), wait(25000)])]).then(go, go);
     setTimeout(go, 30000);
     return true;
   }
@@ -282,10 +295,12 @@
     if (!startSend(form)) { e.stopImmediatePropagation(); return; }
     /* Let the tracking script see a real submit event with the values in place. A synthetic submit does
        not trigger native navigation, so nothing else has to be cancelled. */
-    var ev;
-    try { ev = new SubmitEvent('submit', { bubbles: true, cancelable: true, submitter: btn }); }
-    catch (x) { ev = document.createEvent('Event'); ev.initEvent('submit', true, true); }
-    form.dispatchEvent(ev);
+    ensureTracker().then(function () {
+      var ev;
+      try { ev = new SubmitEvent('submit', { bubbles: true, cancelable: true, submitter: btn }); }
+      catch (x) { ev = document.createEvent('Event'); ev.initEvent('submit', true, true); }
+      form.dispatchEvent(ev);
+    });
   }, true);
   window.addEventListener('submit', function (e) {
     var form = quoteFormOf(e.target);
@@ -396,6 +411,25 @@
     window.fbq('init', '25766325546287202');
     window.fbq('track', 'PageView');
   }
-  var idle = window.requestIdleCallback || function (cb) { setTimeout(cb, 1500); };
-  window.addEventListener('load', function () { idle(loadPixel, { timeout: 4000 }); });
+  /* CRM tracking script (external-tracking.js). It initialises immediately when loaded after the page is
+     ready and attaches to every form (plus a MutationObserver for later forms), so it is loaded lazily too.
+     A quote submit waits for it (ensureTracker) so no submission is missed. */
+  var trackerPromise = null;
+  function ensureTracker() {
+    if (trackerPromise) return trackerPromise;
+    var id = document.documentElement.getAttribute('data-tracking-id');
+    if (!id) return (trackerPromise = Promise.resolve());
+    trackerPromise = new Promise(function (resolve) {
+      var s = document.createElement('script');
+      s.src = 'https://app.downtherabbitholeaust.com/js/external-tracking.js';
+      s.setAttribute('data-tracking-id', id);
+      s.async = true;
+      s.onload = function () { setTimeout(resolve, 50); };
+      s.onerror = function () { resolve(); };
+      setTimeout(resolve, 4000);
+      document.head.appendChild(s);
+    });
+    return trackerPromise;
+  }
+  whenIdleOrInteracted(function () { ensureTracker(); loadPixel(); }, 5000);
 })();

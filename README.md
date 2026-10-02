@@ -87,6 +87,26 @@ Every quote form submission also creates a ServiceM8 job, through the Vercel ser
 - `vercel.json` gives the function 30 seconds (`functions.api/quote.js.maxDuration`) so photo uploads can finish.
 - Only Vercel runs the function. `_redirects` and `.htaccess` hosts serve the static site without it.
 
+## Performance notes
+
+- **Lazy third-party scripts.** The CRM tracking script (`external-tracking.js`, about 267KB uncompressed) and the Facebook pixel load on the visitor's first interaction (scroll, tap, key or mouse move), or 5 seconds after the page loads, whichever comes first.
+  - The tracking ID sits on `<html data-tracking-id>`.
+  - The tracker sets itself up at once when loaded after the page is ready, and attaches to every form. A quote submit also waits for it (`ensureTracker` in `site.js`), so no submission is missed.
+- **Hero video.** The video has no `autoplay` attribute and no `poster` attribute, because either one makes the browser download a file up front. The `<img>` underneath is the poster.
+  - On screens 760px or narrower, the video starts on first interaction or after 5 seconds.
+  - On desktop it starts after the load event.
+- **Service card images.** The homepage service cards use `-card.webp` crops (560×420, quality 50) plus the 400px versions.
+- **Measured locally** with Lighthouse mobile on the homepage:
+
+  | | Before | After |
+  |---|---|---|
+  | Performance score | 75 | 98 |
+  | Total Blocking Time | 770ms | 0–30ms |
+  | Largest Contentful Paint | 3.1s | 2.3s |
+  | Bytes on load | 1,175KB | 320KB |
+
+  The third-party scripts were blocked in that test. On the live site, delaying them removes their cost from the first load as well.
+
 ## Business hours
 
 Mon–Thu 8am–5pm, Fri 9am–5pm, closed weekends. Set in `HOURS` and `openingHoursSpecification` in `tools/build.py`.

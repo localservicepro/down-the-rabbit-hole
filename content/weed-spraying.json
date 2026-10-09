@@ -14,7 +14,7 @@
     {
       "h2": "What our weed control covers",
       "paras": [
-        "Every job starts with a look at what is actually growing. Canberra weeds vary between a kikuyu lawn in Kaleen and a fescue mix in Mawson, and the treatment has to suit both the weed and the grass. Our weed spraying Canberra service covers the following.",
+        "Every job starts with a look at what is actually growing. Canberra weeds vary between a kikuyu lawn in Kambah and a fescue mix in Mawson, and the treatment has to suit both the weed and the grass. Our weed spraying Canberra service covers the following.",
         "Paths and gravel are handled differently from lawns, as nothing needs to survive there."
       ],
       "bullets": [
@@ -38,7 +38,7 @@
       "h2": "How a spraying visit works",
       "paras": [
         "We quote weed spraying Canberra jobs first, free and upfront, after seeing the yard or a few clear photos. On the day we check the weather, look over the lawn and beds, and treat the areas we agreed on. Keep pets and kids off treated areas until fully dry, and avoid mowing for a few days either side so the weeds have enough leaf to take the treatment in.",
-        "If you have regular mowing with us in Weston, Rivett, Evatt or elsewhere, the spraying can be built into the mowing schedule so the timing looks after itself."
+        "If you have regular mowing with us in Weston, Rivett, Chapman or elsewhere, the spraying can be built into the mowing schedule so the timing looks after itself."
       ],
       "bullets": [
         "Free quote before any work starts",
@@ -67,7 +67,7 @@
     },
     {
       "q": "Do you do weed spraying Canberra wide, or only in Weston Creek?",
-      "a": "We cover most of Canberra, including Kaleen and Evatt in Belconnen, Weston and Rivett in Weston Creek, Mawson and Pearce in Woden Valley, plus Queanbeyan across the border. Call us with your suburb and we will confirm."
+      "a": "We cover most of Canberra, including Weston and Rivett in Weston Creek, Mawson and Pearce in Woden Valley, plus Queanbeyan across the border. Call us with your suburb and we will confirm."
     },
     {
       "q": "Will spraying kill my lawn as well as the weeds?",
@@ -79,25 +79,23 @@
     }
   ],
   "suburbs": [
-    "Kaleen",
-    "Evatt",
     "Weston",
     "Rivett",
+    "Chapman",
     "Mawson",
-    "Pearce"
+    "Pearce",
+    "Kambah"
   ],
   "related": [
     "lawn-care",
     "lawn-mowing"
   ],
-  "suburb_page": "/lawn-mowing-woden-valley",
+  "suburb_page": "/lawn-mowing-weston-creek",
   "guides": [
     "/post/bindi-spraying-canberra-lawn-weeds",
     "/post/prepare-lawn-for-spring-canberra",
     "/post/spring-lawn-mowing-canberra-guide"
   ],
   "cta_heading": "Get a free weed spraying quote",
-  "cta_line": "Tell us your suburb and what is growing, and we will quote the treatment and the right time to do it.",
-  "word_count": 829,
-  "density_note": "9 occurrences / 829 words = 1.1%"
+  "cta_line": "Tell us your suburb and what is growing, and we will quote the treatment and the right time to do it."
 }

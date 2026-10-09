@@ -8,7 +8,7 @@
   "lede": "Fertilising, weed control and seasonal advice for Canberra lawns that have lost their colour.",
   "intro": [
     "Down the Rabbit Hole AUST offers lawn care Canberra homeowners turn to when the lawn has gone patchy, weedy or brown after winter. Mowing keeps a lawn tidy, but it does not fix thin grass, bare corners or a bindi problem. That takes feeding, weed control at the right time and a plan that follows the seasons.",
-    "Down the Rabbit Hole AUST is owned and run by Michael Robinson, so you deal directly with the owner. Our lawn care Canberra service covers Weston Creek, Woden Valley and Belconnen suburbs such as Mawson, Pearce, Curtin, Kaleen and Evatt. We are locally operated, fully insured and ABN registered. Quotes are free and given upfront, and we will tell you honestly whether a lawn needs a simple feed or more."
+    "Down the Rabbit Hole AUST is owned and run by Michael Robinson, so you deal directly with the owner. Our lawn care Canberra service covers Weston Creek, Weston Creek and Woden Valley suburbs such as Fisher, Waramanga, Weston, Mawson, Pearce and Curtin. We are locally operated, fully insured and ABN registered. Quotes are free and given upfront, and we will tell you honestly whether a lawn needs a simple feed or more."
   ],
   "sections": [
     {
@@ -35,7 +35,7 @@
     {
       "h2": "Canberra's climate and what it does to lawns",
       "paras": [
-        "Canberra grows cool-climate lawns. Kikuyu, couch, buffalo and tall fescue mixes are all common. Hard frosts from May to August turn kikuyu and couch brown while fescue holds its colour. Hot, dry summers then push the same lawns hard, especially on north-facing blocks in Hawker and Kaleen.",
+        "Canberra grows cool-climate lawns. Kikuyu, couch, buffalo and tall fescue mixes are all common. Hard frosts from May to August turn kikuyu and couch brown while fescue holds its colour. Hot, dry summers then push the same lawns hard, especially on north-facing blocks in Chapman and Rivett.",
         "The pressure points are predictable. Bindi and broadleaf weeds germinate in late winter and spring, so weed control is most effective from August before they set seed. Spring feeding from September supports the growth surge. Autumn feeding builds root reserves before frost. Good lawn care Canberra wide follows that rhythm, which is why we do not sell one visit in January and call it a program."
       ],
       "bullets": []
@@ -72,18 +72,18 @@
     }
   ],
   "suburbs": [
+    "Fisher",
+    "Waramanga",
+    "Weston",
     "Mawson",
     "Pearce",
-    "Curtin",
-    "Kaleen",
-    "Evatt",
-    "Hawker"
+    "Curtin"
   ],
   "related": [
     "lawn-mowing",
     "weed-spraying"
   ],
-  "suburb_page": "/lawn-mowing-woden-valley",
+  "suburb_page": "/lawn-mowing-weston-creek",
   "guides": [
     "/post/canberra-lawn-frost-damage-spring-care",
     "/post/bindi-spraying-canberra-lawn-weeds",
@@ -91,7 +91,5 @@
     "/post/prepare-lawn-for-spring-canberra"
   ],
   "cta_heading": "Get a free lawn care quote",
-  "cta_line": "Send us your suburb and a photo or two of the lawn and we will come back with an upfront quote and a seasonal plan.",
-  "word_count": 825,
-  "density_note": "10 occurrences / 825 words = 1.2%"
+  "cta_line": "Send us your suburb and a photo or two of the lawn and we will come back with an upfront quote and a seasonal plan."
 }

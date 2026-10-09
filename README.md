@@ -50,14 +50,14 @@ Requires Python 3.10+ (Pillow only for the image tooling).
 ## Quote form and CRM tracking
 
 - The quote form is custom HTML (no iframe): inline in every page's `#contact` section and as a pop-up (`#quote-modal`) opened by every "Get a Free Quote" button. `/#quote` also opens it.
-- Field `name`/`data-field` attributes match the GoHighLevel contact fields: `full_name`, `email`, `phone`, `property_address`, `postal_code`, `property_size`, `service_needed`, `job_notes`. A hidden `source_page` carries the page URL and `qf_extra` is a honeypot (named so browser autofill ignores it; a filled honeypot goes straight to the thank-you page without passing the submission on).
+- Field `name`/`data-field` attributes match the LSP (Local Service Pro CRM) contact fields: `full_name`, `email`, `phone`, `property_address`, `postal_code`, `property_size`, `service_needed`, `job_notes`. A hidden `source_page` carries the page URL and `qf_extra` is a honeypot (named so browser autofill ignores it; a filled honeypot goes straight to the thank-you page without passing the submission on).
 - The CRM tracking script (`external-tracking.js`, tracking id `tk_6f4c…`) is loaded deferred in every page's `<head>` and captures the native `submit` event; the page then redirects to `/thank-you` (noindex). There is no form endpoint.
-- **Service needed is multi-select.** Checkboxes write one comma-separated value (for example `Lawn Mowing, Hedge Trimming`) into the single `service_needed` field, so the CRM still receives one value. At least one service is required. In GHL, `contact.service_needed` should be a text field (or a multi-option field), because a single-option dropdown cannot hold the combined value.
+- **Service needed is multi-select.** Checkboxes write one comma-separated value (for example `Lawn Mowing, Hedge Trimming`) into the single `service_needed` field, so the CRM still receives one value. At least one service is required. In LSP, `contact.service_needed` should be a text field (or a multi-option field), because a single-option dropdown cannot hold the combined value.
 - **Returning or new customer.** The form opens with a required "Have you used Down the Rabbit Hole AUST before?" question (`returning_customer` = `Yes` / `No`).
   - **Yes:** the form is sent and the visitor goes to `/thank-you`, which says "Thanks for coming back, <first name>!".
   - **No:** the form is sent first, so the lead is captured even if they stop, then the visitor goes to `/quote-details` (noindex, not in the sitemap). There, seven qualifying questions are sent as a second submission that carries the same `full_name`, `email` and `phone`, so the CRM matches it to the same contact. Then `/thank-you` shows the new-customer message.
   - The first name and contact details pass between pages in `sessionStorage` (this tab only), never in the URL. Opening `/quote-details` directly shows the contact fields instead.
-  - The qualifying field keys need matching custom fields in GHL: `returning_customer`, `service_frequency`, `start_timeframe`, `property_type`, `customer_role`, `yard_condition`, `dva_card_holder`, `lead_source` and `form_step`. Questions and options live in `QUALIFY_QUESTIONS` in `tools/build.py`.
+  - The qualifying field keys need matching custom fields in LSP: `returning_customer`, `service_frequency`, `start_timeframe`, `property_type`, `customer_role`, `yard_condition`, `dva_card_holder`, `lead_source` and `form_step`. Questions and options live in `QUALIFY_QUESTIONS` in `tools/build.py`.
 - Both forms use native validation (required fields, email, 4-digit postcode, phone pattern) with an inline error message.
 
 ## ServiceM8 integration
@@ -73,7 +73,7 @@ Every quote form submission also creates a ServiceM8 job, through the Vercel ser
 
 **Step 2, new customers' quick questions:** the answers are added as a second note on the same job. The browser keeps the job UUID with an HMAC token for this tab only, and the function checks the token before writing to the job.
 
-**Photos:** visitors can add up to 5. The browser shrinks each one to a maximum of 1600px as JPEG, typically 100–300KB, so uploads stay under Vercel's 4.5MB request limit. Photos are not sent to GHL.
+**Photos:** visitors can add up to 5. The browser shrinks each one to a maximum of 1600px as JPEG, typically 100–300KB, so uploads stay under Vercel's 4.5MB request limit. Photos are not sent to LSP.
 
 **Setup**
 1. In ServiceM8, go to Settings > API Keys and create a key. ServiceM8's docs say a private-app key is sent in the `X-API-Key` header, which is what the function does. These are the matching permissions, if ServiceM8 asks: `create_jobs`, `manage_customers`, `read_customer_contacts`, `manage_customer_contacts`, `manage_job_contacts`, `publish_job_notes`, `manage_attachments`.
@@ -81,11 +81,35 @@ Every quote form submission also creates a ServiceM8 job, through the Vercel ser
 3. Send a test quote with a photo and check the job, note and attachment in ServiceM8.
 
 **Behaviour if something fails**
-- The form always finishes on the thank-you page, and GHL still captures the lead.
+- The form always finishes on the thank-you page, and LSP still captures the lead.
 - If the key is missing, the function returns 503. If ServiceM8 rejects a request, it returns 502. The details go to the Vercel function logs only.
 - The function accepts POST requests only, from this site's own domains. It ignores honeypot submissions, and it needs a name plus an email or phone.
 - `vercel.json` gives the function 30 seconds (`functions.api/quote.js.maxDuration`) so photo uploads can finish.
 - Only Vercel runs the function. `_redirects` and `.htaccess` hosts serve the static site without it.
+
+## Performance notes
+
+- **Lazy third-party scripts.** The CRM tracking script (`external-tracking.js`, about 267KB uncompressed) and the Facebook pixel load on the visitor's first interaction (scroll, tap, key or mouse move), or 5 seconds after the page loads, whichever comes first.
+  - The tracking ID sits on `<html data-tracking-id>`.
+  - The tracker sets itself up at once when loaded after the page is ready, and attaches to every form. A quote submit also waits for it (`ensureTracker` in `site.js`), so no submission is missed.
+- **Hero video.** The video has no `autoplay` attribute and no `poster` attribute, because either one makes the browser download a file up front. The `<img>` underneath is the poster.
+  - On screens 760px or narrower, the video starts on first interaction or after 5 seconds.
+  - On desktop it starts after the load event.
+- **Service card images.** The homepage service cards use `-card.webp` crops (560×420, quality 50) plus the 400px versions.
+- **Measured locally** with Lighthouse mobile on the homepage:
+
+  | | Before | After |
+  |---|---|---|
+  | Performance score | 75 | 98 |
+  | Total Blocking Time | 770ms | 0–30ms |
+  | Largest Contentful Paint | 3.1s | 2.3s |
+  | Bytes on load | 1,175KB | 320KB |
+
+  The third-party scripts were blocked in that test. On the live site, delaying them removes their cost from the first load as well.
+
+## Service-area weighting
+
+Weston Creek is the priority area (Fisher, Waramanga, Chapman, Weston and Rivett first), then Woden Valley and the Kambah end of Tuggeranong. The site reflects that in the homepage hero, the nav descriptors, the suburbs listed on service pages, the district page each service links to, and a "Priority area" tag on Weston Creek. The far-district pages (Belconnen, Inner North, Inner South, Queanbeyan) keep their URLs and H1s but lead with garden maintenance, hedging and clean-ups, with mowing offered as part of a garden schedule rather than as standalone recurring mowing.
 
 ## Business hours
 

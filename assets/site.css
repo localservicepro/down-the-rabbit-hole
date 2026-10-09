@@ -318,6 +318,7 @@ ul{margin:0 0 1em;padding-left:1.2em}
 .fld select:invalid{color:var(--muted)}
 .fld textarea{min-height:88px;resize:vertical}
 .fgrid{align-items:start}
+.district-tag{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;background:var(--tint);color:var(--orange-deep);font-family:var(--body);font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;vertical-align:middle}
 /* Photo upload */
 .photos-label{display:block;font-family:var(--display);font-weight:700;font-size:.9rem;color:var(--navy);letter-spacing:.01em}
 .photos-label span{font-family:var(--body);font-weight:500;color:var(--muted);font-size:.82rem}

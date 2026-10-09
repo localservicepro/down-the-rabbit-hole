@@ -40,15 +40,15 @@ HERO_ALT = ("Michael Robinson, owner of Down the Rabbit Hole AUST, mowing a Canb
 SERVICES = [
     # slug, name, nav descriptor, icon, home-card blurb
     ("lawn-mowing", "Lawn Mowing", "Weston Creek, Woden & Tuggeranong", "mower", "Lawn mowing Canberra wide: scheduled or one-off visits with clean edges and clippings taken away."),
-    ("lawn-care", "Lawn Care", "Fertilising & weed control, Canberra wide", "sprout", "Fertilising, weed control and seasonal programs for tired or patchy lawns."),
+    ("lawn-care", "Lawn Care", "Fertilising & weed control, Weston Creek & Woden", "sprout", "Fertilising, weed control and seasonal programs for tired or patchy lawns."),
     ("gardening-services", "Gardening Services", "A local gardener for one-off and project jobs", "trowel", "A local gardener for one-off jobs: planting, garden bed makeovers, pruning and mulching."),
     ("garden-maintenance", "Garden Maintenance", "Scheduled garden care for homes, rentals and strata", "shears", "Fortnightly or monthly garden care on a fixed schedule for homes, rentals and strata."),
-    ("hedge-trimming", "Hedge Trimming", "Established gardens in Woden & Weston Creek", "hedge", "Shaping, height reduction and every clipping removed from site."),
-    ("yard-clean-ups", "Yard Clean-Ups", "Pre-sale & end of lease, Tuggeranong to Belconnen", "broom", "Overgrown yards, pre-sale tidies and end-of-lease clean-ups done in a day."),
+    ("hedge-trimming", "Hedge Trimming", "Established gardens in Weston Creek & Woden", "hedge", "Shaping, height reduction and every clipping removed from site."),
+    ("yard-clean-ups", "Yard Clean-Ups", "Pre-sale & end of lease, Weston Creek to Tuggeranong", "broom", "Overgrown yards, pre-sale tidies and end-of-lease clean-ups done in a day."),
     ("green-waste-removal", "Green Waste Removal", "Clippings, branches & leaves, Canberra wide", "leaf", "Clippings, branches, leaves and garden debris loaded and gone."),
     ("rubbish-removal", "Rubbish Removal", "Garden, yard & household junk, ACT & Queanbeyan", "bin", "Garden, yard and household junk collected without a trip to the tip."),
-    ("dva-lawn-care", "DVA Lawn Care", "Veterans in Tuggeranong, Belconnen & Queanbeyan", "medal", "Registered DVA provider: lawn and garden care for veterans and DVA card holders across Canberra."),
-    ("weed-spraying", "Weed Spraying", "Bindi & broadleaf control, Belconnen & Weston Creek", "spray", "Bindi, broadleaf and garden bed weed control timed for Canberra seasons."),
+    ("dva-lawn-care", "DVA Lawn Care", "Veterans across Weston Creek, Woden & Tuggeranong", "medal", "Registered DVA provider: lawn and garden care for veterans and DVA card holders across Canberra."),
+    ("weed-spraying", "Weed Spraying", "Bindi & broadleaf control, Weston Creek & Woden", "spray", "Bindi, broadleaf and garden bed weed control timed for Canberra seasons."),
 ]
 SERVICE_NAMES = {s[0]: s[1] for s in SERVICES}
 SERVICE_TYPES = {
@@ -68,6 +68,7 @@ DISTRICTS = [
     ("Queanbeyan & NSW", "/lawn-mowing-queanbeyan", ["Queanbeyan", "Jerrabomberra", "Googong", "Karabar", "Crestwood", "Beard"]),
 ]
 DISTRICT_LINKS = {d[0]: d[1] for d in DISTRICTS}
+PRIORITY_TAG = '<span class="district-tag">Priority area</span>'
 AREA_PAGES = {
     "/lawn-mowing-kambah": "Lawn mowing Kambah", "/lawn-mowing-woden-valley": "Lawn mowing Woden Valley",
     "/lawn-mowing-weston-creek": "Lawn mowing Weston Creek", "/lawn-mowing-tuggeranong": "Lawn mowing Tuggeranong",
@@ -142,7 +143,6 @@ PAIRS = [
     ("garden-clean-up-2", "Garden clean-up", "a second view of the garden before the clean-up", "the garden after weeding, pruning and green waste removal"),
     ("garden-tidy", "Garden tidy", "a garden before the tidy-up", "the garden after the tidy-up"),
     ("garden-bed-restore", "Garden bed restore", "overgrown garden beds before restoration", "garden beds weeded, edged and restored"),
-    ("defence-property", "Defence property tidy", "a Defence housing property before the clean-up", "the Defence housing property after mowing and tidying"),
 ]
 
 ICONS = {
@@ -330,7 +330,7 @@ def pills(prefix, key, label, options, hint=""):
 
 
 def quote_form(prefix, compact=False):
-    """Custom quote form. Field names match the GHL contact fields: full_name, email, phone,
+    """Custom quote form. Field names match the LSP (Local Service Pro CRM) contact fields: full_name, email, phone,
     property_address, postal_code, property_size, service_needed, job_notes. The external
     tracking script captures the submission; the page then redirects to the thank-you page."""
     def f(key, label, tag="input", extra="", required=True, span=False, options=None, placeholder=""):
@@ -568,7 +568,7 @@ def home():
         f'<a class="card svc-card rv rv-d{i%3}" href="/{s}">{svc_media(s)}<span class="svc-num" aria-hidden="true">{i+1:02d}</span><span class="ico">{icon(ic)}</span><h3>{esc(n)}</h3><p>{esc(blurb)}</p><span class="more">{esc(n)} Canberra {icon("arrow")}</span></a>'
         for i, (s, n, _, ic, blurb) in enumerate(SERVICES[:9]))
     districts = "\n".join(
-        f'<div class="district rv"><h3><a href="{u}">{esc(n)}</a></h3><p>{esc(", ".join(subs))}</p></div>'
+        f'<div class="district rv"><h3><a href="{u}">{esc(n)}</a>{PRIORITY_TAG if n == "Weston Creek" else ""}</h3><p>{esc(", ".join(subs))}</p></div>'
         for n, u, subs in DISTRICTS)
     thumbs = "\n".join(
         f'<button class="ba-thumb{" active" if i == 0 else ""}" type="button" aria-pressed="{"true" if i == 0 else "false"}" data-before="/images/{j}-before-800.webp" data-after="/images/{j}-after-800.webp" data-before-alt="Before: {esc(b)}" data-after-alt="After: {esc(a)}" data-caption="{esc(lbl)}: drag the handle to compare before and after." aria-label="Show {esc(lbl)} before and after"><img src="/images/{j}-after-400.webp" width="400" height="300" alt="" loading="lazy" decoding="async"></button>'
@@ -587,7 +587,7 @@ def home():
   <div class="wrap hero-inner">
     <span class="eyebrow">Taking the headaches away · Est. 2021</span>
     <h1>Lawn &amp; Garden Care Across Canberra</h1>
-    <p class="lead">Mowing, garden maintenance, hedge trimming and clean-ups for homes and businesses across Weston Creek, Woden, Tuggeranong and Belconnen. Owned and run by {OWNER}, with clear quotes upfront and green waste removal available.</p>
+    <p class="lead">Mowing, garden maintenance, hedge trimming and clean-ups for homes and businesses across Weston Creek, Woden Valley and Tuggeranong. Owned and run by {OWNER}, with clear quotes upfront and green waste removal available.</p>
     <div class="hero-cta">
       <a class="btn btn-primary" href="#contact" data-open-quote>Get a Free Quote {icon("arrow")}</a>
       <a class="btn btn-ghost" href="{SMS}">{icon("sms")}Text {PHONE}</a>
@@ -704,7 +704,7 @@ def home():
         <div class="aside-card" style="margin-top:18px">
           <h3>Commercial and strata grounds</h3>
           {picture("commercial-grounds-after-1", "Commercial grounds in Canberra: a mowed verge and clean car park entry after our visit", sizes="(max-width: 960px) 100vw, 30vw")}
-          <p style="margin:12px 0 0;color:var(--muted)">Commercial sites, strata common areas and Defence housing can go on a regular schedule too. <a href="/garden-maintenance">Scheduled garden maintenance →</a></p>
+          <p style="margin:12px 0 0;color:var(--muted)">Commercial sites, strata common areas and managed properties can go on a regular schedule too. <a href="/garden-maintenance">Scheduled garden maintenance →</a></p>
         </div>
       </div>
     </div>
@@ -780,7 +780,7 @@ SERVICE_IMAGES = {
     "lawn-mowing-belconnen": ("extra-a-after", "Lawn mowing Belconnen: a mowed nature strip beside a footpath in a newer Canberra estate"),
     "lawn-mowing-inner-north": ("leaf-removal", "Lawn mowing Inner North: a swept brick entry and tidy garden at an established Canberra home"),
     "lawn-mowing-inner-south": ("garden-clean-up-2-after", "Lawn mowing Inner South: a neatly clipped hedge along a driveway at an established garden"),
-    "lawn-mowing-queanbeyan": ("defence-property-before", "Lawn mowing Queanbeyan: a family back yard before its scheduled tidy-up"),
+    "lawn-mowing-queanbeyan": ("yard-tidy-2-after", "Lawn mowing Queanbeyan: a back yard mowed, edged and tidied after a visit"),
 }
 
 
@@ -888,7 +888,11 @@ def service_page(slug, is_suburb=False):
 # ---------- about ----------
 
 def about():
-    faqs = HOME_FAQS[6:9]
+    faqs = [
+        ("Who does the work?", "Down the Rabbit Hole AUST is owned and run by Michael Robinson, so you deal with the owner from the first quote onwards. The business is fully insured and ABN registered."),
+        ("Do you take on DVA-funded lawn and garden work?", "Yes. Down the Rabbit Hole AUST is a registered DVA provider for lawn and garden care in Canberra and Queanbeyan. DVA decides who is eligible and what it will fund, so confirm your entitlement with DVA before you book."),
+        ("Do you work with property managers and strata committees?", "Yes. Rentals and strata common areas can go on a fortnightly or monthly schedule with a scope agreed upfront, and access can be arranged with the tenant or property manager."),
+    ]
     body = f'''
 <section class="page-hero">
   <div class="wrap">
@@ -990,7 +994,7 @@ def thankyou():
 
 
 QUALIFY_QUESTIONS = [
-    # GHL contact field key, question, [(value, label)]
+    # LSP contact field key, question, [(value, label)]
     ("service_frequency", "How often do you need the service?",
      [("One-off job", "One-off job"), ("Weekly", "Weekly"), ("Fortnightly", "Fortnightly"), ("Monthly", "Monthly"), ("Not sure yet", "Not sure yet")]),
     ("start_timeframe", "When would you like the work done?",
@@ -1101,13 +1105,13 @@ def area_map():
 
 def areas():
     cards = "".join(
-        f'''<a class="card rv" href="{u}"><span class="ico">{icon("pin")}</span><h3>{esc(n)}</h3><p>{esc(", ".join(subs))}</p><span class="more">Lawn mowing {esc(n.replace(" & NSW", ""))} {icon("arrow")}</span></a>'''
+        f'''<a class="card rv" href="{u}"><span class="ico">{icon("pin")}</span><h3>{esc(n)}{PRIORITY_TAG if n == "Weston Creek" else ""}</h3><p>{esc(", ".join(subs))}</p><span class="more">Lawn mowing {esc(n.replace(" & NSW", ""))} {icon("arrow")}</span></a>'''
         for n, u, subs in DISTRICTS)
     faqs = [
         ("Do you service my suburb?", "If it is in one of the seven districts above, yes. Weston Creek is our priority area, and we also work across Woden Valley, Tuggeranong, Belconnen, the Inner North and the Inner South. Gungahlin is outside our service area."),
         ("Do you travel to Queanbeyan and Googong?", "Yes. We mow and maintain lawns and gardens in Queanbeyan, Jerrabomberra, Googong, Karabar, Crestwood and Beard on the same schedules and terms as Canberra properties."),
         ("Do you service Gungahlin?", "No. Gungahlin is outside our service area. We cover Weston Creek, Woden Valley, Tuggeranong, Belconnen, the Inner North, the Inner South and the Queanbeyan region."),
-        (HOME_FAQS[8][0], HOME_FAQS[8][1]),
+        ("Which suburbs are your priority area?", "Weston Creek is our priority area, especially Fisher, Waramanga, Chapman, Weston and Rivett, with Woden Valley and the Kambah end of Tuggeranong next. We work across the rest of Canberra and Queanbeyan too, particularly for garden maintenance, hedging and clean-up jobs."),
     ]
     body = f'''
 <section class="page-hero">
@@ -1164,7 +1168,9 @@ def areas():
 # ---------- contact page ----------
 
 def contact():
-    faqs = [HOME_FAQS[0], HOME_FAQS[7], ("How quickly will you reply to a quote request?", "As soon as we can during business hours, Monday to Thursday 8am to 5pm and Friday 9am to 5pm, by phone or email. For a faster answer, text 0423 720 317 with a photo of the lawn or garden."),
+    faqs = [("What details help you quote accurately?", "Your suburb, the size of the block, the service you need and a note on the condition of the lawn or garden. A couple of photos help most, and the quote form lets you add up to five."),
+            ("Can I text photos instead of filling in the form?", "Yes. Text 0423 720 317 with a photo or two and your suburb, and you will get a quote back during business hours. The form captures the same details if you prefer."),
+            ("How quickly will you reply to a quote request?", "As soon as we can during business hours, Monday to Thursday 8am to 5pm and Friday 9am to 5pm, by phone or email. For a faster answer, text 0423 720 317 with a photo of the lawn or garden."),
             ("Can I book a regular service straight away?", "Yes. Tell us how often you want visits and we will quote a schedule. Most Canberra lawns are best mowed every 1-2 weeks during the growing season and every 2-4 weeks in the cooler months.")]
     body = f'''
 <section class="page-hero">

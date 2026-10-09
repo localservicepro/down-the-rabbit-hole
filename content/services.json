@@ -56,8 +56,8 @@
   "suburbs": [
     "Fisher",
     "Weston",
+    "Chapman",
     "Kambah",
-    "Kaleen",
     "Curtin",
     "Queanbeyan"
   ],
@@ -65,7 +65,7 @@
     "lawn-mowing",
     "garden-maintenance"
   ],
-  "suburb_page": "/lawn-mowing-kambah",
+  "suburb_page": "/lawn-mowing-weston-creek",
   "guides": [
     "/post/garden-service-canberra-guide",
     "/post/canberra-lawn-mowing-services-guide",
@@ -73,8 +73,6 @@
   ],
   "cta_heading": "Get a free quote for your yard",
   "cta_line": "Tell us your suburb and what needs doing, and we will come back with a free upfront quote.",
-  "word_count": 550,
-  "density_note": "6 occurrences / 550 words = 1.1%",
   "service_blurbs": {
     "lawn-mowing": "Regular, scheduled mowing with edges trimmed and clippings removed, for homes and commercial sites across Canberra.",
     "lawn-care": "Fertilising, aeration and seasonal care to keep Canberra lawns thick through frost, heat and spring growth.",

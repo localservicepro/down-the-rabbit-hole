@@ -5,7 +5,7 @@
   "description": "DVA gardening services in Canberra from a registered DVA provider. Regular mowing and garden upkeep for Gold and White Card holders. Get a free quote today.",
   "keyword": "dva gardening services",
   "eyebrow": "Registered DVA provider · Canberra",
-  "lede": "Regular mowing, garden upkeep and tidy visits for DVA card holders and Defence families across Canberra and Queanbeyan.",
+  "lede": "Regular mowing, garden upkeep and tidy visits for DVA card holders and veterans' families across Canberra and Queanbeyan.",
   "intro": [
     "Down the Rabbit Hole AUST provides DVA gardening services in Canberra for veterans, DVA Gold and White Card holders and their families. We take care of regular mowing, garden upkeep and tidy visits so the yard stays in order without anyone in the household having to chase it. Down the Rabbit Hole AUST is a registered DVA provider, owned and run by Michael Robinson, so you deal directly with the owner. It is fully insured, ABN registered and locally operated, and has maintained 60+ Canberra lawns.",
     "One thing first. Being a registered DVA provider means we can carry out DVA-funded work, but eligibility and approvals for lawn and garden help sit with the Department of Veterans' Affairs, not with us. We do not decide what is covered and we do not promise coverage. If you are unsure of your entitlement, confirm it with DVA before you book. Once that is settled, we give you a free upfront quote for the DVA gardening services you have in mind."
@@ -46,7 +46,7 @@
     {
       "h2": "Where we work for DVA card holders",
       "paras": [
-        "We offer DVA lawn care Canberra wide, with Weston Creek our priority area, plus Woden Valley, Tuggeranong, Belconnen, the Inner North and Inner South, and across the border in Queanbeyan and Jerrabomberra. Suburbs we cover include Kambah, Wanniassa and Kaleen.",
+        "We offer DVA lawn care Canberra wide, with Weston Creek our priority area, plus Woden Valley, Tuggeranong, Belconnen, the Inner North and Inner South, and across the border in Queanbeyan and Jerrabomberra. Suburbs we cover include Kambah, Wanniassa and Fisher.",
         "Residential and commercial work are both welcome, so DVA gardening services can extend to a veterans' group or community facility that needs its grounds kept tidy."
       ],
       "bullets": []
@@ -81,7 +81,8 @@
   "suburbs": [
     "Kambah",
     "Wanniassa",
-    "Kaleen",
+    "Fisher",
+    "Weston",
     "Queanbeyan",
     "Jerrabomberra"
   ],

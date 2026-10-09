@@ -26,6 +26,18 @@
       ]
     },
     {
+      "h2": "Suburb by suburb",
+      "paras": [
+        "Weston Creek is our priority area, and these are the suburbs we most want to grow in. Each has its own mix of blocks, trees and turf, which shapes what a visit involves."
+      ],
+      "bullets": [
+        "Fisher, Waramanga and Chapman: 1970s blocks with established lawns and mature street trees, so autumn visits usually include leaf clean-up",
+        "Weston and Rivett: a mix of original homes and newer builds, with hedges and garden beds that suit a fortnightly or monthly garden schedule",
+        "Stirling, Holder and Duffy: larger blocks on the western edge, where hedge trimming and clean-ups are often part of the visit",
+        "Coombs, Denman Prospect and Wright: new turf and small courtyards that need a careful first season of mowing"
+      ]
+    },
+    {
       "h2": "Why regular mowing suits older blocks and new turf alike",
       "paras": [
         "The older suburbs have larger blocks and established gardens, and a big kikuyu or couch lawn that misses a few cuts takes several visits to bring back. A fortnightly cut keeps the grass at a steady height, shades out bindi and broadleaf weeds, and holds moisture over summer.",
@@ -63,7 +75,7 @@
       "a": "Yes. New turf needs establishment mowing: waiting until it has rooted, cutting high and removing only a little each time. We check the lawn before the first cut and bring it down gradually as it settles."
     },
     {
-      "q": "Do you take the grass clippings and green waste away?",
+      "q": "Do you take the clippings and green waste away in Weston Creek?",
       "a": "Yes. Green waste removal is available with every mowing visit, and with garden maintenance and clean-ups too. If you would rather keep some clippings for compost or mulch, tell us and we will leave what you want."
     }
   ],
@@ -92,7 +104,5 @@
     "/post/garden-maintenance-canberra-guide"
   ],
   "cta_heading": "Get a free lawn mowing quote in Weston Creek",
-  "cta_line": "Tell us your street and a bit about the block, and we will come back with a free upfront quote.",
-  "word_count": 627,
-  "density_note": "7 occurrences / 627 words = 1.1%"
+  "cta_line": "Tell us your street and a bit about the block, and we will come back with a free upfront quote."
 }

@@ -66,35 +66,35 @@
       "a": "Weston Creek is our priority area, and we also mow in Woden Valley, Tuggeranong, Belconnen, the Inner North and the Inner South, and in Queanbeyan, Jerrabomberra and Googong. Gungahlin is outside the service area. Text or call 0423 720 317 with your suburb."
     },
     {
-      "q": "Can you take the grass clippings away?",
-      "a": "Yes. Green waste removal is available with every lawn mowing job. Clippings can be bagged and taken away so your green bin stays free for your own garden waste. Ask for it when you request a quote."
+      "q": "What happens to the clippings?",
+      "a": "Green waste removal is available with every lawn mowing job. Clippings can be bagged and taken away so your green bin stays free for your own garden waste. Ask for it when you request a quote."
     },
     {
-      "q": "How often should my lawn be mowed?",
-      "a": "Most Canberra lawns are best mowed every one to two weeks during the growing season and every two to four weeks in the cooler months. Fast-growing kikuyu in full sun can need a weekly cut in midsummer. The schedule can be adjusted at any time."
+      "q": "What height do you cut kikuyu, couch and fescue?",
+      "a": "Kikuyu and couch are kept shorter through summer, while tall fescue mixes are left a little longer so the leaf shades the soil. The cut height is set to your grass type on the first visit and adjusted through the seasons."
     },
     {
-      "q": "Do I need to be home for the mowing?",
-      "a": "No. As long as there is clear access to the lawn, you do not need to be home. Let us know about locked gates, dogs or anything fragile in the yard when you book."
+      "q": "What should I tell you about access before the first visit?",
+      "a": "Locked gates, side-gate codes, dogs and anything fragile in the yard. With clear access you do not need to be home, and the job notes on the quote form are the easiest place to add these details."
     },
     {
-      "q": "Can I book a one-off cut before an inspection or sale?",
-      "a": "Yes. One-off mowing, edging and a tidy-up before a rental inspection, open home or end of lease is a common request, including in Kambah and across Tuggeranong. Quotes are free and upfront."
+      "q": "Can an overgrown lawn be brought back down in one visit?",
+      "a": "Usually. Long grass is brought down in stages where needed so the lawn is not scalped, then edged and tidied. If the yard needs more than mowing, a yard clean-up covers overgrown beds, weeds and debris in the same visit."
     }
   ],
   "suburbs": [
     "Fisher",
     "Waramanga",
-    "Kambah",
-    "Wanniassa",
+    "Chapman",
     "Weston",
-    "Duffy"
+    "Rivett",
+    "Kambah"
   ],
   "related": [
     "lawn-care",
     "garden-maintenance"
   ],
-  "suburb_page": "/lawn-mowing-kambah",
+  "suburb_page": "/lawn-mowing-weston-creek",
   "guides": [
     "/post/grass-mowing-canberra-guide",
     "/post/canberra-lawn-mowing-services-guide",

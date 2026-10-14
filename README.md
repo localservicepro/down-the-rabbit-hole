@@ -139,7 +139,7 @@ Canberra searchers use the city name, not the district, so one page owns each "[
 
 ## Business facts used in copy
 
-The owner is Michael Robinson. The business is owner-operated, so copy never refers to a team, crew or staff. Copy only states: fully insured, ABN registered, 60+ Canberra lawns maintained, residential and commercial, locally operated, est. 2021, upfront quotes, green waste removal *available* with mowing, garden maintenance and clean-ups, and no need to be home with clear access. It is a registered DVA provider (confirmed by the client), but copy never says DVA will approve or fund a job; eligibility is DVA's call. It does not state prices or price ranges (copy points to a free quote instead), reply times, travel-charge policies or statistics without a source.
+The owner is Michael Robinson, and his name appears only on the About page (copy and the Person schema there). Every other page, post, form and thank-you message stays neutral about who quotes or does the work: it says locally owned and operated, never "deal with the owner", "Michael will quote" or team, crew or staff wording. Copy only states: fully insured, ABN registered, 60+ Canberra lawns maintained, residential and commercial, locally operated, est. 2021, upfront quotes, green waste removal *available* with mowing, garden maintenance and clean-ups, and no need to be home with clear access. It is a registered DVA provider (confirmed by the client), but copy never says DVA will approve or fund a job; eligibility is DVA's call. It does not state prices or price ranges (copy points to a free quote instead), reply times, travel-charge policies or statistics without a source.
 
 ## Reviews widget
 

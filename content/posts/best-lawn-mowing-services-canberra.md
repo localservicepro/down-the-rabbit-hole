@@ -99,4 +99,4 @@ Protect grass during extreme weather
 If your lawn looks better month after month—not just right after a cut—you’ve chosen well.
 ### A Local Option
 
-If you would rather hand it over, Down the Rabbit Hole AUST is a locally operated business owned and run by Michael Robinson. See the [lawn mowing Canberra](/lawn-mowing) service for one-off or regular scheduled visits, with a clear, upfront quote before any work starts.
+If you would rather hand it over, Down the Rabbit Hole AUST is a locally owned, fully insured Canberra business. See the [lawn mowing Canberra](/lawn-mowing) service for one-off or regular scheduled visits, with a clear, upfront quote before any work starts.

@@ -34,7 +34,7 @@ except FileNotFoundError:
     IMG = {}
 
 HERO_IMAGE = os.environ.get("HERO_IMAGE", "hero-video-poster" if os.path.exists(os.path.join(ROOT, "images", "hero-video-poster.webp")) else "garden-clean-up-1-after")
-HERO_ALT = ("Michael Robinson, owner of Down the Rabbit Hole AUST, mowing a Canberra front lawn in his orange hi-vis vest" if HERO_IMAGE == "hero-video-poster"
+HERO_ALT = ("Down the Rabbit Hole AUST mowing a Canberra front lawn in an orange hi-vis vest" if HERO_IMAGE == "hero-video-poster"
             else "A mowed front lawn, clipped hedge and clean driveway under autumn trees in Canberra after a visit from Down the Rabbit Hole AUST")
 
 SERVICES = [
@@ -282,7 +282,7 @@ def footer():
     <div class="footer-grid">
       <div class="footer-brand">
         <img src="/images/dtrh-logo-512.webp" width="120" height="120" alt="{NAME} badge logo, est. 2021" loading="lazy" decoding="async">
-        <p><strong style="color:#fff">{NAME}</strong><br>Lawn mowing, garden maintenance, hedges, clean-ups and waste removal for Canberra homes and businesses. Owned and operated by {OWNER}. Taking the headaches away since 2021.</p>
+        <p><strong style="color:#fff">{NAME}</strong><br>Lawn mowing, garden maintenance, hedges, clean-ups and waste removal for Canberra homes and businesses. Locally owned and operated in Canberra. Taking the headaches away since 2021.</p>
         <div class="footer-nap">
           <a href="{TEL}">{icon("phone")}{PHONE}</a>
           <a href="{SMS}">{icon("sms")}Text {PHONE}</a>
@@ -367,7 +367,7 @@ def quote_form(prefix, compact=False):
     {f("job_notes", "Job notes", tag="textarea", required=False, span=True, placeholder="What needs doing, how often, access details, anything we should know.")}
     <div class="fld span photos" data-photos>
       <span class="photos-label" id="{prefix}-photos-label">Photos of the job <span>(optional, up to 5)</span></span>
-      <label class="photo-add" for="{prefix}-photos">{icon("camera")}<span><strong>Add photos</strong><small>A few snaps of the lawn or garden help Michael quote accurately</small></span></label>
+      <label class="photo-add" for="{prefix}-photos">{icon("camera")}<span><strong>Add photos</strong><small>A few snaps of the lawn or garden help us quote accurately</small></span></label>
       <input class="photo-input" type="file" id="{prefix}-photos" accept="image/*" multiple aria-labelledby="{prefix}-photos-label">
       <ul class="photo-list" aria-live="polite"></ul>
       <p class="photo-msg" role="status" hidden></p>
@@ -587,7 +587,7 @@ def home():
   <div class="wrap hero-inner">
     <span class="eyebrow">Taking the headaches away · Est. 2021</span>
     <h1>Lawn &amp; Garden Care Across Canberra</h1>
-    <p class="lead">Mowing, garden maintenance, hedge trimming and clean-ups for homes and businesses across Weston Creek, Woden Valley and Tuggeranong. Owned and run by {OWNER}, with clear quotes upfront and green waste removal available.</p>
+    <p class="lead">Mowing, garden maintenance, hedge trimming and clean-ups for homes and businesses across Weston Creek, Woden Valley and Tuggeranong. Locally owned and operated, with clear quotes upfront and green waste removal available.</p>
     <div class="hero-cta">
       <a class="btn btn-primary" href="#contact" data-open-quote>Get a Free Quote {icon("arrow")}</a>
       <a class="btn btn-ghost" href="{SMS}">{icon("sms")}Text {PHONE}</a>
@@ -601,7 +601,7 @@ def home():
       <div class="trust-item rv"><span class="ico">{icon("shield")}</span><span><strong>Fully insured</strong><small>Public liability cover on every job</small></span></div>
       <div class="trust-item rv rv-d1"><span class="ico">{icon("badge")}</span><span><strong>ABN registered</strong><small>{LEGAL}</small></span></div>
       <div class="trust-item rv rv-d2"><span class="ico">{icon("mower")}</span><span><strong>60+ lawns maintained</strong><small>Canberra homes and businesses</small></span></div>
-      <div class="trust-item rv rv-d3"><span class="ico">{icon("pin")}</span><span><strong>Locally operated</strong><small>Run by {OWNER}, est. 2021</small></span></div>
+      <div class="trust-item rv rv-d3"><span class="ico">{icon("pin")}</span><span><strong>Locally operated</strong><small>Canberra owned, est. 2021</small></span></div>
     </div>
   </div>
 </section>
@@ -629,10 +629,10 @@ def home():
       <div class="rv rv-d1">
         <span class="eyebrow">About us</span>
         <h2>A locally operated Canberra business, taking the headaches away</h2>
-        <p>{NAME} is a locally operated Canberra business owned and run by {OWNER}. It provides lawn mowing, garden maintenance, hedge trimming and yard clean-ups, is fully insured and ABN registered, and has maintained more than 60 lawns across the ACT and the Queanbeyan region since it was established in 2021.</p>
+        <p>{NAME} is a locally owned and operated Canberra business. It provides lawn mowing, garden maintenance, hedge trimming and yard clean-ups, is fully insured and ABN registered, and has maintained more than 60 lawns across the ACT and the Queanbeyan region since it was established in 2021.</p>
         <p>Residential and commercial properties are both welcome. Every job is quoted upfront before work starts, and green waste removal is available with mowing, garden maintenance and yard clean-ups. Whether you want ongoing lawn care or a one-off tidy before an inspection, the aim is to keep lawn and garden care simple.</p>
         <ul class="checks">
-          <li>{icon("check")}Owned and operated by {OWNER}</li>
+          <li>{icon("check")}Locally owned and operated</li>
           <li>{icon("check")}Clear, upfront quotes before work starts</li>
           <li>{icon("check")}Regular schedules or one-off visits</li>
           <li>{icon("check")}Residential and commercial properties</li>
@@ -728,7 +728,6 @@ def home():
 '''
     graph = [
         business_schema(),
-        owner_schema(),
         {"@type": "WebSite", "@id": SITE + "/#website", "url": SITE + "/", "name": NAME, "publisher": {"@id": BIZ_ID}},
         {"@type": "WebPage", "@id": SITE + "/#webpage", "url": SITE + "/", "name": "Lawn & Garden Care Canberra | Down the Rabbit Hole AUST", "isPartOf": {"@id": SITE + "/#website"}, "about": {"@id": BIZ_ID}},
         faq_schema(HOME_FAQS),
@@ -889,7 +888,7 @@ def service_page(slug, is_suburb=False):
 
 def about():
     faqs = [
-        ("Who does the work?", "Down the Rabbit Hole AUST is owned and run by Michael Robinson, so you deal with the owner from the first quote onwards. The business is fully insured and ABN registered."),
+        ("Who does the work?", "Down the Rabbit Hole AUST is owned by Michael Robinson and is a locally operated Canberra business. It is fully insured and ABN registered, and every job starts with a clear, upfront quote."),
         ("Do you take on DVA-funded lawn and garden work?", "Yes. Down the Rabbit Hole AUST is a registered DVA provider for lawn and garden care in Canberra and Queanbeyan. DVA decides who is eligible and what it will fund, so confirm your entitlement with DVA before you book."),
         ("Do you work with property managers and strata committees?", "Yes. Rentals and strata common areas can go on a fortnightly or monthly schedule with a scope agreed upfront, and access can be arranged with the tenant or property manager."),
     ]
@@ -1042,7 +1041,7 @@ def qualify_page():
   <div class="wrap" style="max-width:860px">
     <ol class="qd-steps" aria-label="Progress"><li class="done"><span>{icon("check")}</span>Your details</li><li class="current" aria-current="step"><span>2</span>A few quick questions</li><li><span>3</span>Done</li></ol>
     <h1 id="qd-title" style="font-size:clamp(1.8rem,3.4vw,2.6rem)">Thanks, your details are in. Just a few quick questions</h1>
-    <p class="lead">These help Michael quote accurately and book the right time for your first visit. It takes about 30 seconds.</p>
+    <p class="lead">These help us quote accurately and book the right time for your first visit. It takes about 30 seconds.</p>
     <div class="form-wrap" style="margin-top:26px">
 {qualify_form()}
     </div>
@@ -1488,7 +1487,7 @@ def post_page(slug):
         {render_blocks(body_blocks)}
         <div class="author-card">
           <img src="/images/dtrh-logo-104.webp" width="56" height="56" alt="" loading="lazy" decoding="async">
-          <div><strong>Down the Rabbit Hole AUST</strong><p>A locally operated Canberra lawn and garden business, owned and run by {OWNER}. Fully insured, est. 2021, with more than 60 lawns maintained across Canberra and Queanbeyan. <a href="/about">About the business</a></p></div>
+          <div><strong>Down the Rabbit Hole AUST</strong><p>A locally owned and operated Canberra lawn and garden business. Fully insured, est. 2021, with more than 60 lawns maintained across Canberra and Queanbeyan. <a href="/about">About the business</a></p></div>
         </div>
         <div class="cta-band rv" style="margin-top:32px"><div><h2 style="margin-top:0">Rather have us do it?</h2><p>Free, upfront quotes for mowing, garden care and clean-ups across Canberra.</p></div><a class="btn btn-navy" href="#contact">Get a Free Quote</a></div>
       </article>

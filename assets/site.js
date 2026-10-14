@@ -370,10 +370,10 @@
     var ld = loadLead(), name = firstName(ld.name), tyLead = document.getElementById('ty-lead');
     if (ld.returning === 'Yes') {
       tyTitle.textContent = name ? 'Thanks for coming back, ' + name + '!' : 'Thanks for coming back!';
-      if (tyLead) tyLead.textContent = 'Great to hear from you again. Michael has your request and will be in touch during business hours to get you booked in. If it is urgent, text 0423 720 317.';
+      if (tyLead) tyLead.textContent = 'Great to hear from you again. We have your request and will be in touch during business hours to get you booked in. If it is urgent, text 0423 720 317.';
     } else if (ld.returning === 'No') {
       tyTitle.textContent = name ? 'Thanks, ' + name + ', your quote request is in' : 'Thanks, your quote request is in';
-      if (tyLead) tyLead.textContent = (ld.qualified ? 'Thanks for answering those questions. ' : '') + 'Welcome to Down the Rabbit Hole AUST. Michael will review your details and come back to you with a clear, upfront quote during business hours. If it is urgent, text 0423 720 317.';
+      if (tyLead) tyLead.textContent = (ld.qualified ? 'Thanks for answering those questions. ' : '') + 'Welcome to Down the Rabbit Hole AUST. We will review your details and come back to you with a clear, upfront quote during business hours. If it is urgent, text 0423 720 317.';
     }
   }
 

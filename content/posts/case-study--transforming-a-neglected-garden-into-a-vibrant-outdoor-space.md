@@ -35,6 +35,6 @@ Thermal Protection: To prevent weeds from returning and to lock in vital moistur
 Sustainability: This provides a vital thermal barrier against Canberra’s frost and heatwaves, ensuring the garden remains resilient with minimal supplemental watering. The result is a "display home" finish that requires far less manual labour to maintain in the future.
 ### Does Your Garden Need a Professional Reset?
 
-Whether you have a neglected backyard that needs a total overhaul or a property that simply needs to be brought back to life for a sale, Down the Rabbit Hole AUST, owned and run by Michael Robinson, can help with yard clean-ups, green waste removal, hedge trimming and garden maintenance, with a clear, upfront quote before any work starts.
+Whether you have a neglected backyard that needs a total overhaul or a property that simply needs to be brought back to life for a sale, Down the Rabbit Hole AUST can help with yard clean-ups, green waste removal, hedge trimming and garden maintenance, with a clear, upfront quote before any work starts.
 
 [Request a Yard Clean-Up Quote](/yard-clean-ups)

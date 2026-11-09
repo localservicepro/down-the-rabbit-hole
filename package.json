@@ -1,0 +1,11 @@
+{
+  "name": "down-the-rabbit-hole-site",
+  "private": true,
+  "description": "Static site. The only dependency is for the api/photo.js serverless function on Vercel.",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@vercel/blob": "2.8.2"
+  }
+}

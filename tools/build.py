@@ -320,6 +320,16 @@ SERVICE_OPTIONS = [n for _, n, *_ in SERVICES] + ["Something else / not sure"]
 SIZE_OPTIONS = ["Courtyard or unit (under 200 m²)", "Standard block (200–600 m²)", "Large block (600–1,000 m²)", "Acreage or commercial site", "Not sure"]
 
 
+def carry(prefix, key, label, value="", textarea=False):
+    """A field the CRM must receive but the visitor does not need to see. The LSP tracking script drops
+    type="hidden" inputs and sends no label for fields with opacity 0, display none or visibility hidden,
+    so these are real, read-only text fields, clipped out of view by the .crm-carry wrapper."""
+    i = f"{prefix}-{key}"
+    ctl = (f'<textarea id="{i}" name="{key}" data-field="{key}" rows="2" readonly tabindex="-1">{esc(value)}</textarea>' if textarea
+           else f'<input type="text" id="{i}" name="{key}" data-field="{key}" value="{esc(value)}" readonly tabindex="-1" autocomplete="off">')
+    return f'<div class="crm-carry" aria-hidden="true"><label for="{i}">{esc(label)}</label>{ctl}</div>'
+
+
 def pills(prefix, key, label, options, hint=""):
     """Required single-choice question rendered as pill buttons (native radios, so validation and the
     CRM tracking script both see a normal named field)."""
@@ -331,8 +341,9 @@ def pills(prefix, key, label, options, hint=""):
 
 def quote_form(prefix, compact=False):
     """Custom quote form. Field names match the LSP (Local Service Pro CRM) contact fields: full_name, email, phone,
-    property_address, postal_code, property_size, service_needed, job_notes. The external
-    tracking script captures the submission; the page then redirects to the thank-you page."""
+    property_address, postal_code, property_size, service_needed, job_notes, plus photo_links, source_page and
+    form_step. The external tracking script captures the submission; the page then redirects to the thank-you
+    page. Photos are uploaded to /api/photo as they are picked, and their links go to LSP in photo_links."""
     def f(key, label, tag="input", extra="", required=True, span=False, options=None, placeholder=""):
         i = f"{prefix}-{key}"
         req = " required" if required else ""
@@ -371,10 +382,12 @@ def quote_form(prefix, compact=False):
       <input class="photo-input" type="file" id="{prefix}-photos" accept="image/*" multiple aria-labelledby="{prefix}-photos-label">
       <ul class="photo-list" aria-live="polite"></ul>
       <p class="photo-msg" role="status" hidden></p>
+      {carry(prefix, "photo_links", "Photo links", textarea=True)}
     </div>
   </div>
   <div class="hp" aria-hidden="true"><label for="{prefix}-qf-extra">Leave this field empty</label><input type="text" id="{prefix}-qf-extra" name="qf_extra" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore="true"></div>
-  <input type="hidden" name="source_page" value="">
+  {carry(prefix, "source_page", "Source page")}
+  {carry(prefix, "form_step", "Form step", "Quote request")}
   <button class="btn btn-primary fsubmit" type="submit"><span class="fsubmit-label">Send my quote request</span> {icon("arrow")}</button>
   <p class="fnote">Free, no-obligation quote. We reply by phone or email during business hours. Or text <a href="{SMS}">{PHONE}</a>.</p>
   <p class="ferror" role="alert" hidden>Please check the highlighted fields.</p>
@@ -1012,23 +1025,24 @@ QUALIFY_QUESTIONS = [
 
 
 def qualify_form():
-    """Step 2 for new customers. The contact fields are pre-filled from step 1 (sessionStorage) and stay hidden,
-    so the CRM can match this submission to the same contact; they are shown only if step 1 data is missing."""
+    """Step 2 for new customers. The contact fields are pre-filled from step 1 (sessionStorage) and stay out of view
+    (clipped, not display:none, so the tracking script still treats them as visible fields), so the CRM can match
+    this submission to the same contact. They are shown only if step 1 data is missing."""
     qs = "\n    ".join(pills("qd", k, q, opts) for k, q, opts in QUALIFY_QUESTIONS)
     return f'''<form class="quote-form qualify-form" id="qd-form" novalidate="" data-thank-you="{THANK_YOU}" data-step="qualify" aria-label="A few quick questions">
   <div class="fgrid">
-    <div class="fld span qf-contact" hidden>
+    <div class="fld span qf-contact crm-carry" aria-hidden="true">
       <div class="fgrid">
-        <div class="fld"><label for="qd-full_name">Full name</label><input id="qd-full_name" name="full_name" data-field="full_name" type="text" autocomplete="name" placeholder="Jane Citizen"></div>
-        <div class="fld"><label for="qd-email">Email</label><input id="qd-email" name="email" data-field="email" type="email" autocomplete="email" placeholder="you@example.com"></div>
-        <div class="fld span"><label for="qd-phone">Phone</label><input id="qd-phone" name="phone" data-field="phone" type="tel" autocomplete="tel" pattern="[0-9+ ()-]{{8,}}" placeholder="04xx xxx xxx"></div>
+        <div class="fld"><label for="qd-full_name">Full name</label><input id="qd-full_name" name="full_name" data-field="full_name" type="text" autocomplete="name" placeholder="Jane Citizen" tabindex="-1"></div>
+        <div class="fld"><label for="qd-email">Email</label><input id="qd-email" name="email" data-field="email" type="email" autocomplete="email" placeholder="you@example.com" tabindex="-1"></div>
+        <div class="fld span"><label for="qd-phone">Phone</label><input id="qd-phone" name="phone" data-field="phone" type="tel" autocomplete="tel" pattern="[0-9+ ()-]{{8,}}" placeholder="04xx xxx xxx" tabindex="-1"></div>
       </div>
     </div>
     {qs}
   </div>
   <div class="hp" aria-hidden="true"><label for="qd-qf-extra">Leave this field empty</label><input type="text" id="qd-qf-extra" name="qf_extra" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore="true"></div>
-  <input type="hidden" name="source_page" value="">
-  <input type="hidden" name="form_step" value="Qualifying questions">
+  {carry("qd", "source_page", "Source page")}
+  {carry("qd", "form_step", "Form step", "Qualifying questions")}
   <button class="btn btn-primary fsubmit" type="submit"><span class="fsubmit-label">Send my answers</span> {icon("arrow")}</button>
   <p class="fnote">Prefer to skip? <a href="{THANK_YOU}">Your quote request is already in</a>.</p>
   <p class="ferror" role="alert" hidden>Please answer the highlighted questions.</p>
@@ -1303,14 +1317,9 @@ POST_META = {
     "the-ultimate-guide-to-commercial-yard-maintenance-in-Australia": ("Commercial Yard Maintenance in Australia: The Guide", None, "commercial-grounds-after-1", ["garden-maintenance", "green-waste-removal"], ""),
     "case-study--transforming-a-neglected-garden-into-a-vibrant-outdoor-space": ("Case Study: Transforming a Neglected Canberra Garden", "How Down the Rabbit Hole AUST turned a neglected Canberra garden into a vibrant outdoor space: debris removal, soil revitalisation and precision hedging.", "overgrown-clean-up-after", ["yard-clean-ups", "hedge-trimming"], ""),
 }
-CRAWL_META = {}
-try:
-    _crawl = json.load(open("/root/.claude/uploads/1bd95d00-0fb7-5770-a5d3-98abbab6ba02/1fa11bde-dtrh-crawl.json"))
-    for _u, _d in _crawl.items():
-        if "/post/" in _u:
-            CRAWL_META[_u.split("/post/")[1]] = (_d["title"], _d["meta"])
-except FileNotFoundError:
-    pass
+# Titles and meta descriptions for migrated posts, as published (originally taken from the old site's crawl).
+# Kept in the repo so every build reproduces them; edit tools/post_meta.json to change one.
+CRAWL_META = {k: tuple(v) for k, v in json.load(open(os.path.join(ROOT, "tools", "post_meta.json"), encoding="utf-8")).items()}
 OLD_LINKS = {
     "/hedge-trimming--lawn-care": "/hedge-trimming", "/dva-lawncare-services": "/dva-lawn-care", "/weed-spraying-prevention/": "/weed-spraying",
     "/weed-spraying-prevention": "/weed-spraying", "/home": "/", "/blog/author/695b34992c0fabfb5cfaeec8": "/about",
@@ -1603,7 +1612,7 @@ VERCEL = {
         {"source": "/post/ultimate-guide-to-green-waste-disposal-in-Canberra", "destination": "/post/green-waste-canberra-disposal-guide", "statusCode": 301},
         {"source": "/blog/tag/:tag*", "destination": "/blog", "statusCode": 301},
     ],
-    "functions": {"api/quote.js": {"maxDuration": 30}},
+    "functions": {"api/photo.js": {"maxDuration": 15}},
     "headers": [
         {"source": "/(.*)\\.(webp|png|woff2|css|js)", "headers": [{"key": "Cache-Control", "value": "public, max-age=31536000, immutable"}]},
     ],

@@ -336,6 +336,10 @@ ul{margin:0 0 1em;padding-left:1.2em}
 .photo-list img{width:72px;height:72px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
 .photo-rm{position:absolute;top:-8px;right:-8px;width:26px;height:26px;border-radius:50%;border:0;background:var(--navy);color:#fff;font-size:18px;line-height:1;cursor:pointer;display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.2)}
 .photo-rm:hover{background:#D6453D}
+.photo-list li.is-uploading img{opacity:.45}
+.photo-list li.is-uploading::after{content:"";position:absolute;inset:24px;border:3px solid var(--line);border-top-color:var(--orange);border-radius:50%;animation:spin .8s linear infinite}
+.photo-list li.is-failed img{outline:2px solid #D6453D;outline-offset:-2px;opacity:.6}
+@keyframes spin{to{transform:rotate(360deg)}}
 .photo-msg{margin:0;font-size:.85rem;color:var(--muted)}
 .quote-form.compact .photo-add{padding:10px 14px}
 .quote-form input,.quote-form select,.quote-form textarea,.quote-form button{scroll-margin-top:calc(var(--nav-h) + 70px)}
@@ -344,7 +348,7 @@ ul{margin:0 0 1em;padding-left:1.2em}
 .pills-fld legend{padding:0;margin-bottom:8px;font-family:var(--display);font-weight:700;font-size:.9rem;color:var(--navy);letter-spacing:.01em}
 .pill-group{display:flex;flex-wrap:wrap;gap:8px}
 .quote-form .pill{position:relative;display:inline-flex;font-family:var(--body)}
-.quote-form .pill input{position:absolute;inset:0;width:100%!important;height:100%;min-height:0!important;margin:0;padding:0!important;opacity:0;border:0!important;cursor:pointer}
+.quote-form .pill input{position:absolute;inset:0;width:100%!important;height:100%;min-height:0!important;margin:0;padding:0!important;clip-path:inset(50%);border:0!important;cursor:pointer}
 .pill span{display:inline-flex;align-items:center;min-height:44px;padding:9px 18px;border:1.5px solid var(--line);border-radius:999px;background:var(--paper);font-family:var(--body);font-weight:600;font-size:.95rem;color:var(--ink);transition:background-color .2s,border-color .2s,color .2s,box-shadow .2s;user-select:none}
 .pill:hover span{border-color:#B9C3D3}
 .pill input:checked+span{background:var(--navy);border-color:var(--navy);color:#fff}
@@ -356,7 +360,9 @@ ul{margin:0 0 1em;padding-left:1.2em}
 .qualify-form .pills-fld:first-of-type{box-shadow:none;padding-top:0}
 .pills-fld legend{float:left;width:100%}
 .pills-fld .pill-group{clear:both}
-.qf-contact[hidden]{display:none}
+/* Fields the CRM must receive but visitors need not see. Never opacity 0, display none or type=hidden:
+   the LSP tracking script ignores those (see carry() in tools/build.py). */
+.crm-carry{position:absolute!important;width:1px!important;height:1px!important;margin:-1px!important;padding:0!important;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;pointer-events:none}
 .qd-steps{display:flex;flex-wrap:wrap;gap:8px 22px;list-style:none;padding:0;margin:0 0 22px;font-weight:600;font-size:.92rem;color:var(--muted)}
 .qd-steps li{display:flex;align-items:center;gap:8px}
 .qd-steps li span{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--line);color:var(--navy);font-size:.8rem;font-weight:700}
@@ -382,7 +388,7 @@ ul{margin:0 0 1em;padding-left:1.2em}
 .ms-opt span{font:inherit!important;color:inherit!important}
 .ms-done{margin-top:10px;width:100%;min-height:42px;border:0;border-radius:999px;background:var(--navy);color:#fff;font-family:var(--display);font-weight:700;font-size:.95rem;cursor:pointer}
 .ms-done:hover{background:var(--navy-deep)}
-.ms-value{position:absolute;left:0;bottom:0;width:1px!important;height:1px;min-height:0!important;padding:0!important;border:0!important;opacity:0;pointer-events:none}
+.ms-value{position:absolute;left:0;bottom:0;width:1px!important;height:1px;min-height:0!important;padding:0!important;border:0!important;clip-path:inset(50%);pointer-events:none}
 .quote-form.touched .ms:has(.ms-value:invalid) .ms-toggle{border-color:#D6453D;box-shadow:0 0 0 4px rgba(214,69,61,.12)}
 @media (max-width:420px){.ms-grid{grid-template-columns:1fr}}
 .fld input:hover,.fld select:hover,.fld textarea:hover{border-color:#B9C3D3}

@@ -1,91 +1,125 @@
-# Website → LSP → ServiceM8 (via Zapier)
+# Setup guide: Vercel Blob, GHL (LSP) and Zapier → ServiceM8
 
-Every quote request now lands in LSP first. The team pre-qualifies it there, and only then does it go to
-ServiceM8 as a Quote job, through Zapier. The website no longer talks to ServiceM8 at all.
+How a quote request travels:
 
 ```
-Website form ──(LSP tracking script)──▶ LSP contact + opportunity
-                                           │  team pre-qualifies
-                                           ▼
-                     Client Management pipeline → stage "Auto Sync to Servicem8"
-                                           │  LSP workflow: Webhook action
-                                           ▼
-                     Zapier: Catch Hook → ServiceM8 "Create Job" (status Quote)
+Website form ── photos ──▶ Vercel Blob (public links)
+     │
+     └── every answer + photo links ──▶ GHL contact            (LSP tracking script)
+                                            │  Workflow 1: opportunity in "Request Quote"
+                                            │  team pre-qualifies the lead
+                                            ▼
+                         stage moved to "Auto Sync to Servicem8"
+                                            │  Workflow 2: Webhook
+                                            ▼
+                         Zapier: Catch Hook ──▶ ServiceM8 job (status Quote)
 ```
 
-Photos are uploaded by the website to Vercel Blob storage when the visitor picks them. The form sends the
-links to LSP in the `photo_links` field, and the Zap puts them in the ServiceM8 job description.
+The website never talks to ServiceM8. Nothing reaches ServiceM8 until someone moves the opportunity to
+"Auto Sync to Servicem8".
+
+Do the three parts in order: Blob, then GHL, then Zapier. The new site is only on the Vercel preview until
+PR #8 is merged and the domain points at Vercel, so test there first.
 
 ---
 
-## 1. Fields the website sends to LSP
+## Part 1. Vercel Blob (photo storage)
 
-Checked against what the LSP tracking script actually sends (a recorded test submission). The tracking
-script matches each form field to an LSP field **by its key**, so each custom field below must exist with
-exactly this key. In LSP, a custom field named "Photo Links" gets the key `photo_links`, and so on.
+1. Vercel → the Down the Rabbit Hole project → **Storage** tab → **Create Storage** → **Blob** → Continue.
+2. Set access to **Public**. This matters: the photo links must open for whoever reads the ServiceM8 job.
+   A Private store will make every upload fail.
+3. Name it `dtrh-quote-photos` and select **Create**. Vercel connects it to Production and Preview.
+   Leave "Add a read-write token env var" unticked. The default connection (it adds `BLOB_STORE_ID`)
+   is what the site uses. Ticking it does no harm either.
+4. **Redeploy** the project (Deployments → latest → Redeploy), so the function picks up the connection.
+5. Optional clean-up: delete the `SERVICEM8_API_KEY` environment variable. Nothing uses it any more.
 
-### Step 1: quote form (every visitor)
+**Check it:** open the preview site, start a quote, add a photo. The thumbnail should finish loading
+without a red outline. A red outline plus "A photo could not be uploaded" means the store is missing,
+Private, or the project was not redeployed.
 
-| Form field (key) | Question on the website | LSP field | Action in LSP |
-|---|---|---|---|
-| `full_name` | Full name | Standard: name (split into first and last) | None |
-| `email` | Email | Standard: Email | None |
-| `phone` | Phone | Standard: Phone | None |
-| `property_address` | Property address | Standard: Street Address | Map it manually (see step 2b) |
-| `postal_code` | Postcode | Standard: Postal Code | None |
-| `property_size` | Property size | Custom: **Property Size** | Create (single line text) |
-| `service_needed` | Service needed (several allowed, comma separated) | Custom: **Service Needed** `service_needed` | Already exists. Use this one, not the dropdown "Service Needed" (`service_needs`) |
-| `job_notes` | Job notes | Custom: **Job Notes** `job_notes` | Already exists |
-| `photo_links` | (photos, sent automatically) | Custom: **Photo Links** | Create (multi line text). One link per line |
-| `returning_customer` | Have you used us before? Yes or No | Custom: **Returning Customer** | Create (single line text) |
-| `source_page` | (sent automatically) | Custom: **Source Page** | Create (single line text) |
-| `form_step` | (sent automatically: "Quote request") | Custom: **Form Step** | Create (single line text) |
-| `qf_extra` | (spam trap, always empty) | none | Set to **Do not track** |
-
-### Step 2: quick questions (new customers only)
-
-Sent as a second submission with the same name, email and phone, so LSP adds the answers to the same contact.
-
-| Form field (key) | Question | LSP field | Action in LSP |
-|---|---|---|---|
-| `service_frequency` | How often do you need the service? | Custom: **Service Frequency** | Create (single line text) |
-| `start_timeframe` | When would you like the work done? | Custom: **Start Timeframe** | Create |
-| `property_type` | What type of property is it? | Custom: **Property Type** | Create |
-| `customer_role` | What is your connection to the property? | Custom: **Customer Role** | Create |
-| `yard_condition` | What condition is the lawn or garden in now? | Custom: **Yard Condition** | Create |
-| `dva_card_holder` | Are you a DVA card holder? | Custom: **DVA Card Holder** | Create |
-| `lead_source` | How did you hear about us? | Custom: **Lead Source** | Create |
-| `form_step` | (sent automatically: "Qualifying questions") | Custom: **Form Step** | Same field as step 1 |
-
-Single line text is the safe type for all of these. A dropdown only works if its options match the website's
-answers exactly. The options are listed in `QUALIFY_QUESTIONS` and `SIZE_OPTIONS` in `tools/build.py`.
-
-The account already has older fields that look similar, such as "2. Is this a one-time job or ongoing
-maintenance?". Their keys are different, so the website cannot fill them. Leave them alone or delete them.
+Photos are saved under `quote-photos/YYYY-MM/` in the store, with random file names. Anyone with a link
+can open that photo, but links cannot be guessed. Old months can be deleted from the store's Browser tab.
 
 ---
 
-## 2. LSP setup
+## Part 2. GHL (LSP)
 
-**a. Custom fields.** Settings → Custom Fields. Create the fields marked "Create" above, as contact fields.
-After creating each one, check its key reads exactly as listed (for example `contact.photo_links`).
+### 2a. Custom fields
 
-**b. External Tracking mapping.** Settings → External Tracking → Settings → open
-`downtherabbitholeaust.com`. Make sure the quote form (`q-form`), the pop-up form (`m-form`) and the
-quick-questions form (`qd-form`) have **Track** on. Then click **Map fields** on `q-form` and `m-form`:
-- `property_address` → Street Address
-- `qf_extra` → Do not track
+Settings → **Custom Fields** → **Add Field**. Create each field below as a **contact** field, type
+**Single Line** unless it says otherwise. Use the exact name shown: GHL turns the name into the key, and
+the website's field names must match the keys. After saving, check the key shown under the field.
 
-Manual mapping only covers standard fields. Custom fields are matched automatically by key, which is why
-step a has to come first. Mapping changes apply to new submissions only.
+| Field name | Key it must get | Type | Filled by |
+|---|---|---|---|
+| Photo Links | `contact.photo_links` | **Multi Line** | Quote form (one link per line) |
+| Property Size | `contact.property_size` | Single Line | Quote form |
+| Returning Customer | `contact.returning_customer` | Single Line | Quote form (Yes or No) |
+| Source Page | `contact.source_page` | Single Line | Quote form and quick questions |
+| Form Step | `contact.form_step` | Single Line | "Quote request" or "Qualifying questions" |
+| Service Frequency | `contact.service_frequency` | Single Line | Quick questions |
+| Start Timeframe | `contact.start_timeframe` | Single Line | Quick questions |
+| Property Type | `contact.property_type` | Single Line | Quick questions |
+| Customer Role | `contact.customer_role` | Single Line | Quick questions |
+| Yard Condition | `contact.yard_condition` | Single Line | Quick questions |
+| DVA Card Holder | `contact.dva_card_holder` | Single Line | Quick questions |
+| Lead Source | `contact.lead_source` | Single Line | Quick questions |
 
-**c. Send a test** from the live site, with one photo. Open the contact in LSP and check every field above,
-including Photo Links. If a field shows as "unmapped", its key does not match.
+These already exist, so do not recreate them:
 
-**d. Workflow.** Automation → Workflows → new workflow "Send to ServiceM8".
-- Trigger: **Pipeline Stage Changed**. Pipeline: Client Management. Stage: **Auto Sync to Servicem8**.
-- Action: **Webhook** (the standard one, not the paid Custom Webhook). Method POST. URL: the Zapier
-  Catch Hook URL from section 3. Under **Custom Data**, add these keys and values:
+| Field | Key | Note |
+|---|---|---|
+| Service Needed | `contact.service_needed` | The text one. Not the dropdown also called "Service Needed" (`service_needs`) |
+| Job Notes | `contact.job_notes` | |
+| Name, Email, Phone, Postal Code | standard fields | Filled automatically |
+
+If a key comes out different (for example `contact.photo_links_1` because the name was used before), tell
+the developer, so the website field can be renamed to match.
+
+### 2b. External Tracking
+
+Settings → **External Tracking**.
+
+1. **Installation**: the tracking code is already on the website (tracking ID `tk_6f4c…`). Nothing to add.
+2. **Settings**: open the website's domain (the `….vercel.app` preview now, `downtherabbitholeaust.com`
+   after launch). Check **Form submissions** is on, and **Track** is on for `q-form` (contact sections),
+   `m-form` (pop-up) and `qd-form` (quick questions). Forms appear after their first test submission.
+3. **Map fields** on `q-form` and on `m-form`:
+   - `property_address` → **Street Address**
+   - `qf_extra` → **Do not track** (spam trap, always empty)
+   - Leave everything else on automatic.
+
+Map fields is part of the newer External Tracking screen. If it is missing, turn it on under **Labs** in the
+sub-account settings. Without it, the address lands in the submission but not on the contact's address.
+
+**Check it:** send a test quote with a photo from the preview site. Open the contact. Every field in 2a
+should be filled, and Photo Links should hold a link that opens the photo. A value shown as "unmapped"
+means the field's key does not match.
+
+### 2c. Workflow 1: new website lead → opportunity
+
+Automation → Workflows → Create → "Website quote → Request Quote".
+
+- **Trigger:** **External Tracking Event**, event **Form submission**. If it offers a form or page
+  filter, limit it to `q-form` and `m-form`.
+- **Action: If/Else.** Continue only when Form Step is `Quote request`. This stops the quick-questions
+  submission from running it a second time.
+- **Action: Create Opportunity.** Pipeline **Client Management**, stage **Request Quote**, name
+  `{{contact.name}} – website quote`, source `Website`. Leave "Allow duplicate opportunities" off.
+- Add the team's usual notification (internal SMS or email) if wanted. Publish.
+
+### 2d. Workflow 2: pre-qualified → ServiceM8
+
+Create Workflow 2 after the Zapier hook exists (Part 3, step 1), because it needs the hook URL.
+
+Automation → Workflows → Create → "Send to ServiceM8".
+
+- **Trigger:** **Pipeline Stage Changed**. Pipeline **Client Management**, moved to stage
+  **Auto Sync to Servicem8**.
+- **Action: Webhook** (the standard one, not the paid "Custom Webhook"). Method **POST**. URL: the Zapier
+  Catch Hook URL. Under **Custom Data**, click **+ Add item** for each row below. Type the key, and insert
+  the value with the merge-field picker so it matches the account.
 
 | Key | Value |
 |---|---|
@@ -107,84 +141,103 @@ including Photo Links. If a field shows as "unmapped", its key does not match.
 | `yard_condition` | `{{contact.yard_condition}}` |
 | `dva_card_holder` | `{{contact.dva_card_holder}}` |
 | `lead_source` | `{{contact.lead_source}}` |
-| `contact_id` | `{{contact.id}}` |
+| `old_form_service` | `{{contact.service_interest}}` |
+| `old_form_notes` | `{{contact.any_notes}}` (pick "Additional Information" in the picker) |
 
-  Pick each value from the merge-field picker rather than typing it, so the keys match the account.
-- Optional last action: **Update Opportunity** → move it to the **New Job** stage, so it is clear the job
-  has been sent.
+  The two `old_form_` rows cover leads that still arrive through the old site's form until launch day.
+  Remove them once the new site is live.
+- **Action (optional): Update Opportunity** → stage **New Job**, so the board shows it was sent.
+- Publish.
 
-**Why a webhook instead of the LeadConnector trigger in Zapier.** Zapier's LeadConnector "Pipeline Stage
-Changed" trigger sends only standard contact fields (name, email, phone, address, tags, stage). It does not
-include custom fields, so service needed, notes, photo links and the quick-question answers would be lost.
+The standard Webhook also sends every contact field on its own, but under their display names. The Custom
+Data rows give Zapier short, predictable names.
 
 ---
 
-## 3. Zapier setup
+## Part 3. Zapier
 
-Connect ServiceM8 in Zapier first (My Apps → ServiceM8). It is not connected in the Zapier account yet.
+Needs a paid Zapier plan (Webhooks by Zapier is a premium app).
 
-**Step 1. Trigger: Webhooks by Zapier → Catch Hook.** Copy the hook URL into the LSP workflow (section 2d).
-Move a test opportunity to "Auto Sync to Servicem8" so Zapier receives a sample. The fields appear as
-"Custom Data First Name", "Custom Data Service Needed" and so on.
+**Before starting:** Zapier → **Apps** → add **ServiceM8** and log in to the client's ServiceM8 account.
+It is not connected yet.
 
-**Step 2. Action: ServiceM8 → Create Job.** The Zapier ServiceM8 app offers Create Job and Create Client
-only. It has no note or attachment actions, so everything goes in the job description.
+### Step 1. Trigger: Webhooks by Zapier → Catch Hook
 
-| ServiceM8 field | Value from the Catch Hook |
+- Create a Zap, choose **Webhooks by Zapier**, event **Catch Hook**, then Continue (no options needed).
+- Copy the hook URL into Workflow 2's Webhook action (Part 2d) and publish that workflow.
+- In GHL, move a test opportunity to **Auto Sync to Servicem8**. Back in Zapier, **Test trigger**. The
+  fields show up as "Custom Data First Name", "Custom Data Photo Links" and so on.
+
+### Step 2. Action: ServiceM8 → Create Job
+
+The ServiceM8 app in Zapier only has Create Job and Create Client. It cannot add notes or attach files, so
+all the details go into the job description and the photos go in as links.
+
+| ServiceM8 field | Set to |
 |---|---|
-| Customer Name | Leave blank. ServiceM8 creates the customer from the job contact details |
+| Customer Name | Leave blank. ServiceM8 creates the client from the job contact |
 | Job Status | `Quote` |
-| Job Address | `address` `postcode` |
-| Billing Address | `address` `postcode` |
+| Job Address | Custom Data Address, a space, Custom Data Postcode |
+| Billing Address | Same as Job Address |
 | Job Description | The template below |
-| Job Contact First Name | `first_name` |
-| Job Contact Last Name | `last_name` |
-| Job Contact Mobile | `phone` |
-| Job Contact E-Mail Address | `email` |
+| Job Contact First Name | Custom Data First Name |
+| Job Contact Last Name | Custom Data Last Name |
+| Job Contact Mobile | Custom Data Phone |
+| Job Contact E-Mail Address | Custom Data Email |
 | Billing Contact First Name, Last Name, Mobile, E-Mail | Same as the job contact |
+| Everything else | Leave blank |
 
-Job Description template (type the labels, insert the fields):
+Job Description: type the labels and insert the matching Custom Data field after each one.
 
 ```
 Website quote request (pre-qualified in LSP)
-Service needed: {service_needed}
-Property size: {property_size}
-Used us before: {returning_customer}
-How often: {service_frequency}
-When: {start_timeframe}
-Property type: {property_type}
-Connection to property: {customer_role}
-Lawn/garden condition: {yard_condition}
-DVA card holder: {dva_card_holder}
-Heard about us via: {lead_source}
+Service needed: [Service Needed]
+Property size: [Property Size]
+Used us before: [Returning Customer]
+How often: [Service Frequency]
+When: [Start Timeframe]
+Property type: [Property Type]
+Connection to property: [Customer Role]
+Lawn/garden condition: [Yard Condition]
+DVA card holder: [DVA Card Holder]
+Heard about us via: [Lead Source]
 
 Job notes:
-{job_notes}
+[Job Notes]
 
-Photos:
-{photo_links}
+Photos (open in a browser):
+[Photo Links]
+
+Old site form (until launch): [Old Form Service] [Old Form Notes]
 ```
 
-**Step 3 (optional).** LeadConnector → Add/Update Contact, matched on the `email` from the hook, to add the
-tag `servicem8-synced`. Useful for reporting and for spotting a failed sync.
+**Test step**, check the new Quote job in ServiceM8, then delete the test job.
 
-Turn the Zap on, then move a real test opportunity to "Auto Sync to Servicem8" and check the ServiceM8 job.
+### Step 3 (optional). LeadConnector → Add/Update Contact
+
+Match on Custom Data Email and add the tag `servicem8-synced`. Handy for spotting a lead that never synced.
+
+Name the Zap "DTRH: LSP → ServiceM8 quote" and turn it on.
 
 ---
 
-## 4. Things to know
+## Final test (end to end)
 
-- **Returning customers.** With Customer Name blank, ServiceM8 creates a new customer each time, so a
-  returning customer gets a duplicate client record. Two ways to handle it: merge duplicates in ServiceM8,
-  or move returning customers ("Returning Customer" = Yes) to the existing **Manual Sync Servm8** stage
-  instead, so staff create the job against the existing client.
-- **Photos are links, not attachments.** The links open the photo in a browser. They are public but
-  unguessable (random file names). Attaching the actual files to the ServiceM8 job would need a
-  Code by Zapier step that downloads each link and posts it to ServiceM8's attachment API.
-- **Photo storage.** Photos live in the project's Vercel Blob store under `quote-photos/YYYY-MM/`. Removing
-  a photo on the form before sending does not delete the uploaded file. Old months can be cleared from the
-  Vercel dashboard once the jobs are done.
-- **If photo storage is not set up**, the form still sends. The photo shows as failed and the visitor is
-  asked to text it instead.
-- **The old direct integration is gone.** `api/quote.js` was removed, so the `SERVICEM8_API_KEY`
-  environment variable in Vercel is no longer used and can be deleted.
+1. On the preview site, send a quote as a new customer, with two photos, then answer the quick questions.
+2. In GHL: the contact has every field filled, and an opportunity sits in **Request Quote**.
+3. Move it to **Auto Sync to Servicem8**.
+4. In ServiceM8: a Quote job with the address, the contact, the full description and two photo links
+   that open.
+5. In Zapier: the run shows as successful under Zap history.
+
+## If something is missing
+
+| Symptom | Likely cause |
+|---|---|
+| Photo thumbnail turns red on the website | Blob store missing or Private, or no redeploy after connecting it |
+| Field empty on the GHL contact | Custom field key does not match (check 2a), or the form's Track switch is off (2b) |
+| Address empty on the GHL contact | `property_address` not mapped to Street Address (2b) |
+| Two opportunities for one lead | Workflow 1 is missing the Form Step check (2c) |
+| Nothing in Zapier | Workflow 2 not published, wrong hook URL, or the stage name differs |
+| Zap fails at ServiceM8 | ServiceM8 connection expired, or Job Status not set to `Quote` |
+| Returning customer appears twice in ServiceM8 | Expected with Customer Name blank. Merge in ServiceM8, or move returning customers to **Manual Sync Servm8** instead so staff attach the job to the existing client |

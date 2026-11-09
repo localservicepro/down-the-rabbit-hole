@@ -67,7 +67,7 @@ Requires Python 3.10+ (Pillow only for the image tooling).
 
 ## Photos and the hand-off to ServiceM8
 
-Quote requests go to LSP only. The team pre-qualifies them there, and an LSP workflow plus a Zapier Zap create the ServiceM8 Quote job. The website does not talk to ServiceM8. **The field map and step-by-step LSP and Zapier setup are in [docs/lsp-to-servicem8-zapier.md](docs/lsp-to-servicem8-zapier.md).**
+Quote requests go to LSP only. The team pre-qualifies them there, and an LSP workflow plus a Zapier Zap create the ServiceM8 Quote job. The website does not talk to ServiceM8. **The step-by-step setup for Vercel Blob, GHL and Zapier, with the full field map, is in [docs/lsp-to-servicem8-zapier.md](docs/lsp-to-servicem8-zapier.md).**
 
 **Photo uploads.** Visitors can add up to 5 photos. The browser shrinks each one (max 1600px JPEG) and uploads it straight away to the Vercel function `api/photo.js`, which stores it in Vercel Blob under `quote-photos/YYYY-MM/<random id>.jpg` and returns its public URL. The URLs go into the form's `photo_links` field, one per line, and reach LSP with the rest of the form.
 - The function accepts POST from this site's own domains only, checks the file really is a JPEG, PNG or WebP from its first bytes, and refuses anything over 2.5MB.
@@ -75,7 +75,7 @@ Quote requests go to LSP only. The team pre-qualifies them there, and an LSP wor
 - `package.json` exists only for this function's one dependency, `@vercel/blob` (pinned). There is still no build step.
 
 **Setup**
-1. Vercel → Project → Storage → create or connect a Blob store to this project. That adds `BLOB_READ_WRITE_TOKEN`. Redeploy.
+1. Vercel → Project → Storage → create a Blob store with **Public** access and connect it to this project (Production and Preview). Connecting adds `BLOB_STORE_ID`, or `BLOB_READ_WRITE_TOKEN` if you tick that option; the function works with either. A Private store rejects these uploads. Redeploy.
 2. Without a store the function answers 503, photos show as failed, and forms still send without links.
 3. `SERVICEM8_API_KEY` is no longer used and can be removed from Vercel.
 

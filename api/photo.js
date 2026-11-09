@@ -5,9 +5,11 @@
  * contact with the rest of the form, and the LSP -> Zapier -> ServiceM8 hand-off carries them to the job.
  * Nothing from the website goes to ServiceM8 directly.
  *
- * Setup: Vercel > Project > Storage > create (or connect) a Blob store. Connecting it adds the
- * BLOB_READ_WRITE_TOKEN environment variable. Redeploy afterwards. Without a store this function
- * answers 503 and the form still sends, without photo links.
+ * Setup: Vercel > Project > Storage > create a Blob store with PUBLIC access (the links must open for the
+ * ServiceM8 team; a private store rejects these uploads) and connect it to the project. Connecting adds
+ * BLOB_STORE_ID (OIDC, the default) or BLOB_READ_WRITE_TOKEN if that box is ticked; either works.
+ * Redeploy afterwards. Without a store this function answers 503 and the form still sends, without links.
+ * Full guide: docs/lsp-to-servicem8-zapier.md
  */
 const crypto = require('crypto');
 const { put } = require('@vercel/blob');

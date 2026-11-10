@@ -13,7 +13,7 @@ A well-maintained garden also adds to a property's street appeal, which matters 
 
 Quick answer: A professional garden service in Canberra helps you maintain a beautiful and healthy yard year-round. Services range from lawn mowing and hedge trimming to full yard cleanups and rubbish removal. Choosing an insured, local expert is key to protecting your property value and handling Canberra's unique climate.
 
-A professional garden service in Canberra can transform your outdoor space from a weekend chore into a stunning oasis. With our busy lives, finding the time and energy to keep up with nature can be tough. That's where the experts step in, ensuring your yard is pristine year-round. For residents in the ACT, a well-maintained garden is not just a luxury; it’s a core part of the local lifestyle, and Down the Rabbit Hole AUST, owned and run by Michael Robinson, can help make it happen.
+A professional garden service in Canberra can transform your outdoor space from a weekend chore into a stunning oasis. With our busy lives, finding the time and energy to keep up with nature can be tough. That's where the experts step in, ensuring your yard is pristine year-round. For residents in the ACT, a well-maintained garden is not just a luxury; it’s a core part of the local lifestyle, and Down the Rabbit Hole AUST can help make it happen.
 ## Key takeaways
 
 Garden services offer everything from basic lawn mowing to complete garden restorations.

@@ -33,7 +33,7 @@ Professionals are trained in safe application and handling procedures.
 
 If you would rather not do it yourself, consider a local professional. Down the Rabbit Hole AUST offers [weed spraying](/weed-spraying) across Canberra and can help get your lawn ready for summer, with a clear, upfront quote before work starts.
 
-Ultimately, preventing bindi and broadleaf weeds is about proactive care. By taking action in the cooler months, you set your lawn up for a successful, enjoyable summer. A little effort in autumn and winter pays big dividends when you can walk across your lawn without a single prickle. If you need help, Down the Rabbit Hole AUST, owned and run by Michael Robinson, can help.
+Ultimately, preventing bindi and broadleaf weeds is about proactive care. By taking action in the cooler months, you set your lawn up for a successful, enjoyable summer. A little effort in autumn and winter pays big dividends when you can walk across your lawn without a single prickle. If you need help, Down the Rabbit Hole AUST can help.
 
 To stop bindi and broadleaf weeds in Canberra, act during autumn and winter. This is when the weeds are young and vulnerable. Use a selective herbicide and maintain a healthy, dense lawn by mowing high and watering deeply. This preventative approach stops them from seeding before summer arrives.
 ## Key takeaways

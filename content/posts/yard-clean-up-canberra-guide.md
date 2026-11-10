@@ -55,7 +55,7 @@ You Lack the Right Equipment: Professional-grade tools like powerful blowers, co
 
 Physical Limitations: Yard work is physically demanding. If you have health issues, mobility problems, or simply don’t fancy a weekend of back-breaking labour, outsourcing the work is a great option.
 
-Waste Disposal is a Problem: This is a big one. A professional service will handle all the green waste removal for you, saving you the time and hassle of multiple trips to the tip. For a truly seamless and stress-free solution, it’s worth checking out a local expert. [Down The Rabbit Hole AUST](https://downtherabbitholeaust.com/yard-clean-ups), owned and run by Michael Robinson, offers yard clean-ups with green waste removal across Canberra, with a clear, upfront quote before work starts.
+Waste Disposal is a Problem: This is a big one. A professional service will handle all the green waste removal for you, saving you the time and hassle of multiple trips to the tip. For a truly seamless and stress-free solution, it’s worth checking out a local expert. [Down The Rabbit Hole AUST](https://downtherabbitholeaust.com/yard-clean-ups) offers yard clean-ups with green waste removal across Canberra, with a clear, upfront quote before work starts.
 ## Conclusion: Enjoy Your Reclaimed Outdoor Oasis
 
 A clean, tidy yard is more than just a chore ticked off a list. It’s a space for relaxation, a safe play area for kids and pets, a source of pride, and an extension of your home. Whether you roll up your sleeves and tackle it yourself over a weekend or bring in the professionals to handle the heavy lifting, the end result is always worth it.

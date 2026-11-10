@@ -41,12 +41,6 @@
       "label": "Garden bed restore",
       "before": "1eFP87UVxSpYMfEBAvLnZ2et38mdMau__",
       "after": "1nuIOKVTUWqpCuK-Vq60eakRVV8Gw9mdR"
-    },
-    {
-      "job": "defence-property",
-      "label": "Defence property tidy",
-      "before": "19ehmP9_ft83qRjM0llOboxuLUVKXtUiq",
-      "after": "1Aj3TODZesiC8GSqQBGE6qR1R5OPJghxA"
     }
   ],
   "singles": [

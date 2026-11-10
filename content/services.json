@@ -8,7 +8,7 @@
   "lede": "Mowing, garden maintenance, hedges, clean-ups, weed control and green waste removal from one local, insured Canberra business.",
   "intro": [
     "Down the Rabbit Hole AUST provides lawn and garden services across Canberra and Queanbeyan for homes, rentals and commercial properties. Regular mowing is the backbone of what we do, but most customers add something to it over time: hedges before summer, a clean-up before a sale or inspection, weed spraying in spring, or a load of green waste that will not fit in the bin.",
-    "Down the Rabbit Hole AUST is owned and run by Michael Robinson, so you deal directly with the owner. We are fully insured, ABN registered and locally operated, and we have maintained 60+ Canberra lawns since 2021. Quotes are free and given upfront before any work starts, and green waste removal is available with every mowing, garden maintenance and clean-up job. Taking the headaches away is the whole idea. Pick a service below, or call us and describe the yard."
+    "Down the Rabbit Hole AUST is fully insured, ABN registered and locally operated, and we have maintained 60+ Canberra lawns since 2021. Quotes are free and given upfront before any work starts, and green waste removal is available with every mowing, garden maintenance and clean-up job. Taking the headaches away is the whole idea. Pick a service below, or call us and describe the yard."
   ],
   "sections": [
     {
@@ -56,8 +56,8 @@
   "suburbs": [
     "Fisher",
     "Weston",
+    "Chapman",
     "Kambah",
-    "Kaleen",
     "Curtin",
     "Queanbeyan"
   ],
@@ -65,7 +65,7 @@
     "lawn-mowing",
     "garden-maintenance"
   ],
-  "suburb_page": "/lawn-mowing-kambah",
+  "suburb_page": "/lawn-mowing-weston-creek",
   "guides": [
     "/post/garden-service-canberra-guide",
     "/post/canberra-lawn-mowing-services-guide",
@@ -73,8 +73,6 @@
   ],
   "cta_heading": "Get a free quote for your yard",
   "cta_line": "Tell us your suburb and what needs doing, and we will come back with a free upfront quote.",
-  "word_count": 550,
-  "density_note": "6 occurrences / 550 words = 1.1%",
   "service_blurbs": {
     "lawn-mowing": "Regular, scheduled mowing with edges trimmed and clippings removed, for homes and commercial sites across Canberra.",
     "lawn-care": "Fertilising, aeration and seasonal care to keep Canberra lawns thick through frost, heat and spring growth.",

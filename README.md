@@ -51,28 +51,26 @@ Requires Python 3.10+ (Pillow only for the image tooling).
 ## Quote form and CRM tracking
 
 - The quote form is custom HTML (no iframe): inline in every page's `#contact` section and as a pop-up (`#quote-modal`) opened by every "Get a Free Quote" button. `/#quote` also opens it.
-- Field `name`/`data-field` attributes match the LSP (Local Service Pro CRM) contact fields: `full_name`, `email`, `phone`, `property_address`, `postal_code`, `property_size`, `service_needed`, `job_notes`. A hidden `source_page` carries the page URL and `qf_extra` is a honeypot (named so browser autofill ignores it; a filled honeypot goes straight to the thank-you page without passing the submission on).
+- Field `name`/`data-field` attributes match the LSP (Local Service Pro CRM) contact fields: `full_name`, `email`, `phone`, `property_address`, `suburb`, `postal_code`, `property_size`, `service_needed`, `job_notes`, `how_did_you_find_us` and `who_referred_you` (the last three match fields that already exist in the client's LSP account). A hidden `source_page` carries the page URL and `qf_extra` is a honeypot (named so browser autofill ignores it; a filled honeypot goes straight to the thank-you page without passing the submission on).
 - The CRM tracking script (`external-tracking.js`, tracking id `tk_6f4c…`) is loaded deferred in every page's `<head>` and captures the native `submit` event; the page then redirects to `/thank-you` (noindex). There is no form endpoint.
 - **Service needed is multi-select.** Checkboxes write one comma-separated value (for example `Lawn Mowing, Hedge Trimming`) into the single `service_needed` field, so the CRM still receives one value. At least one service is required. In LSP, `contact.service_needed` should be a text field (or a multi-option field), because a single-option dropdown cannot hold the combined value.
-- **Returning or new customer.** The form opens with a required "Have you used Down the Rabbit Hole AUST before?" question (`returning_customer` = `Yes` / `No`).
-  - **Yes:** the form is sent and the visitor goes to `/thank-you`, which says "Thanks for coming back, <first name>!".
-  - **No:** the form is sent first, so the lead is captured even if they stop, then the visitor goes to `/quote-details` (noindex, not in the sitemap). There, seven qualifying questions are sent as a second submission that carries the same `full_name`, `email` and `phone`, so the CRM matches it to the same contact. Then `/thank-you` shows the new-customer message.
-  - The first name and contact details pass between pages in `sessionStorage` (this tab only), never in the URL. Opening `/quote-details` directly shows the contact fields instead.
-  - The qualifying field keys need matching custom fields in LSP: `returning_customer`, `service_frequency`, `start_timeframe`, `property_type`, `customer_role`, `yard_condition`, `dva_card_holder`, `lead_source` and `form_step`. Questions and options live in `QUALIFY_QUESTIONS` in `tools/build.py`.
-- Both forms use native validation (required fields, email, 4-digit postcode, phone pattern) with an inline error message.
+- **Used us before?** The form opens with a required "Have you used Down the Rabbit Hole AUST before?" question (`returning_customer` = `Yes` / `No`). Either answer goes straight to `/thank-you`, which says "Thanks for coming back, <first name>!" or "Thanks, <first name>, your quote request is in". The first name passes in `sessionStorage` (this tab only), never in the URL.
+- **How did you hear about us?** Optional dropdown (`how_did_you_find_us`). Choosing "Friend, family or neighbour" shows an optional "Who referred you?" box (`who_referred_you`); choosing anything else hides and clears it. Options are `HEARD_OPTIONS` in `tools/build.py`.
+- There is no second step. The old quick-questions page (`/quote-details`) was removed and 301-redirects to `/contact`.
+- The form uses native validation (required fields, email, 4-digit postcode, phone pattern) with an inline error message.
 
 ## ServiceM8 integration
 
 Every quote form submission also creates a ServiceM8 job, through the Vercel serverless function `api/quote.js`. The API key stays on the server and never reaches the browser.
 
-**Step 1, the quote form (inline or pop-up):**
-- The function looks up an existing active client contact by email (`companycontact.json?$filter=email eq '…' and active eq 1`). If there is no match, it creates a client and client contact.
-- It creates a job with status Quote: `job_address` is the property address and postcode, and `job_description` is a short summary.
-- It adds a job contact (`type: JOB`). Phone numbers starting 04 are saved as mobile.
-- It adds a job note with every form detail, the page the form was sent from and the time received.
-- Each photo is attached to the Job Diary as "Website photo N.jpg", using one multipart POST to `attachment.json` (the method in ServiceM8's "Attaching files to a Job Diary" guide).
+**Dormant while the LSP app connector syncs leads to ServiceM8.** The function only runs when `SERVICEM8_API_KEY` is set in Vercel. Leave it unset while the connector is in use, or each lead creates two ServiceM8 jobs. Photos picked on the form only reach ServiceM8 through this function.
 
-**Step 2, new customers' quick questions:** the answers are added as a second note on the same job. The browser keeps the job UUID with an HMAC token for this tab only, and the function checks the token before writing to the job.
+**What it does (inline or pop-up form):**
+- The function looks up an existing active client contact by email (`companycontact.json?$filter=email eq '…' and active eq 1`). If there is no match, it creates a client and client contact.
+- It creates a job with status Quote: `job_address` is the property address, suburb and postcode, and `job_description` is a short summary.
+- It adds a job contact (`type: JOB`). Phone numbers starting 04 are saved as mobile.
+- It adds a job note with every form detail (including suburb and referral), the page the form was sent from and the time received.
+- Each photo is attached to the Job Diary as "Website photo N.jpg", using one multipart POST to `attachment.json` (the method in ServiceM8's "Attaching files to a Job Diary" guide).
 
 **Photos:** visitors can add up to 5. The browser shrinks each one to a maximum of 1600px as JPEG, typically 100–300KB, so uploads stay under Vercel's 4.5MB request limit. Photos are not sent to LSP.
 

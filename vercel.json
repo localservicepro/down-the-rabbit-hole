@@ -56,6 +56,11 @@
       "source": "/blog/tag/:tag*",
       "destination": "/blog",
       "statusCode": 301
+    },
+    {
+      "source": "/quote-details",
+      "destination": "/contact",
+      "statusCode": 301
     }
   ],
   "functions": {

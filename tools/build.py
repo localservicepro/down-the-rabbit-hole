@@ -334,8 +334,10 @@ def quote_form(prefix, compact=False):
     """Custom quote form. Field names match the LSP (Local Service Pro CRM) contact fields: full_name, email, phone,
     property_address, suburb, postal_code, property_size, service_needed, job_notes, how_did_you_find_us and
     who_referred_you. The external tracking script captures the submission; the page then redirects to the
-    thank-you page."""
-    def f(key, label, tag="input", extra="", required=True, span=False, options=None, placeholder=""):
+    thank-you page. LSP also matches each field's label text against its fields' display names, so the labels
+    of these two must read exactly like the LSP field names ("How did you find us?", "Who referred you?").
+    Hints go in data-hint, which CSS draws after the label, so they are not part of the label text."""
+    def f(key, label, tag="input", extra="", required=True, span=False, options=None, placeholder="", hint=None):
         i = f"{prefix}-{key}"
         req = " required" if required else ""
         if tag == "select":
@@ -347,6 +349,8 @@ def quote_form(prefix, compact=False):
             ctl = f'<textarea id="{i}" name="{key}" data-field="{key}" rows="3" placeholder="{esc(placeholder)}"{req}></textarea>'
         else:
             ctl = f'<input id="{i}" name="{key}" data-field="{key}" placeholder="{esc(placeholder)}"{extra}{req}>'
+        if hint:  # drawn by CSS, so the label text the CRM reads stays exactly `label`
+            return f'<div class="fld{" span" if span else ""}"><label for="{i}" data-hint="{esc(hint)}">{esc(label)}</label>{ctl}</div>'
         return f'<div class="fld{" span" if span else ""}"><label for="{i}">{esc(label)}{"" if required else " <span>(optional)</span>"}</label>{ctl}</div>'
     def multi(key, label, options):
         i = f"{prefix}-{key}"
@@ -368,8 +372,8 @@ def quote_form(prefix, compact=False):
     {f("property_address", "Property address", extra=' type="text" autocomplete="address-line1"', placeholder="12 Example Street")}
     {f("suburb", "Suburb", extra=' type="text" autocomplete="address-level2"', placeholder="Weston")}
     {f("property_size", "Property size", tag="select", options=SIZE_OPTIONS)}
-    {f("how_did_you_find_us", "How did you hear about us?", tag="select", options=HEARD_OPTIONS, required=False)}
-    <div class="fld span referral" data-referral hidden><label for="{prefix}-who_referred_you">Who referred you? <span>(optional, so we can thank them)</span></label><input id="{prefix}-who_referred_you" name="who_referred_you" data-field="who_referred_you" type="text" autocomplete="off" placeholder="Your friend's name"></div>
+    {f("how_did_you_find_us", "How did you find us?", tag="select", options=HEARD_OPTIONS, required=False, hint="(optional)")}
+    <div class="fld span referral" data-referral hidden><label for="{prefix}-who_referred_you" data-hint="(optional, so we can thank them)">Who referred you?</label><input id="{prefix}-who_referred_you" name="who_referred_you" data-field="who_referred_you" type="text" autocomplete="off" placeholder="Your friend's name"></div>
     {multi("service_needed", "Service needed", SERVICE_OPTIONS)}
     {f("job_notes", "Job notes", tag="textarea", required=False, span=True, placeholder="What needs doing, how often, access details, anything we should know.")}
     <div class="fld span photos" data-photos>

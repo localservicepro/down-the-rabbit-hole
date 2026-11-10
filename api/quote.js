@@ -1,9 +1,10 @@
 /* Vercel serverless function: website quote form -> ServiceM8.
  *
- * Step 1 (main quote form) creates a ServiceM8 job with status "Quote":
+ * Each quote form submission creates a ServiceM8 job with status "Quote":
  *   client (company) + client contact, job, job contact, a job note holding every form detail,
  *   and each uploaded photo as a Job Diary attachment (single multipart POST to attachment.json).
- * Step 2 ("A few quick questions", new customers) adds the answers as a second note on the same job.
+ * It only runs when SERVICEM8_API_KEY is set. If LSP already syncs leads to ServiceM8 (app connector),
+ * leave the key unset, or each lead creates two jobs.
  *
  * Environment variables (Vercel > Project > Settings > Environment Variables):
  *   SERVICEM8_API_KEY   required. ServiceM8 API key (ServiceM8 > Settings > API Keys), sent as the X-API-Key header.
@@ -13,7 +14,6 @@
  * The key never reaches the browser. Without it the function answers 503 and the form still
  * completes normally (the CRM tracking script captures the lead either way).
  */
-const crypto = require('crypto');
 
 const BASE = (process.env.SERVICEM8_BASE_URL || 'https://api.servicem8.com/api_1.0').replace(/\/+$/, '');
 const MAX_PHOTOS = 5;
@@ -26,14 +26,11 @@ const ALLOWED_ORIGINS = [
 const FIELD_LABELS = {
   returning_customer: 'Used us before',
   full_name: 'Name', email: 'Email', phone: 'Phone',
-  property_address: 'Property address', postal_code: 'Postcode', property_size: 'Property size',
+  property_address: 'Property address', suburb: 'Suburb', postal_code: 'Postcode', property_size: 'Property size',
   service_needed: 'Service needed', job_notes: 'Job notes',
-  service_frequency: 'How often', start_timeframe: 'When', property_type: 'Property type',
-  customer_role: 'Connection to property', yard_condition: 'Lawn/garden condition',
-  dva_card_holder: 'DVA card holder', lead_source: 'Heard about us via',
+  how_did_you_find_us: 'Heard about us via', who_referred_you: 'Referred by',
 };
-const STEP1_FIELDS = ['returning_customer', 'full_name', 'email', 'phone', 'property_address', 'postal_code', 'property_size', 'service_needed', 'job_notes'];
-const STEP2_FIELDS = ['service_frequency', 'start_timeframe', 'property_type', 'customer_role', 'yard_condition', 'dva_card_holder', 'lead_source'];
+const NOTE_FIELDS = ['returning_customer', 'full_name', 'email', 'phone', 'property_address', 'suburb', 'postal_code', 'property_size', 'service_needed', 'job_notes', 'how_did_you_find_us', 'who_referred_you'];
 
 /* ---------- helpers ---------- */
 
@@ -50,16 +47,6 @@ function splitName(full) {
 function isMobile(phone) {
   const digits = phone.replace(/[^\d+]/g, '');
   return /^(\+?61|0)4\d{8}$/.test(digits);
-}
-
-function sign(jobUuid) {
-  return crypto.createHmac('sha256', String(process.env.SERVICEM8_API_KEY)).update('job:' + jobUuid).digest('hex').slice(0, 40);
-}
-
-function tokenOk(jobUuid, token) {
-  if (!jobUuid || !token || typeof token !== 'string') return false;
-  const a = Buffer.from(sign(jobUuid)), b = Buffer.from(token);
-  return a.length === b.length && crypto.timingSafeEqual(a, b);
 }
 
 function authHeaders(extra) {
@@ -131,7 +118,7 @@ async function findOrCreateClient(d, warnings) {
 
 async function createJob(d, warnings) {
   const companyUuid = await findOrCreateClient(d, warnings);
-  const address = [clean(d.property_address, 200), clean(d.postal_code, 10)].filter(Boolean).join(' ');
+  const address = [clean(d.property_address, 200), clean(d.suburb, 80), clean(d.postal_code, 10)].filter(Boolean).join(' ');
   const summary = ['Website quote request', d.service_needed && `Service: ${clean(d.service_needed, 300)}`, d.property_size && `Property size: ${clean(d.property_size, 80)}`]
     .filter(Boolean).join('\n');
   const jobUuid = await smPost('/job.json', Object.assign(
@@ -194,19 +181,6 @@ module.exports = async function handler(req, res) {
 
   const warnings = [];
   try {
-    if (body.step === 'qualify') {
-      const answers = noteText('Website quote: qualifying answers (new customer)', d, STEP2_FIELDS);
-      if (tokenOk(clean(body.job, 64), body.token)) {
-        await addNote(clean(body.job, 64), answers, warnings);
-        return send(res, 200, { ok: true, job: body.job, warnings: warnings.length });
-      }
-      /* Step 2 opened without step 1: create the job from the contact details given on this page. */
-      if (!clean(d.full_name) || !(clean(d.email) || clean(d.phone))) return send(res, 422, { ok: false, error: 'missing contact details' });
-      const jobUuid = await createJob(d, warnings);
-      await addNote(jobUuid, noteText('Website quote request', d, ['full_name', 'email', 'phone'], [answers]), warnings);
-      return send(res, 200, { ok: true, job: jobUuid, token: sign(jobUuid), warnings: warnings.length });
-    }
-
     if (!clean(d.full_name) || !(clean(d.email) || clean(d.phone))) return send(res, 422, { ok: false, error: 'missing contact details' });
     const photos = Array.isArray(body.photos) ? body.photos.slice(0, MAX_PHOTOS) : [];
     const jobUuid = await createJob(d, warnings);
@@ -215,11 +189,11 @@ module.exports = async function handler(req, res) {
       clean(body.page, 300) && `Sent from: ${clean(body.page, 300)}`,
       `Received: ${new Date().toLocaleString('en-AU', { timeZone: 'Australia/Sydney' })}`,
     ].filter(Boolean);
-    await addNote(jobUuid, noteText('Website quote request', d, STEP1_FIELDS, meta), warnings);
+    await addNote(jobUuid, noteText('Website quote request', d, NOTE_FIELDS, meta), warnings);
     let attached = 0;
     for (let i = 0; i < photos.length; i++) if (await attachPhoto(jobUuid, photos[i], i, warnings)) attached++;
     if (warnings.length) console.warn('servicem8 warnings', jobUuid, warnings);
-    return send(res, 200, { ok: true, job: jobUuid, token: sign(jobUuid), photos: attached, warnings: warnings.length });
+    return send(res, 200, { ok: true, job: jobUuid, photos: attached, warnings: warnings.length });
   } catch (e) {
     console.error('servicem8 error', e.message, warnings);
     return send(res, 502, { ok: false, error: 'ServiceM8 request failed' });

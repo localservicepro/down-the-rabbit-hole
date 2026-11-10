@@ -2,5 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /404
 Disallow: /thank-you
-Disallow: /quote-details
 Sitemap: https://downtherabbitholeaust.com/sitemap.xml

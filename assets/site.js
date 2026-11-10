@@ -169,18 +169,13 @@
   function loadLead() { try { return JSON.parse(sessionStorage.getItem('dtrh_lead') || '{}') || {}; } catch (x) { return {}; } }
   function saveLead(d) { try { sessionStorage.setItem('dtrh_lead', JSON.stringify(d)); } catch (x) {} }
   function firstName(full) { var f = (full || '').trim().split(/\s+/)[0] || ''; return f ? f.charAt(0).toUpperCase() + f.slice(1) : ''; }
-  /* ServiceM8: the server function creates the job (step 1) or adds the qualifying answers (step 2). */
+  /* ServiceM8: the server function creates a Quote job (only when SERVICEM8_API_KEY is set in Vercel). */
   function sendToServiceM8(form) {
     if (!window.fetch) return Promise.resolve();
     var fields = {};
     new FormData(form).forEach(function (v, k) { if (typeof v === 'string') fields[k] = v; });
-    var qualify = form.dataset.step === 'qualify', lead = loadLead();
-    var payload = { step: qualify ? 'qualify' : 'quote', fields: fields, page: location.href };
-    if (qualify && lead.sm8) { payload.job = lead.sm8.job; payload.token = lead.sm8.token; }
-    if (!qualify) payload.photos = (form._photos || []).map(function (p) { return { data: p.data }; });
+    var payload = { step: 'quote', fields: fields, page: location.href, photos: (form._photos || []).map(function (p) { return { data: p.data }; }) };
     return fetch('/api/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), credentials: 'same-origin' })
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (j) { if (j && j.ok && j.job && j.token) { var l = loadLead(); l.sm8 = { job: j.job, token: j.token }; saveLead(l); } })
       .catch(function () {});
   }
 
@@ -245,6 +240,24 @@
     });
   });
 
+  /* LSP's tracking script uploads the files that are in a named file input when the form is submitted.
+     The picker is emptied after each pick (so photos can be added in several goes), so put the shrunk
+     photos back into it, as JPEG files, just before the submission goes out. */
+  function dataUrlToFile(d, name) {
+    var bin = atob(d.split(',')[1]), n = bin.length, u = new Uint8Array(n);
+    while (n--) u[n] = bin.charCodeAt(n);
+    return new File([u], name, { type: 'image/jpeg' });
+  }
+  function attachPhotos(form) {
+    var input = form.querySelector('.photo-input');
+    if (!input || !input.name || typeof DataTransfer === 'undefined') return;
+    try {
+      var dt = new DataTransfer();
+      (form._photos || []).forEach(function (p, i) { dt.items.add(dataUrlToFile(p.data, 'job-photo-' + (i + 1) + '.jpg')); });
+      input.files = dt.files;
+    } catch (x) {}
+  }
+
   function quoteFormOf(el) { return el && el.closest ? el.closest('.quote-form') : null; }
   function showError(form, show) { var err = form.querySelector('.ferror'); if (err) err.hidden = !show; }
   function startSend(form) {
@@ -265,19 +278,18 @@
       return false;
     }
     showError(form, false);
+    attachPhotos(form);
     form.dataset.sending = '1';
     var btn = form.querySelector('.fsubmit');
     if (btn) { btn.disabled = true; btn.textContent = (form._photos && form._photos.length) ? 'Uploading photos…' : 'Sending…'; }
     var dest = form.dataset.thankYou || '/thank-you';
     var ret = form.querySelector('[name=returning_customer]:checked');
     if (ret) {
-      /* Step 1: remember who this is for the thank-you message and step 2 (this tab only, never in the URL). */
+      /* Remember who this is for the thank-you message (this tab only, never in the URL). */
       var val = function (n) { var el = form.querySelector('[name=' + n + ']'); return el ? el.value.trim() : ''; };
       saveLead({ name: val('full_name'), email: val('email'), phone: val('phone'), returning: ret.value });
-      if (ret.value === 'No' && form.dataset.next) dest = form.dataset.next;
     }
-    if (form.dataset.step === 'qualify') { var l = loadLead(); l.qualified = true; saveLead(l); }
-    else if (window.fbq) { try { window.fbq('track', 'Lead'); } catch (x) {} }
+    if (window.fbq) { try { window.fbq('track', 'Lead'); } catch (x) {} }
     /* Send to ServiceM8 (server function) and give the CRM tracking script a moment, then move on.
        The page waits for the upload so photos are not cut off, but never longer than 25 seconds. */
     var went = false;
@@ -338,31 +350,16 @@
     });
   });
 
-  /* "Used us before?" Yes sends straight through; No goes on to a few quick questions, so relabel the button. */
-  document.querySelectorAll('.quote-form [name=returning_customer]').forEach(function (r) {
-    r.addEventListener('change', function () {
-      var form = quoteFormOf(r), lbl = form && form.querySelector('.fsubmit-label');
-      if (lbl && !form.dataset.sending) lbl.textContent = r.value === 'No' ? 'Next: a few quick questions' : 'Send my quote request';
+  /* "How did you hear about us?": show "Who referred you?" only for a friend, family or neighbour. */
+  document.querySelectorAll('.quote-form [name=how_did_you_find_us]').forEach(function (sel) {
+    var box = quoteFormOf(sel).querySelector('[data-referral]');
+    if (!box) return;
+    sel.addEventListener('change', function () {
+      var show = sel.value === 'Friend, family or neighbour';
+      box.hidden = !show;
+      if (!show) box.querySelector('input').value = '';
     });
   });
-
-  /* Step 2 (qualifying questions): greet by name and carry the contact details over so the CRM matches the contact. */
-  var qd = document.querySelector('.qualify-form');
-  if (qd) {
-    var lead = loadLead(), box = qd.querySelector('.qf-contact');
-    if (lead.email || lead.phone) {
-      ['full_name', 'email', 'phone'].forEach(function (k) {
-        var el = qd.querySelector('[name=' + k + ']'), v = lead[k === 'full_name' ? 'name' : k];
-        if (el && v) el.value = v;
-      });
-      var t = document.getElementById('qd-title'), fn = firstName(lead.name);
-      if (t && fn) t.textContent = 'Thanks, ' + fn + '. Just a few quick questions';
-    } else if (box) {
-      /* Opened directly, without step 1: ask for contact details here instead. */
-      box.hidden = false;
-      box.querySelectorAll('input').forEach(function (i) { i.required = true; });
-    }
-  }
 
   /* Thank-you page: personal message for returning and new customers. */
   var tyTitle = document.getElementById('ty-title');
@@ -373,7 +370,7 @@
       if (tyLead) tyLead.textContent = 'Great to hear from you again. We have your request and will be in touch during business hours to get you booked in. If it is urgent, text 0423 720 317.';
     } else if (ld.returning === 'No') {
       tyTitle.textContent = name ? 'Thanks, ' + name + ', your quote request is in' : 'Thanks, your quote request is in';
-      if (tyLead) tyLead.textContent = (ld.qualified ? 'Thanks for answering those questions. ' : '') + 'Welcome to Down the Rabbit Hole AUST. We will review your details and come back to you with a clear, upfront quote during business hours. If it is urgent, text 0423 720 317.';
+      if (tyLead) tyLead.textContent = 'Welcome to Down the Rabbit Hole AUST. We will review your details and come back to you with a clear, upfront quote during business hours. If it is urgent, text 0423 720 317.';
     }
   }
 

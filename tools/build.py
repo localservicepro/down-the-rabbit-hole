@@ -25,7 +25,6 @@ TRACKING_ID = "tk_6f4c1089fe214ae6baa8c2dc37522e82"
 REVIEW_WIDGET_JS = "https://app.downtherabbitholeaust.com/reputation/assets/review-widget.js"
 REVIEW_WIDGET_SRC = "https://app.downtherabbitholeaust.com/reputation/widgets/review_widget/3yb7gzTYYnwm3QAH6nFW?widgetId=6abe618b07d8dcd57f696246"
 THANK_YOU = "/thank-you"
-QUALIFY = "/quote-details"
 CSS = open(os.path.join(ROOT, "assets", "site.css"), encoding="utf-8").read()
 JS_VER = hashlib.md5(open(os.path.join(ROOT, "assets", "site.js"), "rb").read()).hexdigest()[:8]
 try:
@@ -317,6 +316,8 @@ def footer():
 
 
 SERVICE_OPTIONS = [n for _, n, *_ in SERVICES] + ["Something else / not sure"]
+HEARD_OPTIONS = ["Google search", "Google Maps", "Facebook or Instagram", "Friend, family or neighbour", "Saw the ute or trailer", "Other"]
+REFERRAL_OPTION = "Friend, family or neighbour"
 SIZE_OPTIONS = ["Courtyard or unit (under 200 m²)", "Standard block (200–600 m²)", "Large block (600–1,000 m²)", "Acreage or commercial site", "Not sure"]
 
 
@@ -331,18 +332,26 @@ def pills(prefix, key, label, options, hint=""):
 
 def quote_form(prefix, compact=False):
     """Custom quote form. Field names match the LSP (Local Service Pro CRM) contact fields: full_name, email, phone,
-    property_address, postal_code, property_size, service_needed, job_notes. The external
-    tracking script captures the submission; the page then redirects to the thank-you page."""
-    def f(key, label, tag="input", extra="", required=True, span=False, options=None, placeholder=""):
+    property_address, suburb, postal_code, property_size, service_needed, job_notes, how_did_you_find_us and
+    who_referred_you, plus the photos in attach_a_photo (an LSP file-upload field). The external tracking script
+    captures the submission (it uploads the files in a named file input); the page then redirects to the
+    thank-you page. LSP also matches each field's label text against its fields' display names, so the labels
+    of these two must read exactly like the LSP field names ("How did you find us?", "Who referred you?").
+    Hints go in data-hint, which CSS draws after the label, so they are not part of the label text."""
+    def f(key, label, tag="input", extra="", required=True, span=False, options=None, placeholder="", hint=None):
         i = f"{prefix}-{key}"
         req = " required" if required else ""
         if tag == "select":
-            opts = '<option value="" disabled selected>Select…</option>' + "".join(f'<option value="{esc(o)}">{esc(o)}</option>' for o in options)
+            # A required select cannot go back to blank; an optional one can.
+            blank = '<option value="" disabled selected>Select…</option>' if required else '<option value="" selected>Select…</option>'
+            opts = blank + "".join(f'<option value="{esc(o)}">{esc(o)}</option>' for o in options)
             ctl = f'<select id="{i}" name="{key}" data-field="{key}"{req}>{opts}</select>'
         elif tag == "textarea":
             ctl = f'<textarea id="{i}" name="{key}" data-field="{key}" rows="3" placeholder="{esc(placeholder)}"{req}></textarea>'
         else:
             ctl = f'<input id="{i}" name="{key}" data-field="{key}" placeholder="{esc(placeholder)}"{extra}{req}>'
+        if hint:  # drawn by CSS, so the label text the CRM reads stays exactly `label`
+            return f'<div class="fld{" span" if span else ""}"><label for="{i}" data-hint="{esc(hint)}">{esc(label)}</label>{ctl}</div>'
         return f'<div class="fld{" span" if span else ""}"><label for="{i}">{esc(label)}{"" if required else " <span>(optional)</span>"}</label>{ctl}</div>'
     def multi(key, label, options):
         i = f"{prefix}-{key}"
@@ -354,21 +363,24 @@ def quote_form(prefix, compact=False):
                 f'<input class="ms-value" type="text" id="{i}" name="{key}" data-field="{key}" required tabindex="-1" aria-hidden="true" autocomplete="off"></div>')
     returning = pills(prefix, "returning_customer", "Have you used Down the Rabbit Hole AUST before?",
                       [("Yes", "Yes, I have"), ("No", "No, I'm new")])
-    return f'''<form class="quote-form{" compact" if compact else ""}" id="{prefix}-form" novalidate="" data-thank-you="{THANK_YOU}" data-next="{QUALIFY}" aria-label="Request a free quote">
+    return f'''<form class="quote-form{" compact" if compact else ""}" id="{prefix}-form" novalidate="" data-thank-you="{THANK_YOU}" aria-label="Request a free quote">
   <div class="fgrid">
     {returning}
     {f("full_name", "Full name", extra=' type="text" autocomplete="name"', placeholder="Jane Citizen")}
     {f("email", "Email", extra=' type="email" autocomplete="email" inputmode="email"', placeholder="you@example.com")}
     {f("phone", "Phone", extra=' type="tel" autocomplete="tel" inputmode="tel" pattern="[0-9+ ()-]{{8,}}"', placeholder="04xx xxx xxx")}
     {f("postal_code", "Postcode", extra=' type="text" autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{{4}}" maxlength="4"', placeholder="2611")}
-    {f("property_address", "Property address", extra=' type="text" autocomplete="street-address"', placeholder="12 Example Street, Kambah")}
+    {f("property_address", "Property address", extra=' type="text" autocomplete="address-line1"', placeholder="12 Example Street")}
+    {f("suburb", "Suburb", extra=' type="text" autocomplete="address-level2"', placeholder="Weston")}
     {f("property_size", "Property size", tag="select", options=SIZE_OPTIONS)}
+    {f("how_did_you_find_us", "How did you find us?", tag="select", options=HEARD_OPTIONS, required=False, hint="(optional)")}
+    <div class="fld span referral" data-referral hidden><label for="{prefix}-who_referred_you" data-hint="(optional, so we can thank them)">Who referred you?</label><input id="{prefix}-who_referred_you" name="who_referred_you" data-field="who_referred_you" type="text" autocomplete="off" placeholder="Your friend's name"></div>
     {multi("service_needed", "Service needed", SERVICE_OPTIONS)}
     {f("job_notes", "Job notes", tag="textarea", required=False, span=True, placeholder="What needs doing, how often, access details, anything we should know.")}
     <div class="fld span photos" data-photos>
       <span class="photos-label" id="{prefix}-photos-label">Photos of the job <span>(optional, up to 5)</span></span>
       <label class="photo-add" for="{prefix}-photos">{icon("camera")}<span><strong>Add photos</strong><small>A few snaps of the lawn or garden help us quote accurately</small></span></label>
-      <input class="photo-input" type="file" id="{prefix}-photos" accept="image/*" multiple aria-labelledby="{prefix}-photos-label">
+      <input class="photo-input" type="file" id="{prefix}-photos" name="attach_a_photo" data-field="attach_a_photo" accept="image/*" multiple aria-labelledby="{prefix}-photos-label">
       <ul class="photo-list" aria-live="polite"></ul>
       <p class="photo-msg" role="status" hidden></p>
     </div>
@@ -533,7 +545,7 @@ def page(*, path, title, description, body, graph, active="", over_hero=False, o
 {body}
 </main>
 {footer()}
-{quote_modal() if active not in ("thanks", "qualify") else ""}
+{quote_modal() if active != "thanks" else ""}
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=25766325546287202&ev=PageView&noscript=1"></noscript>
 </body>
 </html>
@@ -990,67 +1002,6 @@ def thankyou():
     write(THANK_YOU, page(path=THANK_YOU, title="Thanks, Your Quote Request Is In | Down the Rabbit Hole",
                           description="Thanks for requesting a quote from Down the Rabbit Hole AUST. We reply by phone or email during business hours. Need it sooner? Text or call 0423 720 317.",
                           body=body, graph=graph, active="thanks", over_hero=False, robots="noindex, nofollow"))
-
-
-QUALIFY_QUESTIONS = [
-    # LSP contact field key, question, [(value, label)]
-    ("service_frequency", "How often do you need the service?",
-     [("One-off job", "One-off job"), ("Weekly", "Weekly"), ("Fortnightly", "Fortnightly"), ("Monthly", "Monthly"), ("Not sure yet", "Not sure yet")]),
-    ("start_timeframe", "When would you like the work done?",
-     [("As soon as possible", "As soon as possible"), ("Within 2 weeks", "Within 2 weeks"), ("Within a month", "Within a month"), ("Just comparing quotes", "Just comparing quotes")]),
-    ("property_type", "What type of property is it?",
-     [("House", "House"), ("Townhouse or unit", "Townhouse or unit"), ("Rental property", "Rental property"), ("Commercial or strata", "Commercial or strata")]),
-    ("customer_role", "What is your connection to the property?",
-     [("Owner", "Owner"), ("Tenant", "Tenant"), ("Property manager", "Property manager"), ("Family member or carer", "Family member or carer")]),
-    ("yard_condition", "What condition is the lawn or garden in now?",
-     [("Well kept", "Well kept"), ("A bit overgrown", "A bit overgrown"), ("Very overgrown", "Very overgrown")]),
-    ("dva_card_holder", "Are you a DVA card holder?",
-     [("Yes", "Yes"), ("No", "No")]),
-    ("lead_source", "How did you hear about us?",
-     [("Google search", "Google search"), ("Google Maps", "Google Maps"), ("Facebook or Instagram", "Facebook or Instagram"), ("Friend or neighbour", "Friend or neighbour"), ("Saw the ute or trailer", "Saw the ute or trailer"), ("Other", "Other")]),
-]
-
-
-def qualify_form():
-    """Step 2 for new customers. The contact fields are pre-filled from step 1 (sessionStorage) and stay hidden,
-    so the CRM can match this submission to the same contact; they are shown only if step 1 data is missing."""
-    qs = "\n    ".join(pills("qd", k, q, opts) for k, q, opts in QUALIFY_QUESTIONS)
-    return f'''<form class="quote-form qualify-form" id="qd-form" novalidate="" data-thank-you="{THANK_YOU}" data-step="qualify" aria-label="A few quick questions">
-  <div class="fgrid">
-    <div class="fld span qf-contact" hidden>
-      <div class="fgrid">
-        <div class="fld"><label for="qd-full_name">Full name</label><input id="qd-full_name" name="full_name" data-field="full_name" type="text" autocomplete="name" placeholder="Jane Citizen"></div>
-        <div class="fld"><label for="qd-email">Email</label><input id="qd-email" name="email" data-field="email" type="email" autocomplete="email" placeholder="you@example.com"></div>
-        <div class="fld span"><label for="qd-phone">Phone</label><input id="qd-phone" name="phone" data-field="phone" type="tel" autocomplete="tel" pattern="[0-9+ ()-]{{8,}}" placeholder="04xx xxx xxx"></div>
-      </div>
-    </div>
-    {qs}
-  </div>
-  <div class="hp" aria-hidden="true"><label for="qd-qf-extra">Leave this field empty</label><input type="text" id="qd-qf-extra" name="qf_extra" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore="true"></div>
-  <input type="hidden" name="source_page" value="">
-  <input type="hidden" name="form_step" value="Qualifying questions">
-  <button class="btn btn-primary fsubmit" type="submit"><span class="fsubmit-label">Send my answers</span> {icon("arrow")}</button>
-  <p class="fnote">Prefer to skip? <a href="{THANK_YOU}">Your quote request is already in</a>.</p>
-  <p class="ferror" role="alert" hidden>Please answer the highlighted questions.</p>
-</form>'''
-
-
-def qualify_page():
-    body = f'''
-<section class="section qualify-page">
-  <div class="wrap" style="max-width:860px">
-    <ol class="qd-steps" aria-label="Progress"><li class="done"><span>{icon("check")}</span>Your details</li><li class="current" aria-current="step"><span>2</span>A few quick questions</li><li><span>3</span>Done</li></ol>
-    <h1 id="qd-title" style="font-size:clamp(1.8rem,3.4vw,2.6rem)">Thanks, your details are in. Just a few quick questions</h1>
-    <p class="lead">These help us quote accurately and book the right time for your first visit. It takes about 30 seconds.</p>
-    <div class="form-wrap" style="margin-top:26px">
-{qualify_form()}
-    </div>
-  </div>
-</section>
-'''
-    write(QUALIFY, page(path=QUALIFY, title="A Few Quick Questions | Down the Rabbit Hole AUST",
-                        description="A few quick questions so Down the Rabbit Hole AUST can quote your Canberra lawn or garden job accurately and book the right time for your first visit.",
-                        body=body, graph=[business_schema()], active="qualify", over_hero=False, robots="noindex, nofollow"))
 
 
 def area_map():
@@ -1551,6 +1502,7 @@ REDIRECTS = """# Netlify / Cloudflare Pages style redirects (status 301 unless n
 /post/grass-mowing-canberra-guide-7692             /post/grass-mowing-canberra-guide             301
 /post/ultimate-guide-to-green-waste-disposal-in-Canberra  /post/green-waste-canberra-disposal-guide  301
 /blog/tag/*                                        /blog                                         301
+/quote-details                                     /contact                                      301
 """
 
 HTACCESS = """# Apache equivalent of _redirects
@@ -1573,6 +1525,7 @@ Redirect 301 /author/down-the-rabbit-hole-lawn-care-team /about
 Redirect 301 /post/grass-mowing-canberra-guide-7692 /post/grass-mowing-canberra-guide
 Redirect 301 /post/ultimate-guide-to-green-waste-disposal-in-Canberra /post/green-waste-canberra-disposal-guide
 RedirectMatch 301 ^/blog/tag/.*$ /blog
+Redirect 301 /quote-details /contact
 
 <IfModule mod_headers.c>
   <FilesMatch "\\.(webp|png|woff2|css|js)$">
@@ -1597,6 +1550,7 @@ VERCEL = {
         {"source": "/post/grass-mowing-canberra-guide-7692", "destination": "/post/grass-mowing-canberra-guide", "statusCode": 301},
         {"source": "/post/ultimate-guide-to-green-waste-disposal-in-Canberra", "destination": "/post/green-waste-canberra-disposal-guide", "statusCode": 301},
         {"source": "/blog/tag/:tag*", "destination": "/blog", "statusCode": 301},
+        {"source": "/quote-details", "destination": "/contact", "statusCode": 301},
     ],
     "functions": {"api/quote.js": {"maxDuration": 30}},
     "headers": [
@@ -1609,7 +1563,7 @@ def static_files(pages):
     json.dump(VERCEL, open(os.path.join(ROOT, "vercel.json"), "w"), indent=2)
     open(os.path.join(ROOT, "_redirects"), "w").write(REDIRECTS)
     open(os.path.join(ROOT, ".htaccess"), "w").write(HTACCESS)
-    open(os.path.join(ROOT, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDisallow: /404\nDisallow: /thank-you\nDisallow: /quote-details\nSitemap: {SITE}/sitemap.xml\n")
+    open(os.path.join(ROOT, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDisallow: /404\nDisallow: /thank-you\nSitemap: {SITE}/sitemap.xml\n")
     urls = "".join(f"  <url><loc>{SITE}{p}</loc><changefreq>monthly</changefreq><priority>{'1.0' if p=='/' else '0.8'}</priority></url>\n" for p in pages)
     open(os.path.join(ROOT, "sitemap.xml"), "w").write(
         '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -1621,7 +1575,6 @@ def main():
     about()
     notfound()
     thankyou()
-    qualify_page()
     pages = ["/", "/about", "/services"]
     for slug in ["services"] + [s[0] for s in SERVICES]:
         service_page(slug)

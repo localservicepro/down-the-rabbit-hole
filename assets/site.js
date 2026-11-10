@@ -240,6 +240,24 @@
     });
   });
 
+  /* LSP's tracking script uploads the files that are in a named file input when the form is submitted.
+     The picker is emptied after each pick (so photos can be added in several goes), so put the shrunk
+     photos back into it, as JPEG files, just before the submission goes out. */
+  function dataUrlToFile(d, name) {
+    var bin = atob(d.split(',')[1]), n = bin.length, u = new Uint8Array(n);
+    while (n--) u[n] = bin.charCodeAt(n);
+    return new File([u], name, { type: 'image/jpeg' });
+  }
+  function attachPhotos(form) {
+    var input = form.querySelector('.photo-input');
+    if (!input || !input.name || typeof DataTransfer === 'undefined') return;
+    try {
+      var dt = new DataTransfer();
+      (form._photos || []).forEach(function (p, i) { dt.items.add(dataUrlToFile(p.data, 'job-photo-' + (i + 1) + '.jpg')); });
+      input.files = dt.files;
+    } catch (x) {}
+  }
+
   function quoteFormOf(el) { return el && el.closest ? el.closest('.quote-form') : null; }
   function showError(form, show) { var err = form.querySelector('.ferror'); if (err) err.hidden = !show; }
   function startSend(form) {
@@ -260,6 +278,7 @@
       return false;
     }
     showError(form, false);
+    attachPhotos(form);
     form.dataset.sending = '1';
     var btn = form.querySelector('.fsubmit');
     if (btn) { btn.disabled = true; btn.textContent = (form._photos && form._photos.length) ? 'Uploading photos…' : 'Sending…'; }

@@ -56,6 +56,7 @@ Requires Python 3.10+ (Pillow only for the image tooling).
 - **Service needed is multi-select.** Checkboxes write one comma-separated value (for example `Lawn Mowing, Hedge Trimming`) into the single `service_needed` field, so the CRM still receives one value. At least one service is required. In LSP, `contact.service_needed` should be a text field (or a multi-option field), because a single-option dropdown cannot hold the combined value.
 - **Used us before?** The form opens with a required "Have you used Down the Rabbit Hole AUST before?" question (`returning_customer` = `Yes` / `No`). Either answer goes straight to `/thank-you`, which says "Thanks for coming back, <first name>!" or "Thanks, <first name>, your quote request is in". The first name passes in `sessionStorage` (this tab only), never in the URL.
 - **How did you find us?** Optional dropdown (`how_did_you_find_us`). Its label and the "Who referred you?" label must read exactly like the LSP field names, or LSP also logs them as unmapped fields; the "(optional…)" hints are drawn by CSS from `data-hint`. Choosing "Friend, family or neighbour" shows an optional "Who referred you?" box (`who_referred_you`); choosing anything else hides and clears it. Options are `HEARD_OPTIONS` in `tools/build.py`.
+- **Photos go to LSP as files.** The photo picker is named `add_photos`, matching the client's LSP file-upload field "Add Photos" (`contact.add_photos`). The LSP tracking script uploads the files in a named file input when the form is submitted. Because the picker is emptied after each pick (so photos can be added in several goes), `site.js` puts the shrunk JPEGs back into it just before the submission goes out (`attachPhotos`). "Add Photos" must allow multiple files, or LSP keeps only one.
 - There is no second step. The old quick-questions page (`/quote-details`) was removed and 301-redirects to `/contact`.
 - The form uses native validation (required fields, email, 4-digit postcode, phone pattern) with an inline error message.
 
@@ -63,7 +64,7 @@ Requires Python 3.10+ (Pillow only for the image tooling).
 
 Every quote form submission also creates a ServiceM8 job, through the Vercel serverless function `api/quote.js`. The API key stays on the server and never reaches the browser.
 
-**Dormant while the LSP app connector syncs leads to ServiceM8.** The function only runs when `SERVICEM8_API_KEY` is set in Vercel. Leave it unset while the connector is in use, or each lead creates two ServiceM8 jobs. Photos picked on the form only reach ServiceM8 through this function.
+**Dormant while the LSP app connector syncs leads to ServiceM8.** The function only runs when `SERVICEM8_API_KEY` is set in Vercel. Leave it unset while the connector is in use, or each lead creates two ServiceM8 jobs.
 
 **What it does (inline or pop-up form):**
 - The function looks up an existing active client contact by email (`companycontact.json?$filter=email eq '…' and active eq 1`). If there is no match, it creates a client and client contact.

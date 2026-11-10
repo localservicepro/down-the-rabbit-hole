@@ -328,7 +328,7 @@ ul{margin:0 0 1em;padding-left:1.2em}
 .photo-add svg{width:28px;height:28px;flex:none;stroke:var(--orange-deep);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .photo-add strong{display:block;font-family:var(--display);font-size:.95rem;color:var(--navy)}
 .photo-add small{display:block;font-family:var(--body);font-weight:500;font-size:.85rem;color:var(--muted)}
-.quote-form .fld .photo-input{position:absolute;width:1px!important;height:1px;min-height:0!important;padding:0!important;border:0!important;opacity:0;pointer-events:none}
+.quote-form .fld .photo-input{position:absolute;width:1px!important;height:1px;min-height:0!important;padding:0!important;border:0!important;clip-path:inset(50%);pointer-events:none}
 .photo-input:focus-visible+.photo-list,.photo-add:focus-within{outline:none}
 .photos:focus-within .photo-add{border-color:var(--orange);box-shadow:0 0 0 4px rgba(248,144,24,.18)}
 .photo-list{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:0;padding:0}

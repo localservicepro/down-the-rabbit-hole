@@ -333,7 +333,8 @@ def pills(prefix, key, label, options, hint=""):
 def quote_form(prefix, compact=False):
     """Custom quote form. Field names match the LSP (Local Service Pro CRM) contact fields: full_name, email, phone,
     property_address, suburb, postal_code, property_size, service_needed, job_notes, how_did_you_find_us and
-    who_referred_you. The external tracking script captures the submission; the page then redirects to the
+    who_referred_you, plus the photos in add_photos (an LSP file-upload field). The external tracking script
+    captures the submission (it uploads the files in a named file input); the page then redirects to the
     thank-you page. LSP also matches each field's label text against its fields' display names, so the labels
     of these two must read exactly like the LSP field names ("How did you find us?", "Who referred you?").
     Hints go in data-hint, which CSS draws after the label, so they are not part of the label text."""
@@ -379,7 +380,7 @@ def quote_form(prefix, compact=False):
     <div class="fld span photos" data-photos>
       <span class="photos-label" id="{prefix}-photos-label">Photos of the job <span>(optional, up to 5)</span></span>
       <label class="photo-add" for="{prefix}-photos">{icon("camera")}<span><strong>Add photos</strong><small>A few snaps of the lawn or garden help us quote accurately</small></span></label>
-      <input class="photo-input" type="file" id="{prefix}-photos" accept="image/*" multiple aria-labelledby="{prefix}-photos-label">
+      <input class="photo-input" type="file" id="{prefix}-photos" name="add_photos" data-field="add_photos" accept="image/*" multiple aria-labelledby="{prefix}-photos-label">
       <ul class="photo-list" aria-live="polite"></ul>
       <p class="photo-msg" role="status" hidden></p>
     </div>

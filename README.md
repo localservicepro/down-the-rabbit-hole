@@ -18,8 +18,6 @@ No page-builder runtime, no CSS framework: one HTML file per page with the style
 | `assets/site.css`, `assets/site.js`, `assets/fonts/` | Styles (inlined at build), behaviour, self-hosted Outfit + Hanken Grotesk |
 | `images/` | Self-hosted WebP photos (1600 / 800 / 400 px variants) and logo files |
 | `_redirects`, `.htaccess`, `robots.txt`, `sitemap.xml` | Hosting config (Netlify/Cloudflare Pages style and Apache) |
-| `api/photo.js`, `package.json` | Vercel function that stores quote-form photos in Vercel Blob, and its one dependency |
-| `docs/lsp-to-servicem8-zapier.md` | Field map and setup for LSP → Zapier → ServiceM8 |
 
 ## Build and check
 
@@ -53,7 +51,7 @@ Requires Python 3.10+ (Pillow only for the image tooling).
 ## Quote form and CRM tracking
 
 - The quote form is custom HTML (no iframe): inline in every page's `#contact` section and as a pop-up (`#quote-modal`) opened by every "Get a Free Quote" button. `/#quote` also opens it.
-- Field `name`/`data-field` attributes match the LSP (Local Service Pro CRM) contact fields: `full_name`, `email`, `phone`, `property_address`, `postal_code`, `property_size`, `service_needed`, `job_notes`. `photo_links`, `source_page` and `form_step` are filled in automatically, and `qf_extra` is a honeypot (named so browser autofill ignores it; a filled honeypot goes straight to the thank-you page without passing the submission on).
+- Field `name`/`data-field` attributes match the LSP (Local Service Pro CRM) contact fields: `full_name`, `email`, `phone`, `property_address`, `postal_code`, `property_size`, `service_needed`, `job_notes`. A hidden `source_page` carries the page URL and `qf_extra` is a honeypot (named so browser autofill ignores it; a filled honeypot goes straight to the thank-you page without passing the submission on).
 - The CRM tracking script (`external-tracking.js`, tracking id `tk_6f4c…`) is loaded deferred in every page's `<head>` and captures the native `submit` event; the page then redirects to `/thank-you` (noindex). There is no form endpoint.
 - **Service needed is multi-select.** Checkboxes write one comma-separated value (for example `Lawn Mowing, Hedge Trimming`) into the single `service_needed` field, so the CRM still receives one value. At least one service is required. In LSP, `contact.service_needed` should be a text field (or a multi-option field), because a single-option dropdown cannot hold the combined value.
 - **Returning or new customer.** The form opens with a required "Have you used Down the Rabbit Hole AUST before?" question (`returning_customer` = `Yes` / `No`).
@@ -62,22 +60,33 @@ Requires Python 3.10+ (Pillow only for the image tooling).
   - The first name and contact details pass between pages in `sessionStorage` (this tab only), never in the URL. Opening `/quote-details` directly shows the contact fields instead.
   - The qualifying field keys need matching custom fields in LSP: `returning_customer`, `service_frequency`, `start_timeframe`, `property_type`, `customer_role`, `yard_condition`, `dva_card_holder`, `lead_source` and `form_step`. Questions and options live in `QUALIFY_QUESTIONS` in `tools/build.py`.
 - Both forms use native validation (required fields, email, 4-digit postcode, phone pattern) with an inline error message.
-- **What the tracking script will and will not send.** It drops `type="hidden"` inputs entirely, and sends no label for fields that are `display:none`, `visibility:hidden` or `opacity:0`. So fields the visitor does not need to see are real read-only inputs inside a clipped `.crm-carry` wrapper (`carry()` in `tools/build.py`), and the pill radios and the service value are clipped with `clip-path`, never `opacity:0`. Keep it that way when adding fields.
-- **One submission per form.** The tracking script also listens for clicks on the submit button and would send 50ms after the click, before photo uploads finish. `site.js` stops that click and dispatches a single submit event once uploads are done (at most 20 seconds), so LSP gets one submission with the photo links in it.
 
-## Photos and the hand-off to ServiceM8
+## ServiceM8 integration
 
-Quote requests go to LSP only. The team pre-qualifies them there, and an LSP workflow plus a Zapier Zap create the ServiceM8 Quote job. The website does not talk to ServiceM8. **The step-by-step setup for Vercel Blob, GHL and Zapier, with the full field map, is in [docs/lsp-to-servicem8-zapier.md](docs/lsp-to-servicem8-zapier.md).**
+Every quote form submission also creates a ServiceM8 job, through the Vercel serverless function `api/quote.js`. The API key stays on the server and never reaches the browser.
 
-**Photo uploads.** Visitors can add up to 5 photos. The browser shrinks each one (max 1600px JPEG) and uploads it straight away to the Vercel function `api/photo.js`, which stores it in Vercel Blob under `quote-photos/YYYY-MM/<random id>.jpg` and returns its public URL. The URLs go into the form's `photo_links` field, one per line, and reach LSP with the rest of the form.
-- The function accepts POST from this site's own domains only, checks the file really is a JPEG, PNG or WebP from its first bytes, and refuses anything over 2.5MB.
-- If an upload fails, the photo is marked and the visitor is asked to text it instead. The form still sends.
-- `package.json` exists only for this function's one dependency, `@vercel/blob` (pinned). There is still no build step.
+**Step 1, the quote form (inline or pop-up):**
+- The function looks up an existing active client contact by email (`companycontact.json?$filter=email eq '…' and active eq 1`). If there is no match, it creates a client and client contact.
+- It creates a job with status Quote: `job_address` is the property address and postcode, and `job_description` is a short summary.
+- It adds a job contact (`type: JOB`). Phone numbers starting 04 are saved as mobile.
+- It adds a job note with every form detail, the page the form was sent from and the time received.
+- Each photo is attached to the Job Diary as "Website photo N.jpg", using one multipart POST to `attachment.json` (the method in ServiceM8's "Attaching files to a Job Diary" guide).
+
+**Step 2, new customers' quick questions:** the answers are added as a second note on the same job. The browser keeps the job UUID with an HMAC token for this tab only, and the function checks the token before writing to the job.
+
+**Photos:** visitors can add up to 5. The browser shrinks each one to a maximum of 1600px as JPEG, typically 100–300KB, so uploads stay under Vercel's 4.5MB request limit. Photos are not sent to LSP.
 
 **Setup**
-1. Vercel → Project → Storage → create a Blob store with **Public** access and connect it to this project (Production and Preview). Connecting adds `BLOB_STORE_ID`, or `BLOB_READ_WRITE_TOKEN` if you tick that option; the function works with either. A Private store rejects these uploads. Redeploy.
-2. Without a store the function answers 503, photos show as failed, and forms still send without links.
-3. `SERVICEM8_API_KEY` is no longer used and can be removed from Vercel.
+1. In ServiceM8, go to Settings > API Keys and create a key. ServiceM8's docs say a private-app key is sent in the `X-API-Key` header, which is what the function does. These are the matching permissions, if ServiceM8 asks: `create_jobs`, `manage_customers`, `read_customer_contacts`, `manage_customer_contacts`, `manage_job_contacts`, `publish_job_notes`, `manage_attachments`.
+2. In Vercel, go to Project > Settings > Environment Variables and add `SERVICEM8_API_KEY` for Production, and for Preview if you want to test there. Redeploy.
+3. Send a test quote with a photo and check the job, note and attachment in ServiceM8.
+
+**Behaviour if something fails**
+- The form always finishes on the thank-you page, and LSP still captures the lead.
+- If the key is missing, the function returns 503. If ServiceM8 rejects a request, it returns 502. The details go to the Vercel function logs only.
+- The function accepts POST requests only, from this site's own domains. It ignores honeypot submissions, and it needs a name plus an email or phone.
+- `vercel.json` gives the function 30 seconds (`functions.api/quote.js.maxDuration`) so photo uploads can finish.
+- Only Vercel runs the function. `_redirects` and `.htaccess` hosts serve the static site without it.
 
 ## Performance notes
 

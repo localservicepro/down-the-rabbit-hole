@@ -59,8 +59,8 @@
     }
   ],
   "functions": {
-    "api/photo.js": {
-      "maxDuration": 15
+    "api/quote.js": {
+      "maxDuration": 30
     }
   },
   "headers": [

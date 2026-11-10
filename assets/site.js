@@ -169,41 +169,44 @@
   function loadLead() { try { return JSON.parse(sessionStorage.getItem('dtrh_lead') || '{}') || {}; } catch (x) { return {}; } }
   function saveLead(d) { try { sessionStorage.setItem('dtrh_lead', JSON.stringify(d)); } catch (x) {} }
   function firstName(full) { var f = (full || '').trim().split(/\s+/)[0] || ''; return f ? f.charAt(0).toUpperCase() + f.slice(1) : ''; }
-  /* Photos: each one is shrunk in the browser (max 1600px JPEG) and uploaded to /api/photo as soon as it is
-     picked. The returned links go into the form's photo_links field, which the CRM tracking script sends to
-     LSP with the rest of the form. Nothing goes to ServiceM8 from the website. */
-  var MAX_PHOTOS = 5, MAX_PHOTO_BYTES = 2400000;
+  /* ServiceM8: the server function creates the job (step 1) or adds the qualifying answers (step 2). */
+  function sendToServiceM8(form) {
+    if (!window.fetch) return Promise.resolve();
+    var fields = {};
+    new FormData(form).forEach(function (v, k) { if (typeof v === 'string') fields[k] = v; });
+    var qualify = form.dataset.step === 'qualify', lead = loadLead();
+    var payload = { step: qualify ? 'qualify' : 'quote', fields: fields, page: location.href };
+    if (qualify && lead.sm8) { payload.job = lead.sm8.job; payload.token = lead.sm8.token; }
+    if (!qualify) payload.photos = (form._photos || []).map(function (p) { return { data: p.data }; });
+    return fetch('/api/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), credentials: 'same-origin' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) { if (j && j.ok && j.job && j.token) { var l = loadLead(); l.sm8 = { job: j.job, token: j.token }; saveLead(l); } })
+      .catch(function () {});
+  }
+
+  /* Photo picker: shrink each photo in the browser (max 1600px JPEG) so uploads are quick and fit the request limit. */
+  var MAX_PHOTOS = 5, PHOTO_BUDGET = 3500000;
   function shrink(file) {
     return new Promise(function (resolve, reject) {
       var url = URL.createObjectURL(file), img = new Image();
       img.onload = function () {
-        var draw = function (max, q) {
-          return new Promise(function (ok, no) {
+        try {
+          var draw = function (max, q) {
             var s = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
             var c = document.createElement('canvas');
             c.width = Math.round(img.naturalWidth * s); c.height = Math.round(img.naturalHeight * s);
             c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
-            c.toBlob(function (b) { b ? ok(b) : no(new Error('encode')); }, 'image/jpeg', q);
-          });
-        };
-        draw(1600, 0.8).then(function (b) { return b.size > 900000 ? draw(1280, 0.72) : b; })
-          .then(function (b) { URL.revokeObjectURL(url); resolve(b); }, function (e) { URL.revokeObjectURL(url); reject(e); });
+            return c.toDataURL('image/jpeg', q);
+          };
+          var data = draw(1600, 0.8);
+          if (data.length > 900000) data = draw(1280, 0.72);
+          URL.revokeObjectURL(url); resolve(data);
+        } catch (e) { URL.revokeObjectURL(url); reject(e); }
       };
       img.onerror = function () { URL.revokeObjectURL(url); reject(new Error('decode')); };
       img.src = url;
     });
   }
-  function syncPhotoLinks(form) {
-    var field = form.querySelector('[name=photo_links]');
-    if (field) field.value = (form._photos || []).filter(function (p) { return p.url; }).map(function (p) { return p.url; }).join('\n');
-  }
-  /* Resolves once every photo upload has finished (or after `ms`), with photo_links filled in. */
-  function photosSettled(form, ms) {
-    var pending = (form._photos || []).map(function (p) { return p.upload; }).filter(Boolean);
-    var all = Promise.all(pending.map(function (u) { return u.then(null, function () {}); }));
-    return Promise.race([all, new Promise(function (r) { setTimeout(r, ms); })]).then(function () { syncPhotoLinks(form); });
-  }
-  function photosUploading(form) { return (form._photos || []).some(function (p) { return p.state === 'uploading'; }); }
   document.querySelectorAll('[data-photos]').forEach(function (box) {
     var form = box.closest('.quote-form'), input = box.querySelector('.photo-input'),
         list = box.querySelector('.photo-list'), msg = box.querySelector('.photo-msg');
@@ -213,26 +216,12 @@
       list.innerHTML = '';
       form._photos.forEach(function (p, i) {
         var li = document.createElement('li'), im = document.createElement('img'), rm = document.createElement('button');
-        li.className = p.state === 'uploading' ? 'is-uploading' : p.state === 'failed' ? 'is-failed' : '';
-        im.src = p.preview; im.width = 72; im.height = 72;
-        im.alt = 'Photo ' + (i + 1) + (p.state === 'uploading' ? ', uploading' : p.state === 'failed' ? ', could not upload' : '');
+        im.src = p.data; im.alt = 'Photo ' + (i + 1); im.width = 72; im.height = 72;
         rm.type = 'button'; rm.className = 'photo-rm'; rm.setAttribute('aria-label', 'Remove photo ' + (i + 1)); rm.textContent = '×';
-        rm.addEventListener('click', function () { URL.revokeObjectURL(p.preview); form._photos.splice(form._photos.indexOf(p), 1); syncPhotoLinks(form); render(); say(''); });
+        rm.addEventListener('click', function () { form._photos.splice(i, 1); render(); say(''); });
         li.appendChild(im); li.appendChild(rm); list.appendChild(li);
       });
       box.classList.toggle('has-photos', form._photos.length > 0);
-    }
-    function upload(p) {
-      p.state = 'uploading';
-      p.upload = fetch('/api/photo', { method: 'POST', headers: { 'Content-Type': 'application/octet-stream' }, body: p.blob, credentials: 'same-origin' })
-        .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error('status ' + r.status)); })
-        .then(function (j) { if (!j || !j.url) throw new Error('no url'); p.url = j.url; p.state = 'done'; })
-        .catch(function (e) {
-          p.state = 'failed';
-          say('A photo could not be uploaded. Send the form anyway and text the photo to 0423 720 317.');
-          throw e;
-        })
-        .then(function () { syncPhotoLinks(form); render(); }, function () { syncPhotoLinks(form); render(); });
     }
     input.addEventListener('change', function () {
       var files = [].slice.call(input.files || []).filter(function (f) { return /^image\//.test(f.type) || /\.(jpe?g|png|webp|heic|heif)$/i.test(f.name); });
@@ -244,15 +233,14 @@
       var skipped = 0;
       files.slice(0, room).reduce(function (chain, f) {
         return chain.then(function () {
-          return shrink(f).then(function (blob) {
-            if (blob.size > MAX_PHOTO_BYTES) { skipped++; return; }
-            var p = { blob: blob, preview: URL.createObjectURL(blob) };
-            form._photos.push(p); upload(p); render();
+          return shrink(f).then(function (data) {
+            var used = form._photos.reduce(function (n, p) { return n + p.data.length; }, 0);
+            if (used + data.length > PHOTO_BUDGET) { skipped++; return; }
+            form._photos.push({ data: data }); render();
           }, function () { skipped++; });
         });
       }, Promise.resolve()).then(function () {
-        if (skipped) say(skipped + ' photo' + (skipped > 1 ? 's' : '') + ' could not be added. Try a JPEG or PNG.');
-        else if (files.length <= room && msg.textContent === 'Preparing photos…') say('');
+        say(skipped ? skipped + ' photo' + (skipped > 1 ? 's' : '') + ' could not be added. Try a JPEG or PNG, or fewer photos.' : (files.length > room ? msg.textContent : ''));
       });
     });
   });
@@ -279,7 +267,7 @@
     showError(form, false);
     form.dataset.sending = '1';
     var btn = form.querySelector('.fsubmit');
-    if (btn) { btn.disabled = true; btn.textContent = photosUploading(form) ? 'Uploading photos…' : 'Sending…'; }
+    if (btn) { btn.disabled = true; btn.textContent = (form._photos && form._photos.length) ? 'Uploading photos…' : 'Sending…'; }
     var dest = form.dataset.thankYou || '/thank-you';
     var ret = form.querySelector('[name=returning_customer]:checked');
     if (ret) {
@@ -290,46 +278,36 @@
     }
     if (form.dataset.step === 'qualify') { var l = loadLead(); l.qualified = true; saveLead(l); }
     else if (window.fbq) { try { window.fbq('track', 'Lead'); } catch (x) {} }
-    /* The CRM submission waits until photo uploads finish (photo_links filled in, at most 20 seconds) and the
-       tracking script has loaded. Then the page moves on, giving the tracker a moment to send. */
+    /* Send to ServiceM8 (server function) and give the CRM tracking script a moment, then move on.
+       The page waits for the upload so photos are not cut off, but never longer than 25 seconds. */
     var went = false;
     var go = function () { if (!went) { went = true; window.location.assign(dest); } };
     var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
-    form._ready = Promise.all([ensureTracker(), photosSettled(form, 20000)]);
-    form._ready.then(function () { return wait(900); }).then(go, go);
+    Promise.all([ensureTracker().then(function () { return wait(900); }), Promise.race([sendToServiceM8(form), wait(25000)])]).then(go, go);
     setTimeout(go, 30000);
     return true;
-  }
-  /* Let the tracking script see one submit event, with every value in place (photo links included).
-     A synthetic submit does not trigger native navigation, so nothing else has to be cancelled. */
-  function submitWhenReady(form, submitter) {
-    (form._ready || ensureTracker()).then(function () {
-      var ev;
-      try { ev = new SubmitEvent('submit', { bubbles: true, cancelable: true, submitter: submitter || null }); }
-      catch (x) { ev = document.createEvent('Event'); ev.initEvent('submit', true, true); }
-      form._dispatched = true;
-      form.dispatchEvent(ev);
-      form._dispatched = false;
-    });
   }
   window.addEventListener('click', function (e) {
     var btn = e.target && e.target.closest ? e.target.closest('.quote-form .fsubmit') : null;
     if (!btn) return;
     var form = quoteFormOf(btn);
-    /* The tracking script also listens for clicks on the submit button and sends the form 50ms later, which
-       would be before photo uploads finish. Stop the click here, so its only trigger is our submit event. */
     e.preventDefault();
-    e.stopImmediatePropagation();
-    if (startSend(form)) submitWhenReady(form, btn);
+    if (!startSend(form)) { e.stopImmediatePropagation(); return; }
+    /* Let the tracking script see a real submit event with the values in place. A synthetic submit does
+       not trigger native navigation, so nothing else has to be cancelled. */
+    ensureTracker().then(function () {
+      var ev;
+      try { ev = new SubmitEvent('submit', { bubbles: true, cancelable: true, submitter: btn }); }
+      catch (x) { ev = document.createEvent('Event'); ev.initEvent('submit', true, true); }
+      form.dispatchEvent(ev);
+    });
   }, true);
   window.addEventListener('submit', function (e) {
     var form = quoteFormOf(e.target);
     if (!form) return;
     e.preventDefault(); /* never let the browser navigate with the field values in the URL */
-    if (form.dataset.sending && form._dispatched) return; /* our own dispatched event: pass it on to other listeners */
-    e.stopImmediatePropagation();
-    if (form.dataset.sending) return; /* a second native submit while sending */
-    if (startSend(form)) submitWhenReady(form, null); /* a native submit we did not start (no button click) */
+    if (form.dataset.sending) return; /* our own dispatched event: pass it on to other listeners */
+    if (!startSend(form)) e.stopImmediatePropagation(); /* Enter key on an invalid form */
   }, true);
   /* Multi-select "Service needed": checkboxes write one comma-separated value into the named field,
      so the CRM receives a single service_needed value. */
@@ -381,8 +359,8 @@
       if (t && fn) t.textContent = 'Thanks, ' + fn + '. Just a few quick questions';
     } else if (box) {
       /* Opened directly, without step 1: ask for contact details here instead. */
-      box.classList.remove('crm-carry'); box.removeAttribute('aria-hidden');
-      box.querySelectorAll('input').forEach(function (i) { i.required = true; i.removeAttribute('tabindex'); });
+      box.hidden = false;
+      box.querySelectorAll('input').forEach(function (i) { i.required = true; });
     }
   }
 

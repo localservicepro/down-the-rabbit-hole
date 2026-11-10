@@ -359,10 +359,6 @@ ul{margin:0 0 1em;padding-left:1.2em}
 .photo-list img{width:72px;height:72px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
 .photo-rm{position:absolute;top:-8px;right:-8px;width:26px;height:26px;border-radius:50%;border:0;background:var(--navy);color:#fff;font-size:18px;line-height:1;cursor:pointer;display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.2)}
 .photo-rm:hover{background:#D6453D}
-.photo-list li.is-uploading img{opacity:.45}
-.photo-list li.is-uploading::after{content:"";position:absolute;inset:24px;border:3px solid var(--line);border-top-color:var(--orange);border-radius:50%;animation:spin .8s linear infinite}
-.photo-list li.is-failed img{outline:2px solid #D6453D;outline-offset:-2px;opacity:.6}
-@keyframes spin{to{transform:rotate(360deg)}}
 .photo-msg{margin:0;font-size:.85rem;color:var(--muted)}
 .quote-form.compact .photo-add{padding:10px 14px}
 .quote-form input,.quote-form select,.quote-form textarea,.quote-form button{scroll-margin-top:calc(var(--nav-h) + 70px)}
@@ -371,7 +367,7 @@ ul{margin:0 0 1em;padding-left:1.2em}
 .pills-fld legend{padding:0;margin-bottom:8px;font-family:var(--display);font-weight:700;font-size:.9rem;color:var(--navy);letter-spacing:.01em}
 .pill-group{display:flex;flex-wrap:wrap;gap:8px}
 .quote-form .pill{position:relative;display:inline-flex;font-family:var(--body)}
-.quote-form .pill input{position:absolute;inset:0;width:100%!important;height:100%;min-height:0!important;margin:0;padding:0!important;clip-path:inset(50%);border:0!important;cursor:pointer}
+.quote-form .pill input{position:absolute;inset:0;width:100%!important;height:100%;min-height:0!important;margin:0;padding:0!important;opacity:0;border:0!important;cursor:pointer}
 .pill span{display:inline-flex;align-items:center;min-height:44px;padding:9px 18px;border:1.5px solid var(--line);border-radius:999px;background:var(--paper);font-family:var(--body);font-weight:600;font-size:.95rem;color:var(--ink);transition:background-color .2s,border-color .2s,color .2s,box-shadow .2s;user-select:none}
 .pill:hover span{border-color:#B9C3D3}
 .pill input:checked+span{background:var(--navy);border-color:var(--navy);color:#fff}
@@ -383,9 +379,7 @@ ul{margin:0 0 1em;padding-left:1.2em}
 .qualify-form .pills-fld:first-of-type{box-shadow:none;padding-top:0}
 .pills-fld legend{float:left;width:100%}
 .pills-fld .pill-group{clear:both}
-/* Fields the CRM must receive but visitors need not see. Never opacity 0, display none or type=hidden:
-   the LSP tracking script ignores those (see carry() in tools/build.py). */
-.crm-carry{position:absolute!important;width:1px!important;height:1px!important;margin:-1px!important;padding:0!important;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;pointer-events:none}
+.qf-contact[hidden]{display:none}
 .qd-steps{display:flex;flex-wrap:wrap;gap:8px 22px;list-style:none;padding:0;margin:0 0 22px;font-weight:600;font-size:.92rem;color:var(--muted)}
 .qd-steps li{display:flex;align-items:center;gap:8px}
 .qd-steps li span{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--line);color:var(--navy);font-size:.8rem;font-weight:700}
@@ -411,7 +405,7 @@ ul{margin:0 0 1em;padding-left:1.2em}
 .ms-opt span{font:inherit!important;color:inherit!important}
 .ms-done{margin-top:10px;width:100%;min-height:42px;border:0;border-radius:999px;background:var(--navy);color:#fff;font-family:var(--display);font-weight:700;font-size:.95rem;cursor:pointer}
 .ms-done:hover{background:var(--navy-deep)}
-.ms-value{position:absolute;left:0;bottom:0;width:1px!important;height:1px;min-height:0!important;padding:0!important;border:0!important;clip-path:inset(50%);pointer-events:none}
+.ms-value{position:absolute;left:0;bottom:0;width:1px!important;height:1px;min-height:0!important;padding:0!important;border:0!important;opacity:0;pointer-events:none}
 .quote-form.touched .ms:has(.ms-value:invalid) .ms-toggle{border-color:#D6453D;box-shadow:0 0 0 4px rgba(214,69,61,.12)}
 @media (max-width:420px){.ms-grid{grid-template-columns:1fr}}
 .fld input:hover,.fld select:hover,.fld textarea:hover{border-color:#B9C3D3}
@@ -545,7 +539,7 @@ a.chip:hover{background:var(--orange);color:var(--navy-deep)}
 @media (max-width:900px){.pin-tip{width:200px}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"LocalBusiness","@id":"https://downtherabbitholeaust.com/#business","name":"Down the Rabbit Hole AUST","legalName":"Down the Rabbit Hole (Aust) Pty Ltd","alternateName":"Down the Rabbit Hole (Aust) Pty Ltd","slogan":"Taking the headaches away","foundingDate":"2021","telephone":"+61 423 720 317","email":"info@downtherabbitholeaust.com","url":"https://downtherabbitholeaust.com/","image":"https://downtherabbitholeaust.com/images/hero-video-poster.webp","logo":"https://downtherabbitholeaust.com/images/dtrh-logo.png","priceRange":"$$","address":{"@type":"PostalAddress","addressLocality":"Canberra","addressRegion":"ACT","addressCountry":"AU"},"areaServed":[{"@type":"City","name":"Canberra"},{"@type":"Place","name":"Weston Creek"},{"@type":"Place","name":"Woden Valley"},{"@type":"Place","name":"Tuggeranong"},{"@type":"Place","name":"Belconnen"},{"@type":"Place","name":"Inner North"},{"@type":"Place","name":"Inner South"},{"@type":"Place","name":"Queanbeyan"}],"sameAs":["https://www.facebook.com/p/Down-the-Rabbit-Hole-AUST-61552753624844/","https://www.instagram.com/downtherabbitholeaust","https://maps.app.goo.gl/kx6sMBaVZok5tBfw6","https://www.google.com/maps/search/?api=1&query=Google&query_place_id=ChIJuzQLsqNMFmsRcFlpp27qAAQ"],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday"],"opens":"08:00","closes":"17:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Friday"],"opens":"09:00","closes":"17:00"}],"hasOfferCatalog":{"@type":"OfferCatalog","name":"Lawn and garden services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Lawn Mowing","url":"https://downtherabbitholeaust.com/lawn-mowing"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Lawn Care","url":"https://downtherabbitholeaust.com/lawn-care"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Gardening Services","url":"https://downtherabbitholeaust.com/gardening-services"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Garden Maintenance","url":"https://downtherabbitholeaust.com/garden-maintenance"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Hedge Trimming","url":"https://downtherabbitholeaust.com/hedge-trimming"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Yard Clean-Ups","url":"https://downtherabbitholeaust.com/yard-clean-ups"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Green Waste Removal","url":"https://downtherabbitholeaust.com/green-waste-removal"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Rubbish Removal","url":"https://downtherabbitholeaust.com/rubbish-removal"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"DVA Lawn Care","url":"https://downtherabbitholeaust.com/dva-lawn-care"}}]}},{"@type":"Service","@id":"https://downtherabbitholeaust.com/lawn-mowing-belconnen#service","name":"Lawn Mowing Belconnen","serviceType":"Lawn mowing","description":"Lawn mowing Belconnen homeowners, landlords and retirees can rely on. Local, insured mowing and garden care across 18 suburbs, green waste removed. Free quotes.","url":"https://downtherabbitholeaust.com/lawn-mowing-belconnen","image":"https://downtherabbitholeaust.com/images/extra-a-after.webp","provider":{"@id":"https://downtherabbitholeaust.com/#business"},"areaServed":[{"@type":"Place","name":"Charnwood"},{"@type":"Place","name":"Macgregor"},{"@type":"Place","name":"Melba"},{"@type":"Place","name":"Latham"},{"@type":"Place","name":"Spence"},{"@type":"Place","name":"Evatt"},{"@type":"Place","name":"Holt"},{"@type":"Place","name":"Higgins"},{"@type":"Place","name":"Scullin"},{"@type":"Place","name":"Hawker"},{"@type":"Place","name":"Weetangera"},{"@type":"Place","name":"Macquarie"},{"@type":"Place","name":"Cook"},{"@type":"Place","name":"Aranda"},{"@type":"Place","name":"Giralang"},{"@type":"Place","name":"Kaleen"},{"@type":"Place","name":"Lawson"},{"@type":"Place","name":"Bruce"},{"@type":"City","name":"Canberra"}],"offers":{"@type":"Offer","availability":"https://schema.org/InStock","priceCurrency":"AUD","url":"https://downtherabbitholeaust.com/lawn-mowing-belconnen#contact","description":"Free upfront quote"}},{"@type":"WebPage","@id":"https://downtherabbitholeaust.com/lawn-mowing-belconnen#webpage","url":"https://downtherabbitholeaust.com/lawn-mowing-belconnen","name":"Lawn Mowing Belconnen | Down the Rabbit Hole AUST","description":"Lawn mowing Belconnen homeowners, landlords and retirees can rely on. Local, insured mowing and garden care across 18 suburbs, green waste removed. Free quotes.","isPartOf":{"@id":"https://downtherabbitholeaust.com/#website"},"breadcrumb":{"@id":"https://downtherabbitholeaust.com/lawn-mowing-belconnen#breadcrumb"},"primaryImageOfPage":"https://downtherabbitholeaust.com/images/extra-a-after.webp"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://downtherabbitholeaust.com/"},{"@type":"ListItem","position":2,"name":"Service areas","item":"https://downtherabbitholeaust.com/areas"},{"@type":"ListItem","position":3,"name":"Lawn Mowing Belconnen","item":"https://downtherabbitholeaust.com/lawn-mowing-belconnen"}],"@id":"https://downtherabbitholeaust.com/lawn-mowing-belconnen#breadcrumb"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do you cover all 18 Belconnen suburbs?","acceptedAnswer":{"@type":"Answer","text":"Yes. Our lawn mowing Belconnen service covers Charnwood, Macgregor, Melba, Latham, Spence, Evatt, Holt, Higgins, Scullin, Hawker, Weetangera, Macquarie, Cook, Aranda, Giralang, Kaleen, Lawson and Bruce. Nature strips can be included in the visit."}},{"@type":"Question","name":"Can you mow a rental property near the university in Bruce?","acceptedAnswer":{"@type":"Answer","text":"Yes. Landlords and property managers are welcome as well as owner-occupiers, and a regular schedule keeps a rental tidy between inspections and tenancies. Tell us who to invoice and we will set it up."}},{"@type":"Question","name":"How much does mowing cost in Belconnen?","acceptedAnswer":{"@type":"Answer","text":"It depends on the size of the block, the state of the lawn and what else is included, so we quote each lawn mowing Belconnen job individually. Quotes are free and upfront, and we will not guess a price without seeing the block."}},{"@type":"Question","name":"Do you take the clippings and green waste away in Belconnen?","acceptedAnswer":{"@type":"Answer","text":"Yes. Green waste removal is available with every mowing visit, and with garden maintenance and clean-ups too. If you would rather keep some clippings for compost or mulch, tell us and we will leave what you want."}}]}]}</script>
-<script src="/assets/site.js?v=80c4cec6" defer></script>
+<script src="/assets/site.js?v=a7342051" defer></script>
 </head>
 <body>
 <header class="site-header over-hero" id="top">
@@ -742,12 +736,10 @@ a.chip:hover{background:var(--orange);color:var(--navy-deep)}
       <input class="photo-input" type="file" id="q-photos" accept="image/*" multiple aria-labelledby="q-photos-label">
       <ul class="photo-list" aria-live="polite"></ul>
       <p class="photo-msg" role="status" hidden></p>
-      <div class="crm-carry" aria-hidden="true"><label for="q-photo_links">Photo links</label><textarea id="q-photo_links" name="photo_links" data-field="photo_links" rows="2" readonly tabindex="-1"></textarea></div>
     </div>
   </div>
   <div class="hp" aria-hidden="true"><label for="q-qf-extra">Leave this field empty</label><input type="text" id="q-qf-extra" name="qf_extra" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore="true"></div>
-  <div class="crm-carry" aria-hidden="true"><label for="q-source_page">Source page</label><input type="text" id="q-source_page" name="source_page" data-field="source_page" value="" readonly tabindex="-1" autocomplete="off"></div>
-  <div class="crm-carry" aria-hidden="true"><label for="q-form_step">Form step</label><input type="text" id="q-form_step" name="form_step" data-field="form_step" value="Quote request" readonly tabindex="-1" autocomplete="off"></div>
+  <input type="hidden" name="source_page" value="">
   <button class="btn btn-primary fsubmit" type="submit"><span class="fsubmit-label">Send my quote request</span> <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
   <p class="fnote">Free, no-obligation quote. We reply by phone or email during business hours. Or text <a href="sms:+61423720317">0423 720 317</a>.</p>
   <p class="ferror" role="alert" hidden>Please check the highlighted fields.</p>
@@ -832,12 +824,10 @@ a.chip:hover{background:var(--orange);color:var(--navy-deep)}
       <input class="photo-input" type="file" id="m-photos" accept="image/*" multiple aria-labelledby="m-photos-label">
       <ul class="photo-list" aria-live="polite"></ul>
       <p class="photo-msg" role="status" hidden></p>
-      <div class="crm-carry" aria-hidden="true"><label for="m-photo_links">Photo links</label><textarea id="m-photo_links" name="photo_links" data-field="photo_links" rows="2" readonly tabindex="-1"></textarea></div>
     </div>
   </div>
   <div class="hp" aria-hidden="true"><label for="m-qf-extra">Leave this field empty</label><input type="text" id="m-qf-extra" name="qf_extra" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore="true"></div>
-  <div class="crm-carry" aria-hidden="true"><label for="m-source_page">Source page</label><input type="text" id="m-source_page" name="source_page" data-field="source_page" value="" readonly tabindex="-1" autocomplete="off"></div>
-  <div class="crm-carry" aria-hidden="true"><label for="m-form_step">Form step</label><input type="text" id="m-form_step" name="form_step" data-field="form_step" value="Quote request" readonly tabindex="-1" autocomplete="off"></div>
+  <input type="hidden" name="source_page" value="">
   <button class="btn btn-primary fsubmit" type="submit"><span class="fsubmit-label">Send my quote request</span> <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
   <p class="fnote">Free, no-obligation quote. We reply by phone or email during business hours. Or text <a href="sms:+61423720317">0423 720 317</a>.</p>
   <p class="ferror" role="alert" hidden>Please check the highlighted fields.</p>

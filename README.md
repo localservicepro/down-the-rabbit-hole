@@ -60,32 +60,11 @@ Requires Python 3.10+ (Pillow only for the image tooling).
 - There is no second step. The old quick-questions page (`/quote-details`) was removed and 301-redirects to `/contact`.
 - The form uses native validation (required fields, email, 4-digit postcode, phone pattern) with an inline error message.
 
-## ServiceM8 integration
+## ServiceM8
 
-Every quote form submission also creates a ServiceM8 job, through the Vercel serverless function `api/quote.js`. The API key stays on the server and never reaches the browser.
+The website does not talk to ServiceM8. Quote requests go to LSP only, and the client's LSP app connector creates the ServiceM8 jobs. The old direct integration (`api/quote.js`) was removed, so there is no serverless function and no `SERVICEM8_API_KEY` to set.
 
-**Dormant while the LSP app connector syncs leads to ServiceM8.** The function only runs when `SERVICEM8_API_KEY` is set in Vercel. Leave it unset while the connector is in use, or each lead creates two ServiceM8 jobs.
-
-**What it does (inline or pop-up form):**
-- The function looks up an existing active client contact by email (`companycontact.json?$filter=email eq '…' and active eq 1`). If there is no match, it creates a client and client contact.
-- It creates a job with status Quote: `job_address` is the property address, suburb and postcode, and `job_description` is a short summary.
-- It adds a job contact (`type: JOB`). Phone numbers starting 04 are saved as mobile.
-- It adds a job note with every form detail (including suburb and referral), the page the form was sent from and the time received.
-- Each photo is attached to the Job Diary as "Website photo N.jpg", using one multipart POST to `attachment.json` (the method in ServiceM8's "Attaching files to a Job Diary" guide).
-
-**Photos:** visitors can add up to 5. The browser shrinks each one to a maximum of 1600px as JPEG, typically 100–300KB, so uploads stay under Vercel's 4.5MB request limit. Photos are not sent to LSP.
-
-**Setup**
-1. In ServiceM8, go to Settings > API Keys and create a key. ServiceM8's docs say a private-app key is sent in the `X-API-Key` header, which is what the function does. These are the matching permissions, if ServiceM8 asks: `create_jobs`, `manage_customers`, `read_customer_contacts`, `manage_customer_contacts`, `manage_job_contacts`, `publish_job_notes`, `manage_attachments`.
-2. In Vercel, go to Project > Settings > Environment Variables and add `SERVICEM8_API_KEY` for Production, and for Preview if you want to test there. Redeploy.
-3. Send a test quote with a photo and check the job, note and attachment in ServiceM8.
-
-**Behaviour if something fails**
-- The form always finishes on the thank-you page, and LSP still captures the lead.
-- If the key is missing, the function returns 503. If ServiceM8 rejects a request, it returns 502. The details go to the Vercel function logs only.
-- The function accepts POST requests only, from this site's own domains. It ignores honeypot submissions, and it needs a name plus an email or phone.
-- `vercel.json` gives the function 30 seconds (`functions.api/quote.js.maxDuration`) so photo uploads can finish.
-- Only Vercel runs the function. `_redirects` and `.htaccess` hosts serve the static site without it.
+**Leaving the page.** After a submit, the page waits until the LSP tracking script has finished sending (it watches the script's requests to `/external-tracking/events`, at most 25 seconds), then goes to `/thank-you`. This matters for photos: a form with photos goes out as one multipart upload, which the browser cancels if the page leaves first, and on a slow phone connection that upload can take several seconds.
 
 ## Performance notes
 

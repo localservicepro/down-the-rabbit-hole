@@ -169,14 +169,33 @@
   function loadLead() { try { return JSON.parse(sessionStorage.getItem('dtrh_lead') || '{}') || {}; } catch (x) { return {}; } }
   function saveLead(d) { try { sessionStorage.setItem('dtrh_lead', JSON.stringify(d)); } catch (x) {} }
   function firstName(full) { var f = (full || '').trim().split(/\s+/)[0] || ''; return f ? f.charAt(0).toUpperCase() + f.slice(1) : ''; }
-  /* ServiceM8: the server function creates a Quote job (only when SERVICEM8_API_KEY is set in Vercel). */
-  function sendToServiceM8(form) {
-    if (!window.fetch) return Promise.resolve();
-    var fields = {};
-    new FormData(form).forEach(function (v, k) { if (typeof v === 'string') fields[k] = v; });
-    var payload = { step: 'quote', fields: fields, page: location.href, photos: (form._photos || []).map(function (p) { return { data: p.data }; }) };
-    return fetch('/api/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), credentials: 'same-origin' })
-      .catch(function () {});
+  /* Watch the CRM tracking script's requests, so the page does not leave while it is still sending.
+     A form with photos goes out as one multipart upload, which browsers cancel when the page navigates
+     away; on a slow phone connection that upload can take several seconds. */
+  var trackerCalls = [];
+  if (window.fetch) {
+    var nativeFetch = window.fetch;
+    window.fetch = function (input) {
+      var p = nativeFetch.apply(this, arguments);
+      try {
+        var u = typeof input === 'string' ? input : (input && input.url) || '';
+        if (u.indexOf('/external-tracking/events') > -1) trackerCalls.push({ t: Date.now(), done: p.then(function () {}, function () {}) });
+      } catch (x) {}
+      return p;
+    };
+  }
+  /* Resolves when every tracker request started since `since` has finished. If none has started
+     within `startWait` ms, resolves anyway. */
+  function trackerSent(since, startWait) {
+    return new Promise(function (resolve) {
+      var began = Date.now();
+      (function check() {
+        var mine = trackerCalls.filter(function (c) { return c.t >= since; });
+        if (mine.length) return Promise.all(mine.map(function (c) { return c.done; })).then(resolve);
+        if (Date.now() - began > startWait) return resolve();
+        setTimeout(check, 100);
+      })();
+    });
   }
 
   /* Photo picker: shrink each photo in the browser (max 1600px JPEG) so uploads are quick and fit the request limit. */
@@ -290,12 +309,12 @@
       saveLead({ name: val('full_name'), email: val('email'), phone: val('phone'), returning: ret.value });
     }
     if (window.fbq) { try { window.fbq('track', 'Lead'); } catch (x) {} }
-    /* Send to ServiceM8 (server function) and give the CRM tracking script a moment, then move on.
-       The page waits for the upload so photos are not cut off, but never longer than 25 seconds. */
-    var went = false;
+    /* Move on once the CRM tracking script has finished sending the form, photos included
+       (never longer than 25 seconds; the 30-second timer below is a final fallback). */
+    var went = false, since = Date.now() - 200;
     var go = function () { if (!went) { went = true; window.location.assign(dest); } };
     var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
-    Promise.all([ensureTracker().then(function () { return wait(900); }), Promise.race([sendToServiceM8(form), wait(25000)])]).then(go, go);
+    Promise.race([ensureTracker().then(function () { return trackerSent(since, 4000); }).then(function () { return wait(300); }), wait(25000)]).then(go, go);
     setTimeout(go, 30000);
     return true;
   }

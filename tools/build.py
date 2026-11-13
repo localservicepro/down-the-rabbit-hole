@@ -1552,7 +1552,6 @@ VERCEL = {
         {"source": "/blog/tag/:tag*", "destination": "/blog", "statusCode": 301},
         {"source": "/quote-details", "destination": "/contact", "statusCode": 301},
     ],
-    "functions": {"api/quote.js": {"maxDuration": 30}},
     "headers": [
         {"source": "/(.*)\\.(webp|png|woff2|css|js)", "headers": [{"key": "Cache-Control", "value": "public, max-age=31536000, immutable"}]},
     ],

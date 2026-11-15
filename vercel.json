@@ -61,6 +61,176 @@
       "source": "/quote-details",
       "destination": "/contact",
       "statusCode": 301
+    },
+    {
+      "source": "/welcome-813228-2604",
+      "destination": "https://offers.downtherabbitholeaust.com/welcome-813228-2604",
+      "statusCode": 302
+    },
+    {
+      "source": "/lawnmowing",
+      "destination": "https://offers.downtherabbitholeaust.com/lawnmowing",
+      "statusCode": 302
+    },
+    {
+      "source": "/faq",
+      "destination": "/#faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/garden-cleanup",
+      "destination": "/yard-clean-ups",
+      "statusCode": 301
+    },
+    {
+      "source": "/rubbishremovals",
+      "destination": "/rubbish-removal",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/the-ultimate-guide-to-commercial-yard-maintenance-in-australia",
+      "destination": "/post/the-ultimate-guide-to-commercial-yard-maintenance-in-Australia",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/canberra-rubbish-removal--a-comprehensive-guide-to-eco-friendly-practices",
+      "destination": "/rubbish-removal",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/comparing-rubbish-removal-services--what-to-look-for",
+      "destination": "/rubbish-removal",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/how-to-efficiently-manage-domestic-rubbish-removal-for-a-cleaner-garden",
+      "destination": "/rubbish-removal",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/the-ultimate-guide-to-domestic-rubbish-removal-for-australian-homes",
+      "destination": "/rubbish-removal",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/eco-friendly-green-waste-disposal-solutions-in-kambah",
+      "destination": "/post/green-waste-canberra-disposal-guide",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/expert-tips-for-eco-friendly-green-waste-disposal",
+      "destination": "/post/green-waste-canberra-disposal-guide",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/green-waste-disposal--eco-friendly-practices-for-australian-gardens",
+      "destination": "/post/green-waste-canberra-disposal-guide",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/how-to-efficiently-handle-green-waste-disposal-in-kambah",
+      "destination": "/post/green-waste-canberra-disposal-guide",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/understanding-local-regulations-for-green-waste-disposal-in-australia",
+      "destination": "/post/green-waste-canberra-disposal-guide",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/diy-lawn-care-tips--when-to-call-in-the-professionals",
+      "destination": "/lawn-care",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/seasonal-lawn-care--preparing-your-garden-for-summer",
+      "destination": "/lawn-care",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/lawn-care-and-mowing-services--what-to-look-for",
+      "destination": "/post/canberra-lawn-mowing-services-guide",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/canberra-yard-maintenance-tips-for-every-season",
+      "destination": "/post/yard-clean-up-canberra-guide",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/diy-yard-maintenance-in-kambah--a-step-by-step-guide",
+      "destination": "/post/yard-clean-up-canberra-guide",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/how-to-choose-the-right-yard-maintenance-services-for-your-needs",
+      "destination": "/post/yard-clean-up-canberra-guide",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/seasonal-yard-maintenance-tips-for-australian-gardens",
+      "destination": "/post/yard-clean-up-canberra-guide",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/seasonal-yard-maintenance-tips-for-australian-gardens-3",
+      "destination": "/post/yard-clean-up-canberra-guide",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/summer-yard-maintenance-tips-for-act-residents",
+      "destination": "/post/yard-clean-up-canberra-guide",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/comparing-garden-maintenance-services--what-to-look-for-in-australia",
+      "destination": "/post/garden-maintenance-canberra-guide",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/january-garden-maintenance-tips-for-act-residents",
+      "destination": "/post/garden-maintenance-canberra-guide",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/february-gardening-tips-for-canberra-gardens",
+      "destination": "/post/garden-maintenance-canberra-guide",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/how-to-prepare-your-garden-for-the-australian-summer",
+      "destination": "/post/garden-maintenance-canberra-guide",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/seasonal-gardening-tips--preparing-for-australia-s-unique-climate",
+      "destination": "/post/garden-maintenance-canberra-guide",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/understanding-australia-s-climate--how-it-affects-your-garden-maintenance-routine",
+      "destination": "/post/garden-maintenance-canberra-guide",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/planning-your-canberra-garden-for-2025",
+      "destination": "/post/spring-garden-checklist-canberra",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ultimate-guide-to-gardening-services-in-australia--what-you-need-to-know",
+      "destination": "/post/garden-service-canberra-guide",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/the-importance-of-tree-trimming-and-hedge-cutting-for-property-value",
+      "destination": "/post/hedge-trimming-canberra",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/:slug",
+      "destination": "/blog",
+      "statusCode": 301
     }
   ],
   "headers": [

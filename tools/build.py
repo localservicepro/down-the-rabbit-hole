@@ -1558,6 +1558,56 @@ VERCEL = {
 }
 
 
+# Old addresses from the previous LSP-hosted site, found in the web archive after the domain moved to
+# Vercel. Each goes to the closest new page. (source, destination, status)
+GHL_FUNNEL_HOST = "https://offers.downtherabbitholeaust.com"
+LEGACY_REDIRECTS = [
+    # LSP funnel pages that used the main domain. The funnel lives on the offers subdomain now; a temporary
+    # redirect, because funnel step addresses can change in LSP.
+    ("/welcome-813228-2604", GHL_FUNNEL_HOST + "/welcome-813228-2604", 302),
+    ("/lawnmowing", GHL_FUNNEL_HOST + "/lawnmowing", 302),
+    ("/faq", "/#faq", 301),
+    ("/garden-cleanup", "/yard-clean-ups", 301),
+    ("/rubbishremovals", "/rubbish-removal", 301),
+    # Old LSP blog posts (/blog/<slug>) to the closest new guide or service page
+    ("/blog/the-ultimate-guide-to-commercial-yard-maintenance-in-australia", "/post/the-ultimate-guide-to-commercial-yard-maintenance-in-Australia", 301),
+    ("/blog/canberra-rubbish-removal--a-comprehensive-guide-to-eco-friendly-practices", "/rubbish-removal", 301),
+    ("/blog/comparing-rubbish-removal-services--what-to-look-for", "/rubbish-removal", 301),
+    ("/blog/how-to-efficiently-manage-domestic-rubbish-removal-for-a-cleaner-garden", "/rubbish-removal", 301),
+    ("/blog/the-ultimate-guide-to-domestic-rubbish-removal-for-australian-homes", "/rubbish-removal", 301),
+    ("/blog/eco-friendly-green-waste-disposal-solutions-in-kambah", "/post/green-waste-canberra-disposal-guide", 301),
+    ("/blog/expert-tips-for-eco-friendly-green-waste-disposal", "/post/green-waste-canberra-disposal-guide", 301),
+    ("/blog/green-waste-disposal--eco-friendly-practices-for-australian-gardens", "/post/green-waste-canberra-disposal-guide", 301),
+    ("/blog/how-to-efficiently-handle-green-waste-disposal-in-kambah", "/post/green-waste-canberra-disposal-guide", 301),
+    ("/blog/understanding-local-regulations-for-green-waste-disposal-in-australia", "/post/green-waste-canberra-disposal-guide", 301),
+    ("/blog/diy-lawn-care-tips--when-to-call-in-the-professionals", "/lawn-care", 301),
+    ("/blog/seasonal-lawn-care--preparing-your-garden-for-summer", "/lawn-care", 301),
+    ("/blog/lawn-care-and-mowing-services--what-to-look-for", "/post/canberra-lawn-mowing-services-guide", 301),
+    ("/blog/canberra-yard-maintenance-tips-for-every-season", "/post/yard-clean-up-canberra-guide", 301),
+    ("/blog/diy-yard-maintenance-in-kambah--a-step-by-step-guide", "/post/yard-clean-up-canberra-guide", 301),
+    ("/blog/how-to-choose-the-right-yard-maintenance-services-for-your-needs", "/post/yard-clean-up-canberra-guide", 301),
+    ("/blog/seasonal-yard-maintenance-tips-for-australian-gardens", "/post/yard-clean-up-canberra-guide", 301),
+    ("/blog/seasonal-yard-maintenance-tips-for-australian-gardens-3", "/post/yard-clean-up-canberra-guide", 301),
+    ("/blog/summer-yard-maintenance-tips-for-act-residents", "/post/yard-clean-up-canberra-guide", 301),
+    ("/blog/comparing-garden-maintenance-services--what-to-look-for-in-australia", "/post/garden-maintenance-canberra-guide", 301),
+    ("/blog/january-garden-maintenance-tips-for-act-residents", "/post/garden-maintenance-canberra-guide", 301),
+    ("/blog/february-gardening-tips-for-canberra-gardens", "/post/garden-maintenance-canberra-guide", 301),
+    ("/blog/how-to-prepare-your-garden-for-the-australian-summer", "/post/garden-maintenance-canberra-guide", 301),
+    ("/blog/seasonal-gardening-tips--preparing-for-australia-s-unique-climate", "/post/garden-maintenance-canberra-guide", 301),
+    ("/blog/understanding-australia-s-climate--how-it-affects-your-garden-maintenance-routine", "/post/garden-maintenance-canberra-guide", 301),
+    ("/blog/planning-your-canberra-garden-for-2025", "/post/spring-garden-checklist-canberra", 301),
+    ("/blog/ultimate-guide-to-gardening-services-in-australia--what-you-need-to-know", "/post/garden-service-canberra-guide", 301),
+    ("/blog/the-importance-of-tree-trimming-and-hedge-cutting-for-property-value", "/post/hedge-trimming-canberra", 301),
+    # Anything else under the old /blog/<slug> (including off-topic posts such as flat-pack furniture) goes to
+    # the guides index. Must stay last: the first matching rule wins.
+    ("/blog/:slug", "/blog", 301),
+]
+VERCEL["redirects"] += [{"source": a, "destination": b, "statusCode": c} for a, b, c in LEGACY_REDIRECTS]
+REDIRECTS += "".join(f"{a.replace(':slug', '*'):50} {b:45} {c}\n" for a, b, c in LEGACY_REDIRECTS)
+HTACCESS = HTACCESS.replace("\n<IfModule mod_headers.c>", "".join(
+    (f"RedirectMatch {c} ^/blog/[^/]+/?$ {b}\n" if a == "/blog/:slug" else f"Redirect {c} {a} {b}\n") for a, b, c in LEGACY_REDIRECTS
+) + "\n<IfModule mod_headers.c>", 1)
+
 def static_files(pages):
     json.dump(VERCEL, open(os.path.join(ROOT, "vercel.json"), "w"), indent=2)
     open(os.path.join(ROOT, "_redirects"), "w").write(REDIRECTS)

@@ -1,0 +1,136 @@
+name: Temporary live-site audit
+# Temporary: crawls the live site, checks redirects and runs Lighthouse. Delete after use.
+on:
+  push:
+    branches: [claude/laughing-davinci-sk12jh]
+    paths: [".github/workflows/audit-live-tmp.yml"]
+permissions:
+  contents: read
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    steps:
+      - run: pip install -q requests beautifulsoup4
+      - name: Crawl and redirect checks
+        run: |
+          python3 - <<'EOF'
+          import requests, re, json, collections, time, xml.etree.ElementTree as ET
+          from bs4 import BeautifulSoup
+          from urllib.parse import urljoin, urlparse
+          S = requests.Session(); S.headers['User-Agent'] = 'Mozilla/5.0 (audit; Lighthouse-like) Chrome/130'
+          BASE = 'https://downtherabbitholeaust.com'
+          def get(u, **k):
+              for i in range(3):
+                  try: return S.get(u, allow_redirects=False, timeout=30, **k)
+                  except Exception as e: err = e; time.sleep(2)
+              raise err
+          def chain(u):
+              hops = []
+              for _ in range(8):
+                  r = get(u); hops.append((r.status_code, u))
+                  if r.status_code in (301, 302, 303, 307, 308): u = urljoin(u, r.headers['location']); continue
+                  return hops, r
+              return hops, r
+          print('=== HOST / PROTOCOL VARIANTS')
+          for u in ['http://downtherabbitholeaust.com/', 'https://www.downtherabbitholeaust.com/', 'http://www.downtherabbitholeaust.com/lawn-mowing', 'https://downtherabbitholeaust.com/lawn-mowing/', 'https://downtherabbitholeaust.com/lawn-mowing.html', 'https://downtherabbitholeaust.com/index.html', 'https://downtherabbitholeaust.com/LAWN-MOWING']:
+              hops, r = chain(u); print(f'{u} -> ' + ' -> '.join(f'{c}' for c, _ in hops) + f'  final={hops[-1][1]}')
+          r = get(BASE + '/')
+          print('=== RESPONSE HEADERS (home)'); [print(f'  {k}: {v}') for k, v in r.headers.items() if k.lower() in ('cache-control','content-type','strict-transport-security','x-content-type-options','x-frame-options','referrer-policy','permissions-policy','content-security-policy','x-vercel-cache','age','server','x-robots-tag','link')]
+          rob = get(BASE + '/robots.txt'); print('=== robots.txt', rob.status_code); print(rob.text)
+          sm = get(BASE + '/sitemap.xml'); print('=== sitemap', sm.status_code, sm.headers.get('content-type'))
+          locs = [e.text for e in ET.fromstring(sm.content).iter('{http://www.sitemaps.org/schemas/sitemap/0.9}loc')]
+          print('sitemap urls:', len(locs))
+          pages = {}; links = collections.Counter(); assets = set(); issues = []
+          for u in locs:
+              r = get(u)
+              if r.status_code != 200: issues.append(f'SITEMAP URL {u} -> {r.status_code} {r.headers.get("location","")}'); continue
+              s = BeautifulSoup(r.text, 'html.parser')
+              t = (s.title.string or '').strip() if s.title else ''
+              d = (s.find('meta', attrs={'name': 'description'}) or {}).get('content', '')
+              c = (s.find('link', rel='canonical') or {}).get('href', '')
+              rb = (s.find('meta', attrs={'name': 'robots'}) or {}).get('content', '')
+              h1 = [h.get_text(' ', strip=True) for h in s.find_all('h1')]
+              ld_ok, types = True, []
+              for sc in s.find_all('script', type='application/ld+json'):
+                  try:
+                      j = json.loads(sc.string); types += [n.get('@type') for n in j.get('@graph', [j])]
+                  except Exception as e: ld_ok = False
+              pages[u] = dict(t=t, d=d, c=c, rb=rb, h1=h1, bytes=len(r.content), cache=r.headers.get('cache-control'), xvc=r.headers.get('x-vercel-cache'))
+              if c != u: issues.append(f'CANONICAL {u} -> {c}')
+              if 'noindex' in rb: issues.append(f'NOINDEX {u}')
+              if len(h1) != 1: issues.append(f'H1 x{len(h1)} {u}')
+              if not ld_ok: issues.append(f'BAD JSON-LD {u}')
+              if not (30 <= len(t) <= 60): issues.append(f'TITLE len {len(t)} {u}: {t}')
+              if not (120 <= len(d) <= 160): issues.append(f'DESC len {len(d)} {u}')
+              for a in s.find_all('a', href=True):
+                  h = urljoin(u, a['href']).split('#')[0]
+                  if urlparse(h).netloc in ('downtherabbitholeaust.com', 'www.downtherabbitholeaust.com'): links[h] += 1
+              for tag, attr in (('img', 'src'), ('script', 'src'), ('link', 'href'), ('source', 'src'), ('video', 'src')):
+                  for el in s.find_all(tag):
+                      v = el.get(attr)
+                      if v and not v.startswith('data:'): assets.add(urljoin(u, v))
+                  for el in s.find_all(tag):
+                      for part in (el.get('srcset') or '').split(','):
+                          p = part.strip().split(' ')[0]
+                          if p: assets.add(urljoin(u, p))
+              for im in s.find_all('img'):
+                  if im.get('alt') is None: issues.append(f'IMG NO ALT {u} {im.get("src")}')
+              if re.search(r'src="http://|href="http://(?!www\.w3)', r.text): issues.append(f'HTTP RESOURCE {u}')
+          print('=== PAGES', len(pages))
+          for k in ('t', 'd'):
+              dup = collections.Counter(p[k] for p in pages.values())
+              for v, n in dup.items():
+                  if n > 1: issues.append(f'DUPLICATE {"TITLE" if k=="t" else "DESC"} x{n}: {v[:80]}')
+          print('cache headers seen:', collections.Counter(p['cache'] for p in pages.values()).most_common(3))
+          print('=== INTERNAL LINKS', len(links))
+          for h, n in sorted(links.items()):
+              r = get(h)
+              if r.status_code != 200: issues.append(f'LINK {r.status_code} {h} (x{n}) -> {r.headers.get("location","")}')
+          print('=== ASSETS', len(assets))
+          big = []
+          for a in sorted(assets):
+              if urlparse(a).netloc not in ('downtherabbitholeaust.com', 'www.downtherabbitholeaust.com'): continue
+              r = S.head(a, allow_redirects=False, timeout=30)
+              if r.status_code != 200: issues.append(f'ASSET {r.status_code} {a}')
+              else:
+                  size = int(r.headers.get('content-length') or 0)
+                  if size > 250000: big.append((size, a))
+                  if '/images/' in a and 'immutable' not in (r.headers.get('cache-control') or ''): issues.append(f'ASSET NOT CACHED {a} {r.headers.get("cache-control")}')
+          for size, a in sorted(big, reverse=True)[:10]: print(f'  large asset {size//1024} KB {a}')
+          r = get(BASE + '/this-page-does-not-exist-xyz'); print('=== 404 test status', r.status_code, 'noindex' in r.text)
+          print('=== OLD URL REDIRECTS')
+          old = ['/home','/faq','/garden-cleanup','/rubbishremovals','/services','/contact','/about','/dva-lawncare-services','/hedge-trimming--lawn-care','/weed-spraying-prevention','/blog/category/canberra-lawn-care-tips-guides','/blog/tag/lawn%20mowing','/blog/author/695b34992c0fabfb5cfaeec8','/post/grass-mowing-canberra-guide-7692','/post/ultimate-guide-to-green-waste-disposal-in-Canberra','/blog/10-tips-for-assembling-flat-pack-furniture-like-a-pro','/blog/seasonal-lawn-care--preparing-your-garden-for-summer','/blog?q=&p=2','/lawnmowing','/welcome-813228-2604','/quote-details','/categories/canberra-lawn-care-tips-guides','/author/down-the-rabbit-hole-lawn-care-team']
+          for p in old:
+              hops, r = chain(BASE + p)
+              print(f'  {p} -> ' + ' -> '.join(str(c) for c, _ in hops) + f' final={hops[-1][1]}' + ('' if len(hops) <= 2 else '  [CHAIN]'))
+          print('=== ISSUES', len(issues)); [print('  ' + i) for i in issues]
+          EOF
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i -g lighthouse@12.8.2 >/dev/null 2>&1
+      - name: Lighthouse
+        run: |
+          for path in / /lawn-mowing /lawn-mowing-weston-creek /contact /post/garden-service-canberra-guide; do
+            for mode in mobile desktop; do
+              f="lh-$(echo $path | tr '/' '_')-$mode.json"
+              preset=""; [ "$mode" = desktop ] && preset="--preset=desktop"
+              lighthouse "https://downtherabbitholeaust.com$path" $preset --quiet --chrome-flags="--headless=new --no-sandbox" --output=json --output-path="$f" >/dev/null 2>&1 || echo "LH FAILED $path $mode"
+            done
+          done
+          node -e '
+          const fs=require("fs");
+          for (const f of fs.readdirSync(".").filter(x=>x.startsWith("lh-"))) {
+            const j=JSON.parse(fs.readFileSync(f)); const c=j.categories, a=j.audits;
+            const s=k=>Math.round((c[k]||{}).score*100);
+            console.log(`${f.replace("lh-","").replace(".json","")}: perf ${s("performance")} a11y ${s("accessibility")} bp ${s("best-practices")} seo ${s("seo")} | LCP ${a["largest-contentful-paint"].displayValue} CLS ${a["cumulative-layout-shift"].displayValue} TBT ${a["total-blocking-time"].displayValue} FCP ${a["first-contentful-paint"].displayValue}`);
+            const fails=[]; for (const cat of ["accessibility","best-practices","seo"]) for (const r of c[cat].auditRefs) { const x=a[r.id]; if (r.weight>0 && x.score!==null && x.score<1) fails.push(`${cat}:${r.id}`); }
+            const perf=c.performance.auditRefs.map(r=>a[r.id]).filter(x=>x.details&&x.details.type==="opportunity"&&x.numericValue>150).map(x=>`${x.id}(${Math.round(x.numericValue)}ms)`);
+            if (fails.length) console.log("   fails:", fails.join(", "));
+            if (perf.length) console.log("   opportunities:", perf.join(", "));
+            const dia=["render-blocking-resources","unused-javascript","third-party-summary","errors-in-console","inspector-issues"].map(id=>a[id]).filter(x=>x&&x.score!==null&&x.score<1).map(x=>`${x.id}: ${x.displayValue||""}`);
+            if (dia.length) console.log("   notes:", dia.join(" | "));
+          }'

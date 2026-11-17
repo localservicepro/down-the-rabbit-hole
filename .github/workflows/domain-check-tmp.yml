@@ -1,0 +1,36 @@
+name: Temporary domain check
+on:
+  push:
+    paths: ['.github/workflows/domain-check-tmp.yml']
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: DNS
+        run: |
+          for t in A AAAA CNAME MX TXT NS CAA; do echo "== apex $t"; dig +short downtherabbitholeaust.com $t @8.8.8.8; done
+          for h in www offers app; do echo "== $h"; dig +short $h.downtherabbitholeaust.com @8.8.8.8; done
+          echo "== _dmarc"; dig +short TXT _dmarc.downtherabbitholeaust.com @8.8.8.8
+          echo "== 1.1.1.1 apex A"; dig +short downtherabbitholeaust.com A @1.1.1.1
+      - name: HTTP
+        run: |
+          for u in http://downtherabbitholeaust.com/ https://www.downtherabbitholeaust.com/contact http://www.downtherabbitholeaust.com/ https://downtherabbitholeaust.com/ https://downtherabbitholeaust.com/lawnmowing https://downtherabbitholeaust.com/welcome-813228-2604 https://offers.downtherabbitholeaust.com/lawnmowing https://app.downtherabbitholeaust.com/; do
+            echo "== $u"; curl -sS -o /dev/null -L --max-redirs 5 -w '%{http_code} hops=%{num_redirects} final=%{url_effective}\n' "$u" || true
+            curl -sS -o /dev/null -D - "$u" | grep -iE '^(HTTP|location|server|x-vercel-cache)' || true
+          done
+      - name: Certificates
+        run: |
+          for h in downtherabbitholeaust.com www.downtherabbitholeaust.com offers.downtherabbitholeaust.com; do
+            echo "== $h"; echo | openssl s_client -servername $h -connect $h:443 2>/dev/null | openssl x509 -noout -issuer -subject -enddate -ext subjectAltName 2>/dev/null | tr '\n' ' '; echo
+          done
+      - name: Page content
+        run: |
+          curl -sS https://downtherabbitholeaust.com/ > home.html
+          echo "GA tag: $(grep -c 'G-SPG93NW40S' home.html)"
+          echo "GSC meta: $(grep -o '<meta name="google-site-verification"[^>]*>' home.html)"
+          echo "LSP tracker: $(grep -c 'external-tracking' home.html)"
+          grep -o '<title>[^<]*</title>' home.html
+          grep -o '<meta name="description"[^>]*>' home.html
+          echo "rating text: $(grep -o 'from 8[0-9] reviews' home.html | head -1)"
+          curl -sS https://offers.downtherabbitholeaust.com/lawnmowing | grep -oE '<meta (property|name)="(og:image|og:url|og:title|description)"[^>]*>|<link rel="canonical"[^>]*>' | head
+          echo "== welcome funnel"; curl -sS https://offers.downtherabbitholeaust.com/welcome-813228-2604 | grep -oE '<title>[^<]*</title>|<meta property="og:image"[^>]*>' | head -3

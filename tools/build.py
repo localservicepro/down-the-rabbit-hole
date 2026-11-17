@@ -22,6 +22,10 @@ HOURS = "Mon–Thu 8am–5pm · Fri 9am–5pm · Sat–Sun closed"
 OWNER = "Michael Robinson"
 OWNER_ID = SITE + "/#owner"
 TRACKING_ID = "tk_6f4c1089fe214ae6baa8c2dc37522e82"
+
+# Google Analytics 4 (G-SPG93NW40S) plus a generate_lead event on the thank-you page.
+# Added to the built pages by LSP's analytics tool; kept here so a rebuild keeps it.
+ANALYTICS = '<!-- sales-brain:analytics -->\n<!-- sales-brain:ga -->\n<script async src="https://www.googletagmanager.com/gtag/js?id=G-SPG93NW40S"></script>\n<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag(\'js\',new Date());gtag(\'config\',\'G-SPG93NW40S\');</script>\n<!-- /sales-brain:ga -->\n<script>addEventListener(\'load\',function(){try{if(!/\\/(thank-?you|thanks)(\\/|$)/i.test(location.pathname)||typeof gtag!==\'function\')return;var k=\'sb-lead:\'+location.pathname+location.search;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,\'1\');gtag(\'event\',\'generate_lead\',{page_path:location.pathname});}catch(e){}});</script>\n<!-- /sales-brain:analytics -->'
 REVIEW_WIDGET_JS = "https://app.downtherabbitholeaust.com/reputation/assets/review-widget.js"
 REVIEW_WIDGET_SRC = "https://app.downtherabbitholeaust.com/reputation/widgets/review_widget/3yb7gzTYYnwm3QAH6nFW?widgetId=6abe618b07d8dcd57f696246"
 THANK_YOU = "/thank-you"
@@ -280,7 +284,7 @@ def footer():
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="/images/dtrh-logo-512.webp" width="120" height="120" alt="{NAME} badge logo, est. 2021" loading="lazy" decoding="async">
+        <img src="/images/dtrh-logo-240.webp" width="120" height="120" alt="{NAME} badge logo, est. 2021" loading="lazy" decoding="async">
         <p><strong style="color:#fff">{NAME}</strong><br>Lawn mowing, garden maintenance, hedges, clean-ups and waste removal for Canberra homes and businesses. Locally owned and operated in Canberra. Taking the headaches away since 2021.</p>
         <div class="footer-nap">
           <a href="{TEL}">{icon("phone")}{PHONE}</a>
@@ -515,6 +519,7 @@ def page(*, path, title, description, body, graph, active="", over_hero=False, o
     return f'''<!DOCTYPE html>
 <html lang="en-AU" data-tracking-id="{TRACKING_ID}">
 <head>
+{ANALYTICS}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(title)}</title>
@@ -682,7 +687,7 @@ def home():
         <iframe src="{MAP_EMBED}" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Map of the Down the Rabbit Hole AUST service area around Canberra"></iframe>
         <div class="rating">
           <span class="score">4.8</span>
-          <span><span class="stars" role="img" aria-label="4.8 out of 5 stars">{icon("star")*5}</span><small>Google rating from 85 reviews</small><a href="{GBP}" rel="noopener" target="_blank">Read our Google reviews →</a></span>
+          <span><span class="stars" role="img" aria-label="4.8 out of 5 stars">{icon("star")*5}</span><small>Google rating from 86 reviews</small><a href="{GBP}" rel="noopener" target="_blank">Read our Google reviews →</a></span>
         </div>
       </div>
     </div>
@@ -708,9 +713,9 @@ def home():
       </div>
       <div class="rv rv-d1">
         <div class="review-card">
-          <div class="g"><span class="score">4.8</span><span><span class="stars" role="img" aria-label="4.8 out of 5 stars">{icon("star")*5}</span><small style="color:var(--muted)">Google rating, 85 reviews</small></span></div>
+          <div class="g"><span class="score">4.8</span><span><span class="stars" role="img" aria-label="4.8 out of 5 stars">{icon("star")*5}</span><small style="color:var(--muted)">Google rating, 86 reviews</small></span></div>
           <h3>What Canberra customers say</h3>
-          <p style="color:var(--muted)">Rated 4.8 from 85 Google reviews. Read what customers say about mowing, garden care and clean-ups.</p>
+          <p style="color:var(--muted)">Rated 4.8 from 86 Google reviews. Read what customers say about mowing, garden care and clean-ups.</p>
           <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-navy" href="#reviews">See customer reviews</a><a class="btn btn-outline" href="{GBP}" rel="noopener" target="_blank">Google reviews</a></div>
         </div>
         <div class="aside-card" style="margin-top:18px">
@@ -745,7 +750,7 @@ def home():
         faq_schema(HOME_FAQS),
     ]
     write("/", page(path="/", title="Lawn & Garden Care Canberra | Down the Rabbit Hole AUST",
-                    description="Lawn and garden care across Canberra: mowing, garden maintenance, hedges and clean-ups for homes and businesses. Owner-operated, fully insured. Free quote.",
+                    description="Lawn and garden care across Canberra: mowing, garden maintenance, hedges and clean-ups for homes and businesses. Locally owned, fully insured. Free quote.",
                     body=body, graph=graph, active="home", over_hero=True,
                     preload_image=f'<link rel="preload" as="image" href="/images/{HERO_IMAGE}.webp" imagesrcset="/images/{HERO_IMAGE}-800.webp 800w, /images/{HERO_IMAGE}.webp {hw}w" imagesizes="100vw" fetchpriority="high">'))
 
@@ -1098,7 +1103,7 @@ def areas():
       </div>
       <div class="map-card rv rv-d1">
         <iframe src="{MAP_EMBED}" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Map of the Down the Rabbit Hole AUST service area around Canberra"></iframe>
-        <div class="rating"><span class="score">4.8</span><span><span class="stars" role="img" aria-label="4.8 out of 5 stars">{icon("star")*5}</span><small>Google rating from 85 reviews</small><a href="{GBP}" rel="noopener" target="_blank">Read our Google reviews →</a></span></div>
+        <div class="rating"><span class="score">4.8</span><span><span class="stars" role="img" aria-label="4.8 out of 5 stars">{icon("star")*5}</span><small>Google rating from 86 reviews</small><a href="{GBP}" rel="noopener" target="_blank">Read our Google reviews →</a></span></div>
       </div>
     </div>
   </div>
@@ -1155,7 +1160,7 @@ def contact():
       </div>
       <div class="map-card rv rv-d1">
         <iframe src="{MAP_EMBED}" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Map of the Down the Rabbit Hole AUST service area around Canberra"></iframe>
-        <div class="rating"><span class="score">4.8</span><span><span class="stars" role="img" aria-label="4.8 out of 5 stars">{icon("star")*5}</span><small>Google rating from 85 reviews</small><a href="{GBP}" rel="noopener" target="_blank">Read our Google reviews →</a></span></div>
+        <div class="rating"><span class="score">4.8</span><span><span class="stars" role="img" aria-label="4.8 out of 5 stars">{icon("star")*5}</span><small>Google rating from 86 reviews</small><a href="{GBP}" rel="noopener" target="_blank">Read our Google reviews →</a></span></div>
       </div>
     </div>
   </div>
@@ -1478,7 +1483,8 @@ def redirect_stubs():
     for old, new in REDIRECT_STUBS.items():
         target = SITE + new
         html_doc = f"""<!DOCTYPE html>
-<html lang="en-AU"><head><meta charset="utf-8"><title>Redirecting to {esc(target)}</title>
+<html lang="en-AU"><head>
+{ANALYTICS}<meta charset="utf-8"><title>Redirecting to {esc(target)}</title>
 <meta name="robots" content="noindex"><link rel="canonical" href="{target}">
 <meta http-equiv="refresh" content="0; url={new}">
 <script>location.replace({json.dumps(new)});</script></head>
@@ -1528,7 +1534,7 @@ RedirectMatch 301 ^/blog/tag/.*$ /blog
 Redirect 301 /quote-details /contact
 
 <IfModule mod_headers.c>
-  <FilesMatch "\\.(webp|png|woff2|css|js)$">
+  <FilesMatch "\\.(webp|png|mp4|webm|woff2|css|js)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
 </IfModule>
@@ -1553,7 +1559,7 @@ VERCEL = {
         {"source": "/quote-details", "destination": "/contact", "statusCode": 301},
     ],
     "headers": [
-        {"source": "/(.*)\\.(webp|png|woff2|css|js)", "headers": [{"key": "Cache-Control", "value": "public, max-age=31536000, immutable"}]},
+        {"source": "/(.*)\\.(webp|png|mp4|webm|woff2|css|js)", "headers": [{"key": "Cache-Control", "value": "public, max-age=31536000, immutable"}]},
     ],
 }
 

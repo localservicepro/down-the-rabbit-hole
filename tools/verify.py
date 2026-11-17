@@ -70,7 +70,7 @@ for f in ALL_HTML:
     name = os.path.relpath(f, ROOT)[:-5]
     if name.endswith("/index") or name.endswith(os.sep + "index"):
         continue  # directory copy of a page
-    if "http-equiv=\"refresh\"" in open(f, encoding="utf-8").read(400):
+    if "http-equiv=\"refresh\"" in open(f, encoding="utf-8").read().split("</head>")[0]:
         continue  # redirect stub
     p = Text(); p.feed(open(f, encoding="utf-8").read())
     issues = []

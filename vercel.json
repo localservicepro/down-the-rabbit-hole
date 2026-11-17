@@ -235,7 +235,7 @@
   ],
   "headers": [
     {
-      "source": "/(.*)\\.(webp|png|woff2|css|js)",
+      "source": "/(.*)\\.(webp|png|mp4|webm|woff2|css|js)",
       "headers": [
         {
           "key": "Cache-Control",

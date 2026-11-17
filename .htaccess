@@ -55,7 +55,7 @@ Redirect 301 /blog/the-importance-of-tree-trimming-and-hedge-cutting-for-propert
 RedirectMatch 301 ^/blog/[^/]+/?$ /blog
 
 <IfModule mod_headers.c>
-  <FilesMatch "\.(webp|png|woff2|css|js)$">
+  <FilesMatch "\.(webp|png|mp4|webm|woff2|css|js)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
 </IfModule>
